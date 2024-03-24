@@ -3,9 +3,11 @@ import User from "@/models/userModel";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+connect(); //its imp to connect to db in every api route
+
 const createToken = (_id) => {
   try {
-    return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" });
+    return jwt.sign({ _id }, process.env.JWT_SECRET, { expiresIn: "3d" });
   } catch (error) {
     console.error("Error creating token:", error);
     return null;
@@ -44,7 +46,7 @@ export async function POST(req) {
     if (error instanceof Error) {
       return NextResponse.json({ message: error.message }, { status: 400 });
     } else {
-      return NextResponse.json({ mesage: "error", error }, { status: 500 });
+      return NextResponse.json({ mesage: error.mesage }, { status: 500 });
     }
   }
 }
