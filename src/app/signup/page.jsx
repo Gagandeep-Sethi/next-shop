@@ -1,13 +1,14 @@
-'use client'
-import Link from 'next/link'
-import React from 'react'
+"use client";
+
+import React from "react";
+import SignUp from "../(components)/SignUp";
 
 const signupPage = () => {
   return (
-    <div>signup
-        <Link href='/login'> login</Link>
+    <div>
+      <SignUp />
     </div>
-  )
-}
+  );
+};
 
-export default signupPage
+export default signupPage;
