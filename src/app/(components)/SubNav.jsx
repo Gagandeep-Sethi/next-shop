@@ -1,16 +1,19 @@
 "use client";
-import React, { useState } from "react";
+
+import { toggleState } from "@/provider/redux/sidebarSlice";
+import { useDispatch } from "react-redux";
 
 const SubNav = () => {
-  const [toogleMenu, setToggleMenu] = useState(false);
+  const dispatch = useDispatch();
+
   return (
-    <div className="flex items-center space-x-4">
+    <div className="flex items-center space-x-5 relative">
       <div className=" ">
         <svg
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-10  h-8 fill-current text-black transition-colors duration-300 hover:text-orange-500 "
+          className="w-6 lg:w-10 h-6 lg:h-8 fill-current text-black transition-colors duration-300 hover:text-orange-500 "
         >
           <path
             fill="none"
@@ -26,7 +29,7 @@ const SubNav = () => {
         <svg
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-10  h-8 fill-current text-black transition-colors duration-300 hover:text-orange-500 "
+          className="w-6 lg:w-10 h-6 lg:h-8 fill-current text-black transition-colors duration-300 hover:text-orange-500 "
         >
           <path
             fill="none"
@@ -58,7 +61,7 @@ const SubNav = () => {
         <svg
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
-          className=" lg:flex w-10  h-8 fill-current text-black transition-colors duration-300 hover:text-orange-500 "
+          className=" lg:flex w-6 lg:w-10 h-6 lg:h-8 fill-current text-black transition-colors duration-300 hover:text-orange-500 "
         >
           <title />
 
@@ -69,9 +72,9 @@ const SubNav = () => {
                   d="M20,21V19a4,4,0,0,0-4-4H8a4,4,0,0,0-4,4v2"
                   fill="none"
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="1.5"
+                  strokeLineCap="round"
+                  strokeLineJoin="round"
+                  strokeWidth="1.5"
                 />
 
                 <circle
@@ -89,12 +92,12 @@ const SubNav = () => {
           </g>
         </svg>
       </div>
-      <div className=" md:hidden ">
+      <div className=" md:hidden  ">
         <svg
-          onClick={() => setToggleMenu(!toogleMenu)}
+          onClick={() => dispatch(toggleState())}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
-          className=" w-10 h-8 fill-current text-black transition-colors duration-300 hover:text-orange-500 "
+          className=" w-6 lg:w-10 h-6 lg:h-8 fill-current text-black transition-colors duration-300 hover:text-orange-500 "
         >
           <path
             fill="none"

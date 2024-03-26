@@ -1,15 +1,19 @@
+"use client";
 import React from "react";
 import NavLinks from "./NavLinks";
 import SubNav from "./SubNav";
+import Sidebar from "./Sidebar";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const sidebar = useSelector((store) => store?.sidebar);
   return (
-    <div className="flex justify-between shadow-lg sticky top-0 z-[20] w-full">
+    <div className="flex justify-between shadow-lg sticky top-0 z-[20] w-full bg-white">
       <div className="p-4 flex items-center">
         <svg
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-10 h-10 fill-current text-black transition-colors duration-300 hover:text-orange-500 "
+          className="w-8 h-8 lg:w-10 lh:h-10 fill-current text-black transition-colors duration-300 hover:text-orange-500 "
         >
           <path
             fill="none"
@@ -31,6 +35,11 @@ const Header = () => {
         </div>
       </div>
       <SubNav />
+      {sidebar ? (
+        <div className="w-screen absolute z-30  top-0 left-0 bottom-0 bg-white  ">
+          <Sidebar />
+        </div>
+      ) : null}
     </div>
   );
 };
