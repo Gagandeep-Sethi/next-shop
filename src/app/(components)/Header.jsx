@@ -1,14 +1,15 @@
 import React from "react";
 import NavLinks from "./NavLinks";
+import SubNav from "./SubNav";
 
 const Header = () => {
   return (
-    <div className="flex">
+    <div className="flex justify-between shadow-lg sticky top-0 z-[20] w-full">
       <div className="p-4 flex items-center">
         <svg
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-20 lg:w-10 h-20 lg:h-10 fill-current text-black transition-colors duration-300 hover:text-orange-500 "
+          className="w-10 h-10 fill-current text-black transition-colors duration-300 hover:text-orange-500 "
         >
           <path
             fill="none"
@@ -25,10 +26,11 @@ const Header = () => {
             strokeLinecap="round"
           />
         </svg>
-        <div className="">
+        <div className=" lg:">
           <NavLinks />
         </div>
       </div>
+      <SubNav />
     </div>
   );
 };

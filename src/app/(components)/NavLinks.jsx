@@ -3,7 +3,7 @@ import React from "react";
 
 const NavLinks = () => {
   return (
-    <div className="flex">
+    <div className="hidden md:flex">
       <Link
         href="/"
         className=" mx-4 transition-colors duration-300 hover:text-orange-500"
