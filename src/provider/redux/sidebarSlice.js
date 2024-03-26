@@ -1,11 +1,13 @@
-const { createSlice } = require("@reduxjs/toolkit");
+import { createSlice } from "@reduxjs/toolkit";
 
 const sidebarSlice = createSlice({
   name: "sidebar",
-  initial: false,
+  initialState: false,
   reducers: {
-    toggle: (state) => (state = !state),
+    toggleState: (state) => {
+      return (state = !state);
+    },
   },
 });
 export default sidebarSlice.reducer;
-export const { toggle } = sidebarSlice.actions;
+export const { toggleState } = sidebarSlice.actions;
