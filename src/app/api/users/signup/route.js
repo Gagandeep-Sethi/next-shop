@@ -17,7 +17,7 @@ const createToken = (_id) => {
 export default async function POST() {
   try {
     const body = await req.json();
-    const { username, email, password } = body;
+    const { username, email, password, confirmPassword } = body;
     if (!email || !password) {
       throw new Error("All fields must be filed");
     }
@@ -28,6 +28,9 @@ export default async function POST() {
 
     if (!validator.isStrongPassword(password)) {
       throw new Error("password not strong");
+    }
+    if (password !== confirmPassword) {
+      throw new Error("Password doesn't match");
     }
 
     const emailExist = await User.findOne({ email });
