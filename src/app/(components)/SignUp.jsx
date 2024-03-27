@@ -1,21 +1,41 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import { useSignup } from "../(hooks)/useSignup";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [formValue, setFormValue] = useState({
+    username: "",
+    password: "",
+    confirmPassword: "",
+    email: "",
+  });
+  const { signUp, isLoading, error } = useSignup();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await signUp(formValue);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValue((prevFormValue) => ({
+      ...prevFormValue,
+      [name]: value,
+    }));
   };
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-white">
       <div className="max-w-md w-full px-6 py-8 bg-gray-200 shadow-md rounded-md">
         <h2 className="text-2xl font-bold mb-8 text-center">Sign Up</h2>
-        <form className="space-y-4  ">
+        <form className="space-y-4  " onSubmit={handleSubmit}>
           <div className="flex flex-col">
-            <label htmlFor="username" className="text-sm font-medium">
+            <label for="username" className="text-sm font-medium">
               Username
             </label>
             <input
@@ -23,10 +43,12 @@ const SignUp = () => {
               name="username"
               className="input"
               placeholder="Username"
+              value={formValue.username}
+              onChange={handleChange}
             />
           </div>
           <div className="flex flex-col">
-            <label htmlFor="email" className="text-sm font-medium">
+            <label for="email" className="text-sm font-medium">
               Email
             </label>
             <input
@@ -34,10 +56,12 @@ const SignUp = () => {
               name="email"
               className="input"
               placeholder="Your email address"
+              value={formValue.email}
+              onChange={handleChange}
             />
           </div>
           <div className="flex flex-col relative">
-            <label htmlFor="password" className="text-sm font-medium">
+            <label for="password" className="text-sm font-medium">
               Password
             </label>
             <input
@@ -45,6 +69,8 @@ const SignUp = () => {
               name="password"
               className="input"
               placeholder="Your password"
+              value={formValue.password}
+              onChange={handleChange}
             />
             <button
               type="button"
@@ -95,8 +121,11 @@ const SignUp = () => {
               )}
             </button>
           </div>
+          <p className="text-xs font-extralight">
+            Must include no,symbol,uppercase,lower,min 8 letter long !
+          </p>
           <div className="flex flex-col relative">
-            <label htmlFor="confirmPassword" className="text-sm font-medium">
+            <label for="confirmPassword" className="text-sm font-medium">
               Confirm Password
             </label>
             <input
@@ -104,10 +133,13 @@ const SignUp = () => {
               name="confirmPassword"
               className="input"
               placeholder="Confirm password"
+              value={formValue.confirmPassword}
+              onChange={handleChange}
             />
           </div>
           <div className="flex justify-center">
             <button
+              disabled={isLoading}
               type="submit"
               className="btn bg-blue-500 text-white hover:bg-blue-600 "
             >
@@ -162,9 +194,10 @@ const SignUp = () => {
             Sign in with Google
           </button>
         </div>
+        {error && <div className="text-red-600 text-lg">{error} !!</div>}
         <p className="text-center text-lg text-gray-600">
           Already have account !{" "}
-          <span className="text-black cursor-pointer">
+          <span className="text-black cursor-pointer hover:text-blue-800 hover:underline">
             <Link href="/login">SignIn</Link>
           </span>
         </p>

@@ -1,9 +1,29 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import { useLogin } from "../(hooks)/useLogin";
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
+
+  const [formValue, setFormValue] = useState({
+    password: "",
+    email: "",
+  });
+  const { login, isLoading, error } = useLogin();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await login(formValue);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValue((prevFormValue) => ({
+      ...prevFormValue,
+      [name]: value,
+    }));
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -13,9 +33,9 @@ const SignIn = () => {
     <div className="min-h-screen flex flex-col justify-center items-center bg-white">
       <div className="max-w-md w-full px-6 py-8 bg-gray-200 shadow-md rounded-md">
         <h2 className="text-2xl font-bold mb-8 text-center">Sign In</h2>
-        <form className="space-y-4 ">
+        <form className="space-y-4 " onSubmit={handleSubmit}>
           <div className="flex flex-col">
-            <label htmlFor="email" className="text-sm font-medium">
+            <label for="email" className="text-sm font-medium">
               Email
             </label>
             <input
@@ -24,10 +44,12 @@ const SignIn = () => {
               name="email"
               className="input"
               placeholder="Your email address"
+              value={formValue.email}
+              onChange={handleChange}
             />
           </div>
           <div className="flex flex-col relative">
-            <label htmlFor="password" className="text-sm font-medium">
+            <label for="password" className="text-sm font-medium">
               Password
             </label>
             <input
@@ -36,6 +58,8 @@ const SignIn = () => {
               name="password"
               className="input"
               placeholder="Your password"
+              value={formValue.password}
+              onChange={handleChange}
             />
             <button
               type="button"
@@ -88,6 +112,7 @@ const SignIn = () => {
           </div>
           <div className="flex justify-center">
             <button
+              disabled={isLoading}
               type="submit"
               className="btn bg-blue-500 text-white hover:bg-blue-600 "
             >
@@ -142,9 +167,10 @@ const SignIn = () => {
             Sign in with Google
           </button>
         </div>
+        {error && <div className="text-red-600 text-lg">{error} !!</div>}
         <p className="text-center text-lg text-gray-600">
           Do not have account ?{" "}
-          <span className="text-black cursor-pointer">
+          <span className="text-black cursor-pointer  hover:text-blue-800 hover:underline">
             <Link href="signup">SignUp</Link>
           </span>
         </p>
