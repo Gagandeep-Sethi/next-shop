@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 const Sidebar = () => {
   const dispatch = useDispatch();
   return (
-    <div className="space-y-5 w-full ">
+    <div className="space-y-5 w-full  bg-white">
       <div className="flex justify-end">
         <p
           onClick={() => dispatch(toggleState())}

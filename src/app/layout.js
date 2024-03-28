@@ -2,6 +2,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./(components)/Header";
 import ReduxProvider from "@/provider/redux/ReduxProvider";
+//import { NextAuthProvider } from "./provider/google/NextAuthProvider";
+import { NextAuthProvider } from "@/provider/google/NextAuthProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -13,10 +15,12 @@ export default function RootLayout({ children }) {
   return (
     <ReduxProvider>
       <html lang="en">
-        <body className={inter.className}>
-          <Header />
-          {children}
-        </body>
+        <NextAuthProvider>
+          <body className={inter.className}>
+            <Header />
+            {children}
+          </body>
+        </NextAuthProvider>
       </html>
     </ReduxProvider>
   );

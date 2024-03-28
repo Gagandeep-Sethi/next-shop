@@ -3,6 +3,7 @@ import User from "@/models/userModel";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import validator from "validator";
+import jwt from "jsonwebtoken";
 
 connect();
 const createToken = (_id) => {
@@ -14,7 +15,7 @@ const createToken = (_id) => {
   }
 };
 
-export default async function POST() {
+export async function POST(req) {
   try {
     const body = await req.json();
     const { username, email, password, confirmPassword } = body;
@@ -46,7 +47,14 @@ export default async function POST() {
     });
     const token = createToken(user._id);
     const isAdmin = user.isAdmin;
-    res.status(200).json({ email, username, token, isAdmin });
+    console.log(user);
+    const response = NextResponse.json(
+      //{ email, username, token, isAdmin },
+      { message: "user saved" },
+      { status: 200 }
+    );
+    response.cookies.set("token", token, { httpOnly: true });
+    return response;
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json({ message: error.message }, { status: 400 });
