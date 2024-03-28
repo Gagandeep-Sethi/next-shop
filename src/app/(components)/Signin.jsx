@@ -35,12 +35,11 @@ const SignIn = () => {
         <h2 className="text-2xl font-bold mb-8 text-center">Sign In</h2>
         <form className="space-y-4 " onSubmit={handleSubmit}>
           <div className="flex flex-col">
-            <label for="email" className="text-sm font-medium">
+            <label htmlFor="email" className="text-sm font-medium">
               Email
             </label>
             <input
               type="email"
-              id="email"
               name="email"
               className="input"
               placeholder="Your email address"
@@ -49,12 +48,11 @@ const SignIn = () => {
             />
           </div>
           <div className="flex flex-col relative">
-            <label for="password" className="text-sm font-medium">
+            <label htmlFor="password" className="text-sm font-medium">
               Password
             </label>
             <input
               type={showPassword ? "text" : "password"}
-              id="password"
               name="password"
               className="input"
               placeholder="Your password"
@@ -77,9 +75,9 @@ const SignIn = () => {
                     <path
                       d="M2.99902 3L20.999 21M9.8433 9.91364C9.32066 10.4536 8.99902 11.1892 8.99902 12C8.99902 13.6569 10.3422 15 11.999 15C12.8215 15 13.5667 14.669 14.1086 14.133M6.49902 6.64715C4.59972 7.90034 3.15305 9.78394 2.45703 12C3.73128 16.0571 7.52159 19 11.9992 19C13.9881 19 15.8414 18.4194 17.3988 17.4184M10.999 5.04939C11.328 5.01673 11.6617 5 11.9992 5C16.4769 5 20.2672 7.94291 21.5414 12C21.2607 12.894 20.8577 13.7338 20.3522 14.5"
                       stroke="#000000"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                   </svg>
                 </div>
@@ -94,16 +92,16 @@ const SignIn = () => {
                     <path
                       d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z"
                       stroke="#000000"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M12.0012 5C7.52354 5 3.73326 7.94288 2.45898 12C3.73324 16.0571 7.52354 19 12.0012 19C16.4788 19 20.2691 16.0571 21.5434 12C20.2691 7.94291 16.4788 5 12.0012 5Z"
                       stroke="#000000"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                   </svg>
                 </div>
@@ -125,6 +123,7 @@ const SignIn = () => {
           <div className="mx-4 text-gray-500">or</div>
           <div className="border-b border-gray-500 flex-grow"></div>
         </div>
+        {error && <div className="text-red-600 text-lg">{error} !!</div>}
         <div className="flex justify-center">
           <button className="btn mt-6 bg-white text-gray-700 border border-gray-300 hover:border-gray-400 flex items-center justify-center">
             <svg viewBox="-0.5 0 48 48" version="1.1" className="w-8">
@@ -134,9 +133,9 @@ const SignIn = () => {
               <g
                 id="Icons"
                 stroke="none"
-                stroke-width="1"
+                strokeWidth="1"
                 fill="none"
-                fill-rule="evenodd"
+                fillRule="evenodd"
               >
                 <g id="Color-" transform="translate(-401.000000, -860.000000)">
                   <g id="Google" transform="translate(401.000000, 860.000000)">
@@ -167,7 +166,7 @@ const SignIn = () => {
             Sign in with Google
           </button>
         </div>
-        {error && <div className="text-red-600 text-lg">{error} !!</div>}
+
         <p className="text-center text-lg text-gray-600">
           Do not have account ?{" "}
           <span className="text-black cursor-pointer  hover:text-blue-800 hover:underline">

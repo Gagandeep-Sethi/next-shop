@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { connect } from "@/dbConfig/dbConfig";
 import User from "@/models/userModel";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -33,15 +34,24 @@ export async function POST(req) {
     }
     const role = user.isAdmin;
     const token = createToken(user._id);
-    return NextResponse.json(
-      {
-        email,
-        username: user.username,
-        token,
-        isAdmin,
-      },
+    console.log(user);
+
+    const response = NextResponse.json(
+      //{ email, username, token, isAdmin },
+      { message: "user saved" },
       { status: 200 }
     );
+    response.cookies.set("token", token, { httpOnly: true });
+    return response;
+    // return NextResponse.json(
+    //   {
+    //     email,
+    //     username: user.username,
+    //     token,
+    //     isAdmin,
+    //   },
+    //   { status: 200 }
+    // );
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json({ message: error.message }, { status: 400 });
