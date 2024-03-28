@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useUpdateProduct } from "../(hooks)/useUpdateProduct";
 import Image from "next/image";
+//import { useParams } from "next/navigation";
 
 const UpdateProduct = () => {
   const [formValue, setFormValue] = useState({
@@ -13,6 +14,7 @@ const UpdateProduct = () => {
     size: "not_required",
     images: [],
   });
+  //const{_id}=useParams()
   const { updateProduct, isLoading, error } = useUpdateProduct();
 
   const handleSubmit = async (e) => {
