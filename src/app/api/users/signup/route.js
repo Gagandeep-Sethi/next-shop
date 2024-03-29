@@ -8,7 +8,7 @@ import jwt from "jsonwebtoken";
 connect();
 const createToken = (_id) => {
   try {
-    return jwt.sign({ _id }, process.env.JWT_SECRET, { expiresIn: "3d" });
+    return jwt.sign({ _id }, process.env.JWT_SECRET, { expiresIn: "2d" });
   } catch (error) {
     console.error("Error creating token:", error);
     return null;
@@ -46,14 +46,19 @@ export async function POST(req) {
       password: hashPassword,
     });
     const token = createToken(user._id);
-    const isAdmin = user.isAdmin;
+
     console.log(user);
     const response = NextResponse.json(
-      //{ email, username, token, isAdmin },
       { message: "user saved" },
       { status: 200 }
     );
-    response.cookies.set("token", token, { httpOnly: true });
+
+    response.cookies.set("token", token, { httpOnly: true, secure: true });
+    response.cookies.set(
+      "user",
+      JSON.stringify({ username: user.username, email: user.email }),
+      { httpOnly: false }
+    );
     return response;
   } catch (error) {
     if (error instanceof Error) {

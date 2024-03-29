@@ -32,26 +32,21 @@ export async function POST(req) {
     if (!match) {
       throw new Error("Incorrect password");
     }
-    const role = user.isAdmin;
+
     const token = createToken(user._id);
     console.log(user);
 
     const response = NextResponse.json(
-      //{ email, username, token, isAdmin },
       { message: "user saved" },
       { status: 200 }
     );
     response.cookies.set("token", token, { httpOnly: true });
+    response.cookies.set(
+      "user",
+      JSON.stringify({ username: user.username, email: user.email }),
+      { httpOnly: false, secure: true }
+    );
     return response;
-    // return NextResponse.json(
-    //   {
-    //     email,
-    //     username: user.username,
-    //     token,
-    //     isAdmin,
-    //   },
-    //   { status: 200 }
-    // );
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json({ message: error.message }, { status: 400 });
