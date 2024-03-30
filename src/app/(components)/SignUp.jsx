@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useSignup } from "../(hooks)/useSignup";
+import { signIn, useSession } from "next-auth/react";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -11,6 +12,7 @@ const SignUp = () => {
     confirmPassword: "",
     email: "",
   });
+  const session = useSession();
   const { signUp, isLoading, error } = useSignup();
 
   const togglePasswordVisibility = () => {
@@ -45,6 +47,7 @@ const SignUp = () => {
               placeholder="Username"
               value={formValue.username}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="flex flex-col">
@@ -58,6 +61,7 @@ const SignUp = () => {
               placeholder="Your email address"
               value={formValue.email}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="flex flex-col relative">
@@ -71,6 +75,7 @@ const SignUp = () => {
               placeholder="Your password"
               value={formValue.password}
               onChange={handleChange}
+              required
             />
             <button
               type="button"
@@ -135,6 +140,7 @@ const SignUp = () => {
               placeholder="Confirm password"
               value={formValue.confirmPassword}
               onChange={handleChange}
+              required
             />
           </div>
           {error && (
@@ -157,7 +163,10 @@ const SignUp = () => {
           <div className="border-b border-gray-500 flex-grow"></div>
         </div>
         <div className="flex justify-center">
-          <button className="btn mt-6 bg-white text-gray-700 border border-gray-300 hover:border-gray-400 flex items-center justify-center">
+          <button
+            onClick={() => signIn("google")}
+            className="btn mt-6 bg-white text-gray-700 border border-gray-300 hover:border-gray-400 flex items-center justify-center"
+          >
             <svg viewBox="-0.5 0 48 48" version="1.1" className="w-8">
               <title>Google-color</title>
               <desc>Created with Sketch.</desc>

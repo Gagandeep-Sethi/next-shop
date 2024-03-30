@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useLogin } from "../(hooks)/useLogin";
+import { signIn, useSession } from "next-auth/react";
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -11,6 +12,7 @@ const SignIn = () => {
     email: "",
   });
   const { login, isLoading, error } = useLogin();
+  const session = useSession();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,6 +47,7 @@ const SignIn = () => {
               placeholder="Your email address"
               value={formValue.email}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="flex flex-col relative">
@@ -58,6 +61,7 @@ const SignIn = () => {
               placeholder="Your password"
               value={formValue.password}
               onChange={handleChange}
+              required
             />
             <button
               type="button"
@@ -108,6 +112,7 @@ const SignIn = () => {
               )}
             </button>
           </div>
+          {error && <div className="text-red-600 text-lg">{error} !!</div>}
           <div className="flex justify-center">
             <button
               disabled={isLoading}
@@ -123,9 +128,12 @@ const SignIn = () => {
           <div className="mx-4 text-gray-500">or</div>
           <div className="border-b border-gray-500 flex-grow"></div>
         </div>
-        {error && <div className="text-red-600 text-lg">{error} !!</div>}
+
         <div className="flex justify-center">
-          <button className="btn mt-6 bg-white text-gray-700 border border-gray-300 hover:border-gray-400 flex items-center justify-center">
+          <button
+            onClick={() => signIn("google")}
+            className="btn mt-6 bg-white text-gray-700 border border-gray-300 hover:border-gray-400 flex items-center justify-center"
+          >
             <svg viewBox="-0.5 0 48 48" version="1.1" className="w-8">
               <title>Google-color</title>
               <desc>Created with Sketch.</desc>

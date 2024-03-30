@@ -64,6 +64,7 @@ const UpdateProduct = () => {
               placeholder="Name of the product"
               value={formValue.name}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="flex flex-col">
@@ -77,6 +78,7 @@ const UpdateProduct = () => {
               placeholder="Category"
               value={formValue.category}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="flex flex-col">
@@ -89,6 +91,7 @@ const UpdateProduct = () => {
               placeholder="Description of the product"
               value={formValue.description}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="flex flex-col">
@@ -102,6 +105,7 @@ const UpdateProduct = () => {
               placeholder="Price in Rupees"
               value={formValue.price}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="flex flex-col">
@@ -115,6 +119,7 @@ const UpdateProduct = () => {
               placeholder="Write same as ori. price if case of no discount  "
               value={formValue.price}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="flex flex-col">
@@ -126,6 +131,7 @@ const UpdateProduct = () => {
               className="input"
               value={formValue.size}
               onChange={handleChange}
+              required
             >
               <option value="not_required">Not required</option>
               <option value="M">M</option>
@@ -146,6 +152,7 @@ const UpdateProduct = () => {
               accept="image/jpeg, image/png"
               multiple
               onChange={handleChange}
+              required
             />
           </div>
           {/* Display uploaded images with option to remove */}

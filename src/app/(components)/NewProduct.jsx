@@ -17,6 +17,7 @@ const NewProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formValue.images);
     await addProduct(formValue);
   };
 
@@ -26,6 +27,11 @@ const NewProduct = () => {
       setFormValue((prevFormValue) => ({
         ...prevFormValue,
         [name]: [...prevFormValue.images, ...files],
+      }));
+    } else if (name === "size") {
+      setFormValue((prevFormValue) => ({
+        ...prevFormValue,
+        [name]: value,
       }));
     } else {
       setFormValue((prevFormValue) => ({
@@ -62,6 +68,7 @@ const NewProduct = () => {
               placeholder="Name of the product"
               value={formValue.name}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="flex flex-col">
@@ -75,6 +82,7 @@ const NewProduct = () => {
               placeholder="Category"
               value={formValue.category}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="flex flex-col">
@@ -87,6 +95,7 @@ const NewProduct = () => {
               placeholder="Description of the product"
               value={formValue.description}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="flex flex-col">
@@ -94,12 +103,13 @@ const NewProduct = () => {
               Original Price
             </label>
             <input
-              type="text"
+              type="number"
               name="originalPrice"
               className="input"
               placeholder="Price in Rupees"
-              value={formValue.price}
+              value={formValue.originalPrice}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="flex flex-col">
@@ -107,12 +117,13 @@ const NewProduct = () => {
               Discounted Price
             </label>
             <input
-              type="text"
-              name="discountPrice"
+              type="number"
+              name="discountedPrice"
               className="input"
-              placeholder="Write same as ori. price if case of no discount  "
-              value={formValue.price}
+              placeholder="Write same as ori. price if case of no discount"
+              value={formValue.discountedPrice}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="flex flex-col">
@@ -141,9 +152,10 @@ const NewProduct = () => {
               type="file"
               name="images"
               className="input"
-              accept="image/jpeg, image/png"
+              accept="image/*"
               multiple
               onChange={handleChange}
+              required
             />
           </div>
           {/* Display uploaded images with option to remove */}
@@ -155,6 +167,8 @@ const NewProduct = () => {
                     src={URL.createObjectURL(image)}
                     alt={`Image ${index + 1}`}
                     className="h-20 w-20 object-cover"
+                    width="100"
+                    height="100"
                   />
                   <button
                     type="button"

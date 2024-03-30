@@ -20,7 +20,7 @@ export const useUpdateProduct = () => {
     setError(null);
 
     try {
-      const response = await fetch(`${Fetch_Uri}/api/product/${id}`, {
+      const response = await fetch(`/api/product/updateProduct${_id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -41,6 +41,7 @@ export const useUpdateProduct = () => {
       }
       if (response.ok) {
         setIsLoading(false);
+        console.log("product updated");
       }
     } catch (error) {
       setError("Error updating product. Please try again.");
