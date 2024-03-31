@@ -79,7 +79,9 @@ export const useNewProduct = () => {
 //     try {
 //       const response = await fetch(`/api/product/newProduct`, {
 //         method: "POST",
-//         headers: { "Content-Type": "application/json" },
+//         headers: {
+//           "Content-Type": "multipart/form-data",
+//         },
 //         body: JSON.stringify({
 //           name,
 //           category,
