@@ -1,6 +1,7 @@
 import { toggleState } from "@/provider/redux/sidebarSlice";
 import React from "react";
 import { useDispatch } from "react-redux";
+import { CiUser } from "react-icons/ci";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -17,38 +18,7 @@ const Sidebar = () => {
 
       <div className="flex justify-start  rounded-xl ">
         <div className="bg-gray-400 rounded-3xl ">
-          <svg
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            className="  w-10 m-1     h-8 fill-current text-black  "
-          >
-            <title />
-            <g id="Complete">
-              <g id="user">
-                <g>
-                  <path
-                    d="M20,21V19a4,4,0,0,0-4-4H8a4,4,0,0,0-4,4v2"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="1.5"
-                  />
-
-                  <circle
-                    cx="12"
-                    cy="7"
-                    fill="none"
-                    r="4"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="1.5"
-                  />
-                </g>
-              </g>
-            </g>
-          </svg>
+          <CiUser className="m-2 w-6 h-6" />
         </div>
         <p className="ml-2 my-auto ">Sign Up / Sign In</p>
       </div>
