@@ -27,6 +27,9 @@ export async function POST(req) {
     if (!user) {
       throw new Error("Email not found");
     }
+    if (!user.verified) {
+      throw new Error("Verify your Email !!");
+    }
 
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
