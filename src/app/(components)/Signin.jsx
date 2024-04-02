@@ -111,7 +111,7 @@ const SignIn = () => {
         <p className="text-center text-lg text-gray-600">
           Do not have account ?{" "}
           <span className="text-black cursor-pointer  hover:text-blue-800 hover:underline">
-            <Link href="signup">SignUp</Link>
+            <Link href="/user/signup">SignUp</Link>
           </span>
         </p>
       </div>
