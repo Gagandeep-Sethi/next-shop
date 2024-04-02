@@ -21,7 +21,7 @@ export async function PUT(req, { params }) {
         { status: 400 }
       );
     }
-
+    //retracting data coming in req
     const data = await req.formData();
     let files = data.getAll("images");
     const newImageFiles = data.getAll("newImageUploads");
@@ -38,10 +38,8 @@ export async function PUT(req, { params }) {
 
     //Delete images from cloudinary removed by user
     if (dletedImageFiles && dletedImageFiles.length !== 0) {
-      console.log("deleted image found");
       try {
         await deleteImages(dletedImageFiles);
-        console.log("images deleted");
       } catch (error) {
         return NextResponse.json(
           { message: "Unable to delete images from cloudinary" },
@@ -50,13 +48,10 @@ export async function PUT(req, { params }) {
       }
     }
 
-    //Upload newly added images by user to cloudinary
+    //Upload newly added images by user to cloudinary before that converting image file in buffer
     const fileBuffers = [];
     if (newImageFiles.length > 0) {
-      console.log("new image files recieved");
       for (const file of newImageFiles) {
-        console.log("Processing file:", file.name);
-
         const reader = file.stream().getReader();
         let chunks = [];
         let done = false;
@@ -76,7 +71,6 @@ export async function PUT(req, { params }) {
       }
     }
 
-    console.log("File processing complete");
     let newAddedImageIds = [];
     if (fileBuffers.length > 0) {
       const imageIds = await uploadImagesToCloudinary(
@@ -84,14 +78,13 @@ export async function PUT(req, { params }) {
         "nextShop/product"
       );
       newAddedImageIds = [...newAddedImageIds, ...imageIds];
-
-      console.log("Image IDs:", imageIds);
     }
 
     //Combining previous images and newly added images
 
     files = [...files, ...newAddedImageIds];
 
+    //uploading every new data to db
     const updatedProduct = await Product.findByIdAndUpdate(
       params.id,
       {
@@ -112,18 +105,18 @@ export async function PUT(req, { params }) {
   }
 }
 
+//function for deleting images from cloudinary
 async function deleteImages(dletedImageFiles) {
   for (const publicId of dletedImageFiles) {
     try {
       const result = await cloudinary.uploader.destroy(publicId);
-      console.log("Image deleted successfully:", result);
     } catch (error) {
       console.error("Error deleting image:", error);
       throw error;
     }
   }
 }
-
+//uploading images to cloudinary
 async function uploadImagesToCloudinary(fileBuffers, folder) {
   const uploadPromises = fileBuffers.map((buffer, index) => {
     return new Promise((resolve, reject) => {

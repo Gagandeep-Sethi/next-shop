@@ -14,6 +14,7 @@ cloudinary.config({
 connect();
 export async function POST(req) {
   try {
+    //retracting data from req
     const data = await req.formData();
     const files = data.getAll("images");
     const {
@@ -31,7 +32,7 @@ export async function POST(req) {
         { status: 400 }
       );
     }
-
+    //converting image files into buffer
     const fileBuffers = [];
 
     for (const file of files) {
@@ -55,14 +56,10 @@ export async function POST(req) {
       fileBuffers.push(buffer);
     }
 
-    console.log("File processing complete");
-
     const imageIds = await uploadImagesToCloudinary(
       fileBuffers,
       "nextShop/product"
     );
-
-    console.log("Image IDs:", imageIds);
 
     // Here, you can store the image IDs in your MongoDB database
     const newProduct = await Product.create({
@@ -88,7 +85,7 @@ export async function POST(req) {
     );
   }
 }
-
+//uploading images to cloudinary
 async function uploadImagesToCloudinary(fileBuffers, folder) {
   const uploadPromises = fileBuffers.map((buffer, index) => {
     return new Promise((resolve, reject) => {
