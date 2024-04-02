@@ -1,12 +1,12 @@
 "use client";
 import { useState } from "react";
-//import { Fetch_Uri } from "../constant"
 
 export const useUpdateProduct = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
 
-  const updateProduct = async (formValue, _id) => {
+  const updateProduct = async (formValue, productId) => {
+    console.log("reached hook");
     const {
       name,
       category,
@@ -15,23 +15,35 @@ export const useUpdateProduct = () => {
       originalPrice,
       discountedPrice,
       size,
+      newImageUploads,
+      deletedImages,
     } = formValue;
     setIsLoading(true);
     setError(null);
 
     try {
-      const response = await fetch(`/api/product/updateProduct${_id}`, {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("category", category);
+      formData.append("description", description);
+      formData.append("originalPrice", originalPrice);
+      formData.append("discountedPrice", discountedPrice);
+      formData.append("size", size);
+
+      // Append each file to the form data
+      for (let i = 0; i < images.length; i++) {
+        formData.append("images", images[i]);
+      }
+      for (let i = 0; i < deletedImages.length; i++) {
+        formData.append("deletedImages", deletedImages[i]);
+      }
+      for (let i = 0; i < newImageUploads.length; i++) {
+        formData.append("newImageUploads", newImageUploads[i]);
+      }
+      console.log("before req send");
+      const response = await fetch(`/api/product/updateProduct/${productId}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          category,
-          description,
-          images,
-          originalPrice,
-          discountedPrice,
-          size,
-        }),
+        body: formData,
       });
       const json = await response.json();
 

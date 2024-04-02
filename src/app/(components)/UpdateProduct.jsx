@@ -1,10 +1,12 @@
 "use client";
-import { useState } from "react";
-import { useUpdateProduct } from "../(hooks)/useUpdateProduct";
-import Image from "next/image";
-//import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
-const UpdateProduct = () => {
+import Image from "next/image";
+import { useUpdateProduct } from "../(hooks)/useUpdateProduct";
+
+const UpdateProduct = ({ productId }) => {
+  console.log(productId, "update");
+
   const [formValue, setFormValue] = useState({
     name: "",
     category: "",
@@ -13,21 +15,28 @@ const UpdateProduct = () => {
     discountedPrice: "",
     size: "not_required",
     images: [],
+    newImageUploads: [],
+    deletedImages: [],
   });
-  //const{_id}=useParams()
   const { updateProduct, isLoading, error } = useUpdateProduct();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await updateProduct(formValue, _id);
+    console.log("before sending to hook");
+    await updateProduct(formValue, productId);
   };
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === "images") {
+    if (name === "newImageUploads") {
       setFormValue((prevFormValue) => ({
         ...prevFormValue,
-        [name]: [...prevFormValue.images, ...files],
+        [name]: [...prevFormValue.newImageUploads, ...files],
+      }));
+    } else if (name === "size") {
+      setFormValue((prevFormValue) => ({
+        ...prevFormValue,
+        [name]: value,
       }));
     } else {
       setFormValue((prevFormValue) => ({
@@ -37,9 +46,9 @@ const UpdateProduct = () => {
     }
   };
 
-  const handleRemoveImage = (index) => {
+  const handleRemoveNewImage = (index) => {
     setFormValue((prevFormValue) => {
-      const newImages = [...prevFormValue.images];
+      const newImages = [...prevFormValue.newImageUploads];
       newImages.splice(index, 1);
       return {
         ...prevFormValue,
@@ -47,6 +56,52 @@ const UpdateProduct = () => {
       };
     });
   };
+  const handleRemoveOldImage = (image, index) => {
+    setFormValue((prevFormValue) => {
+      const newImages = [...prevFormValue.images];
+      newImages.splice(index, 1);
+      const dlt = [...prevFormValue.deletedImages, image];
+      return {
+        ...prevFormValue,
+        images: newImages,
+        deletedImages: dlt,
+      };
+    });
+  };
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await fetch(`/api/product/${productId}`);
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch product");
+        }
+
+        const product = await response.json();
+        //console.log(product);
+        //console.log(product.product.name, "name");
+        // Update the form value state with the fetched product data
+        setFormValue((prevFormValue) => ({
+          ...prevFormValue,
+          name: product?.product?.name,
+          category: product?.product?.category,
+          description: product?.product?.description,
+          originalPrice: product?.product?.originalPrice,
+          discountedPrice: product?.product?.displayPrice,
+          size: product?.product?.size,
+          images: product?.product?.images,
+          newImageUploads: [], // No new images initially
+          deletedImages: [], // No deleted images initially
+        }));
+        console.log("form data:", formValue);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-white">
@@ -99,11 +154,11 @@ const UpdateProduct = () => {
               Original Price
             </label>
             <input
-              type="text"
+              type="number"
               name="originalPrice"
               className="input"
               placeholder="Price in Rupees"
-              value={formValue.price}
+              value={formValue.originalPrice}
               onChange={handleChange}
               required
             />
@@ -113,11 +168,11 @@ const UpdateProduct = () => {
               Discounted Price
             </label>
             <input
-              type="text"
-              name="discountPrice"
+              type="number"
+              name="discountedPrice"
               className="input"
-              placeholder="Write same as ori. price if case of no discount  "
-              value={formValue.price}
+              placeholder="Write same as ori. price if case of no discount"
+              value={formValue.discountedPrice}
               onChange={handleChange}
               required
             />
@@ -131,7 +186,6 @@ const UpdateProduct = () => {
               className="input"
               value={formValue.size}
               onChange={handleChange}
-              required
             >
               <option value="not_required">Not required</option>
               <option value="M">M</option>
@@ -141,34 +195,61 @@ const UpdateProduct = () => {
               {/* Add more size options as needed */}
             </select>
           </div>
+          <p className="text-sm font-medium">Previous Images</p>
+          {/* Display uploaded images with option to remove */}
+          {formValue.images && formValue.images.length > 0 && (
+            <div className="flex flex-wrap">
+              {formValue.images.map((image, index) => (
+                <div key={index} className="relative mr-4 mb-4">
+                  <Image
+                    src={`http://res.cloudinary.com/dyja4tbmu/image/upload/${image}.png`}
+                    alt=""
+                    className="h-20 w-20 object-cover"
+                    width="100"
+                    height="100"
+                  />
+                  <button
+                    type="button"
+                    className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
+                    onClick={() => handleRemoveOldImage(image, index)}
+                  >
+                    X
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
           <div className="flex flex-col">
-            <label htmlFor="images" className="text-sm font-medium">
-              Images
+            <label htmlFor="newImageUploads" className="text-sm font-medium">
+              Add New Images
             </label>
             <input
               type="file"
-              name="images"
+              name="newImageUploads"
               className="input"
-              accept="image/jpeg, image/png"
+              accept="image/*"
               multiple
               onChange={handleChange}
               required
             />
           </div>
           {/* Display uploaded images with option to remove */}
-          {formValue.images.length > 0 && (
+          {formValue.newImageUploads.length > 0 && (
             <div className="flex flex-wrap">
-              {formValue.images.map((image, index) => (
+              {formValue.newImageUploads.map((image, index) => (
                 <div key={index} className="relative mr-4 mb-4">
                   <Image
                     src={URL.createObjectURL(image)}
                     alt={`Image ${index + 1}`}
                     className="h-20 w-20 object-cover"
+                    width="100"
+                    height="100"
                   />
                   <button
                     type="button"
                     className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
-                    onClick={() => handleRemoveImage(index)}
+                    onClick={() => handleRemoveNewImage(index)}
                   >
                     X
                   </button>
