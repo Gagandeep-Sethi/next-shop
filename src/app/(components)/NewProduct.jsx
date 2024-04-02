@@ -187,7 +187,7 @@ const NewProduct = () => {
               type="submit"
               className="btn bg-blue-500 text-white hover:bg-blue-600"
             >
-              Update Product
+              Add New Product
             </button>
           </div>
         </form>
