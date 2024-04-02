@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
       return !this.googleId;
     },
   },
+  verified: {
+    type: Boolean,
+    default: false,
+  },
   isAdmin: {
     type: Boolean,
     default: false,
