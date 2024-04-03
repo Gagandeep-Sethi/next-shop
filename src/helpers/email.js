@@ -25,3 +25,12 @@ export async function sendEmail(email, subject, text, html) {
     console.error("Error sending email:", error);
   }
 }
+
+// var transport = nodemailer.createTransport({
+//   host: "sandbox.smtp.mailtrap.io",
+//   port: 2525,
+//   auth: {
+//     user: "fbc0cd973fd303",
+//     pass: "cf086af5ede6a2"
+//   }
+// });

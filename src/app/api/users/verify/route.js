@@ -1,29 +1,80 @@
 import User from "@/models/userModel";
 import { NextResponse } from "next/server";
+connect();
 
-export default async function handler(req, res) {
-  const { token } = req.query;
+const createToken = (email) => {
+  try {
+    return jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: "1d" });
+  } catch (error) {
+    console.error("Error creating token:", error);
+    return null;
+  }
+};
+export async function GET(req) {
+  const searchParams = req.nextUrl.searchParams;
+  const token = searchParams.get("token");
+  const action = searchParams.get("action");
 
   try {
-    // find user using verification token
-    const user = await User.findOne({ verifyToken: token });
+    //if verification is for email
+    if (action === "verify-email") {
+      // find user using verification token
+      const user = await User.findOne({ verifyToken: token });
 
-    if (!user || user.verifyTokenExpiry < Date.now()) {
-      // Token is invalid or expired
-      return NextResponse.json(
-        { message: "Invalid or expired token please try to signup again" },
-        { status: 400 }
-      );
+      if (!user || user.verifyTokenExpiry < Date.now()) {
+        // Token is invalid or expired
+        return NextResponse.json(
+          { message: "Invalid or expired token please try to signup again" },
+          { status: 400 }
+        );
+      }
+
+      // Mark user as verified
+      user.verified = true;
+      user.verifyToken = null;
+      user.verifyTokenExpiry = null;
+      await user.save();
+
+      // Redirect to a verification success page
+      return NextResponse.redirect(`${process.env.DOMAIN}/user/verified`);
     }
 
-    // Mark user as verified
-    user.verified = true;
-    user.verifyToken = null;
-    user.verifyTokenExpiry = null;
-    await user.save();
+    //if the verification is for forgot password
+    if (action === "reset-password") {
+      // find user using verification token
+      const user = await User.findOne({ forgotPasswordToken: token });
 
-    // Redirect to a verification success page
-    return NextResponse.redirect("/verification-success");
+      if (!user || user.forgotPasswordTokenExpiry < Date.now()) {
+        // Token is invalid or expired
+        return NextResponse.json(
+          {
+            message:
+              "Invalid or expired token please try to reset password again",
+          },
+          { status: 400 }
+        );
+      }
+
+      // updating forgot password fields
+
+      user.forgotPasswordToken = null;
+      user.forgotPasswordTokenExpiry = null;
+      await user.save();
+      const encryptedEmail = createToken(user.email);
+      // Redirect to a verification success page
+      const response = NextResponse.redirect(
+        `${process.env.DOMAIN}/user/resetPassword?email=${encodeURIComponent(
+          user.email
+        )}`
+      );
+      response.cookies.set("resetEmail", encryptedEmail, { httpOnly: true });
+      //response.cookies.set("resetEmail", encryptedEmail, { httpOnly: true, secure: true });
+      return response;
+    }
+    return NextResponse.json(
+      { message: "Something went wrong Please try again !!" },
+      { status: 400 }
+    );
   } catch (error) {
     console.error("Error verifying user:", error);
     return NextResponse.json(
