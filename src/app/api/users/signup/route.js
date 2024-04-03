@@ -69,7 +69,7 @@ export async function POST(req) {
       user.email,
       "Email Verification",
       `Click the following link to verify your email: ${process.env.DOMAIN}/verify?token=${user.verifyToken}`,
-      `<p>Click the following link to verify your email: <a href="${process.env.DOMAIN}/api/user/verify?token=${user.verifyToken}">Verify Email</a></p>`
+      `<p>Click the following link to verify your email: <a href="${process.env.DOMAIN}/api/users/verify?token=${user.verifyToken}&action=verify-email">Verify Email</a></p>`
     );
 
     const response = NextResponse.json(

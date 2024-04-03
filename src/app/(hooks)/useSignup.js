@@ -27,6 +27,7 @@ export const useSignup = () => {
     }
     if (response.ok) {
       console.log(response);
+      setError(json.message);
       // localStorage.setItem("user", JSON.stringify(json));
       // dispatch(addUser(json));
       setIsLoading(false);

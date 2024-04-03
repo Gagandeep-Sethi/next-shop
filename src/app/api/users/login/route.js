@@ -44,6 +44,8 @@ export async function POST(req) {
       { status: 200 }
     );
     response.cookies.set("token", token, { httpOnly: true });
+    //response.cookies.set("token", token, { httpOnly: true , secure: true });
+
     response.cookies.set(
       "user",
       JSON.stringify({ username: user.username, email: user.email }),
