@@ -56,13 +56,16 @@ const authOptions = {
           email: email.toLowerCase(),
           googleId: id,
           googleToken: access_token,
+          verified: true,
         });
         const token = createToken(newUser._id);
         const response = NextResponse.json(
           { message: "user saved" },
           { status: 200 }
         );
-        response.cookies.set("token", token, { httpOnly: true, secure: true });
+        response.cookies.set("token", token, { httpOnly: true });
+        //response.cookies.set("token", token, { httpOnly: true, secure: true });
+
         response.cookies.set(
           "user",
           JSON.stringify({ username: newUser.username, email: newUser.email }),

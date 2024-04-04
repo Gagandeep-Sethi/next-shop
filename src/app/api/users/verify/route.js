@@ -1,5 +1,7 @@
 import User from "@/models/userModel";
 import { NextResponse } from "next/server";
+import { connect } from "@/dbConfig/dbConfig";
+import jwt from "jsonwebtoken";
 connect();
 
 const createToken = (email) => {

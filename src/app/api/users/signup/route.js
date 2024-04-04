@@ -30,7 +30,7 @@ export async function POST(req) {
     }
 
     if (!validator.isStrongPassword(password)) {
-      throw new Error("password not strong");
+      throw new Error("confirm password not strong");
     }
     if (password !== confirmPassword) {
       throw new Error("Password doesn't match");
