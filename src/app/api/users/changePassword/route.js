@@ -47,6 +47,7 @@ export async function POST(req) {
     //   if you want iser to get logged out after changing password
     //   response.cookies.set("token", "", { httpOnly: true, secure: true });
     // response.cookies.set("user", "", { httpOnly: false, secure: true });
+    //you can add redirection to login page also
   } catch (error) {
     console.log(error);
     if (
