@@ -34,6 +34,7 @@ export async function PUT(req, { params }) {
       originalPrice,
       discountedPrice,
       size,
+      warranty,
     } = Object.fromEntries(data.entries());
 
     //Delete images from cloudinary removed by user
@@ -95,6 +96,7 @@ export async function PUT(req, { params }) {
         originalPrice,
         displayPrice: discountedPrice,
         size,
+        warranty,
       },
       { new: true }
     );

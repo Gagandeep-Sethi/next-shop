@@ -18,6 +18,10 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    warranty: {
+      type: Number, //in months
+      required: true,
+    },
     images: {
       type: [String],
     },

@@ -14,6 +14,7 @@ const UpdateProduct = ({ productId }) => {
     originalPrice: "",
     discountedPrice: "",
     size: "not_required",
+    warranty: "",
     images: [],
     newImageUploads: [],
     deletedImages: [],
@@ -88,6 +89,7 @@ const UpdateProduct = ({ productId }) => {
           description: product?.product?.description,
           originalPrice: product?.product?.originalPrice,
           discountedPrice: product?.product?.displayPrice,
+          warranty: product?.product?.warranty,
           size: product?.product?.size,
           images: product?.product?.images,
           newImageUploads: [], // No new images initially
@@ -173,6 +175,20 @@ const UpdateProduct = ({ productId }) => {
               className="input"
               placeholder="Write same as ori. price if case of no discount"
               value={formValue.discountedPrice}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="waranty" className="text-sm font-medium">
+              Warranty (in months)
+            </label>
+            <input
+              type="number"
+              name="warranty"
+              className="input"
+              placeholder="Name of the product"
+              value={formValue.warranty}
               onChange={handleChange}
               required
             />

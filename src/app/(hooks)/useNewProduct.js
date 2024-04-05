@@ -15,6 +15,7 @@ export const useNewProduct = () => {
       originalPrice,
       discountedPrice,
       size,
+      warranty,
     } = formValue;
     setIsLoading(true);
     setError(null);
@@ -22,6 +23,7 @@ export const useNewProduct = () => {
     try {
       const formData = new FormData();
       formData.append("name", name);
+      formData.append("warranty", warranty);
       formData.append("category", category);
       formData.append("description", description);
       formData.append("originalPrice", originalPrice);

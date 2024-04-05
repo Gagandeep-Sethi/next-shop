@@ -11,6 +11,7 @@ const NewProduct = () => {
     originalPrice: "",
     discountedPrice: "",
     size: "not_required",
+    warranty: "",
     images: [],
   });
   const { addProduct, isLoading, error } = useNewProduct();
@@ -143,6 +144,20 @@ const NewProduct = () => {
               <option value="Half">Half</option>
               {/* Add more size options as needed */}
             </select>
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="warranty" className="text-sm font-medium">
+              Warranty in months
+            </label>
+            <input
+              type="number"
+              name="warranty"
+              className="input"
+              placeholder="Name of the product"
+              value={formValue.warranty}
+              onChange={handleChange}
+              required
+            />
           </div>
           <div className="flex flex-col">
             <label htmlFor="images" className="text-sm font-medium">

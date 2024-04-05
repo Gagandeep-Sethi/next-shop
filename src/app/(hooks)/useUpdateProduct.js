@@ -17,6 +17,7 @@ export const useUpdateProduct = () => {
       size,
       newImageUploads,
       deletedImages,
+      warranty,
     } = formValue;
     setIsLoading(true);
     setError(null);
@@ -24,6 +25,7 @@ export const useUpdateProduct = () => {
     try {
       const formData = new FormData();
       formData.append("name", name);
+      formData.append("warranty", warranty);
       formData.append("category", category);
       formData.append("description", description);
       formData.append("originalPrice", originalPrice);
