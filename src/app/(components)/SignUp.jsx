@@ -12,6 +12,7 @@ const SignUp = () => {
     password: "",
     confirmPassword: "",
     email: "",
+    phoneNumber: "",
   });
   const session = useSession();
   const { signUp, isLoading, error } = useSignup();
@@ -61,6 +62,20 @@ const SignUp = () => {
               className="input"
               placeholder="Your email address"
               value={formValue.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="phoneNumber" className="text-sm font-medium">
+              Phone Number
+            </label>
+            <input
+              type="number"
+              name="phoneNumber"
+              className="input"
+              placeholder="Phone Number"
+              value={formValue.phoneNumber}
               onChange={handleChange}
               required
             />

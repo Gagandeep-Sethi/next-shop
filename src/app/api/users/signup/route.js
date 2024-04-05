@@ -20,8 +20,8 @@ function generateTokenExpiry() {
 export async function POST(req) {
   try {
     const body = await req.json();
-    const { username, email, password, confirmPassword } = body;
-    if (!email || !password) {
+    const { username, email, password, confirmPassword, phoneNumber } = body;
+    if (!email || !password || !phoneNumber) {
       throw new Error("All fields must be filed");
     }
 
@@ -34,6 +34,9 @@ export async function POST(req) {
     }
     if (password !== confirmPassword) {
       throw new Error("Password doesn't match");
+    }
+    if (!validator.isMobilePhone(phoneNumber, "IN")) {
+      throw new Error("Phone number invalid");
     }
 
     const emailExist = await User.findOne({ email });
@@ -56,6 +59,7 @@ export async function POST(req) {
     const hashPassword = await bcrypt.hash(password, salt);
     const user = await User.create({
       username,
+      phoneNumber,
       email: email.toLowerCase(),
       password: hashPassword,
       verifyToken: generateVerificationToken(),

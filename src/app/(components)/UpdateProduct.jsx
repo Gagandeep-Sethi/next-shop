@@ -187,7 +187,7 @@ const UpdateProduct = ({ productId }) => {
               type="number"
               name="warranty"
               className="input"
-              placeholder="Name of the product"
+              placeholder="Warranty"
               value={formValue.warranty}
               onChange={handleChange}
               required

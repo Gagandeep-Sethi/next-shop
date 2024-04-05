@@ -11,6 +11,10 @@ const userSchema = new mongoose.Schema({
     unique: true,
     trim: true,
   },
+  phoneNumber: {
+    type: Number,
+    required: true,
+  },
   password: {
     type: String,
     // Password is not required for Google users
