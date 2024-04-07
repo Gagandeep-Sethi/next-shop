@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import User from "./userModel";
 
 const orderSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
@@ -15,6 +16,10 @@ const orderSchema = new mongoose.Schema({
       replaceEligible: { type: Boolean, default: true }, // New field to track replacement eligibility
     },
   ],
+  paid: {
+    type: Boolean,
+    default: false,
+  },
   totalAmount: { type: Number, required: true },
   status: {
     type: String,
