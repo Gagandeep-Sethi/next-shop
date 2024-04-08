@@ -1,4 +1,5 @@
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import Header from "./(components)/Header";
 import ReduxProvider from "@/provider/redux/ReduxProvider";
@@ -21,6 +22,7 @@ export default function RootLayout({ children }) {
             {children}
           </body>
         </html>
+        <Script src="https://checkout.razorpay.com/v1/checkout.js" />
       </NextAuthProvider>
     </ReduxProvider>
   );
