@@ -1,24 +1,21 @@
 import { connect } from "@/dbConfig/dbConfig";
-import User from "@/models/userModel";
 import { NextResponse } from "next/server";
+import Product from "@/models/productModel";
 
 connect();
 
 export async function GET(req) {
-  //const query = new URLSearchParams(req.url).get("query");
   const { searchParams } = new URL(req.url);
   const query = searchParams.get("query");
-  //const { searchParams } = new URL(request.url)
-  // const name = searchParams.get(‘name’)
   if (!query) {
-    throw new Error("Search for some email");
+    throw new Error("Search for some product");
   }
   try {
-    const users = await User.search(query);
-    if (!users) {
-      throw new Error("No Email found related to your Search");
+    const products = await Product.search(query);
+    if (!products) {
+      throw new Error("No product found related to your Search");
     }
-    return NextResponse.json({ users }, { status: 200 });
+    return NextResponse.json({ products }, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json({ message: error.message }, { status: 400 });
