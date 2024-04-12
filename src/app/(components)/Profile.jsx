@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import NewProduct from "./NewProduct";
 import Orders from "./Orders";
 import Rating from "./Rating";
 import Account from "./Account";
@@ -9,6 +8,7 @@ import { MdAccountTree, MdRateReview } from "react-icons/md";
 import { FaBoxOpen } from "react-icons/fa";
 import { TbPasswordFingerprint } from "react-icons/tb";
 import { GiDeerTrack } from "react-icons/gi";
+import ChangePassword from "./ChangePassword";
 
 const Profile = () => {
   const [selectedOption, setSelectedOption] = useState("myAccount");
@@ -23,7 +23,7 @@ const Profile = () => {
         <h1 className="text-lg font-semibold ">Hello Sky</h1>
         <div
           onClick={() => handleOptionClick("myAccount")}
-          className={` flex items-center  w-full text-left p-4 rounded-md  border-b-2 border-gray-200 ${
+          className={` flex items-center  w-full text-left p-4 rounded-md  border-b-2 border-gray-200 cursor-pointer ${
             selectedOption === "myAccount" ? "bg-blue-500 text-white" : ""
           }`}
         >
@@ -33,7 +33,7 @@ const Profile = () => {
         </div>
         <div
           onClick={() => handleOptionClick("myOrders")}
-          className={` flex items-center  w-full text-left p-4 rounded-md  border-b-2 border-gray-200 ${
+          className={` flex items-center  w-full text-left p-4 rounded-md  border-b-2 border-gray-200 cursor-pointer ${
             selectedOption === "myOrders" ? "bg-blue-500 text-white" : ""
           }`}
         >
@@ -43,7 +43,7 @@ const Profile = () => {
         </div>
         <div
           onClick={() => handleOptionClick("changePassword")}
-          className={`flex items-center w-full  text-left p-4 rounded-md mt-2 border-b-2 border-gray-200 ${
+          className={`flex items-center w-full  text-left p-4 rounded-md mt-2 border-b-2 border-gray-200 cursor-pointer ${
             selectedOption === "changePassword" ? "bg-blue-500 text-white" : ""
           }`}
         >
@@ -53,7 +53,7 @@ const Profile = () => {
         </div>
         <div
           onClick={() => handleOptionClick("myRatingAndReviews")}
-          className={`flex items-center w-full text-left p-4 rounded-md mt-2 border-b-2 border-gray-200 ${
+          className={`flex items-center w-full text-left p-4 rounded-md mt-2 border-b-2 border-gray-200 cursor-pointer ${
             selectedOption === "myRatingAndReviews"
               ? "bg-blue-500 text-white"
               : ""
@@ -65,7 +65,7 @@ const Profile = () => {
         </div>
         <div
           onClick={() => handleOptionClick("trackOrders")}
-          className={` flex items-center w-full text-left p-4 rounded-md mt-2 border-b-2 border-gray-200 ${
+          className={` flex items-center w-full text-left p-4 rounded-md mt-2 border-b-2 border-gray-200 cursor-pointer ${
             selectedOption === "trackOrders" ? "bg-blue-500 text-white" : ""
           }`}
         >
@@ -92,7 +92,7 @@ const Profile = () => {
         )}
         {selectedOption === "changePassword" && (
           <div>
-            <NewProduct />
+            <ChangePassword />
           </div>
         )}
         {selectedOption === "myRatingAndReviews" && (
