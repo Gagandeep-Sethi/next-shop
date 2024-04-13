@@ -114,6 +114,9 @@ const SignIn = () => {
             <Link href="/user/signup">SignUp</Link>
           </span>
         </p>
+        <p className="text-center text-black cursor-pointer  hover:text-blue-800 hover:underline ">
+          <Link href="/user/forgotPassword">Forgot Password ?</Link>
+        </p>
       </div>
     </div>
   );

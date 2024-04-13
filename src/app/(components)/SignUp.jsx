@@ -74,7 +74,7 @@ const SignUp = () => {
               type="number"
               name="phoneNumber"
               className="input"
-              placeholder="Phone Number"
+              placeholder="Phone Number (Indian)"
               value={formValue.phoneNumber}
               onChange={handleChange}
               required

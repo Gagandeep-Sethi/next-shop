@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { useForgotPassword } from "../(hooks)/useForgotPassword";
 
-const ChangePassword = () => {
+const ForgotPassword = () => {
   const [formValue, setFormValue] = useState({
     email: "",
   });
@@ -34,7 +34,7 @@ const ChangePassword = () => {
               Email
             </label>
             <input
-              type={showPassword ? "text" : "password"}
+              type="text"
               name="email"
               className="input"
               placeholder="Email"
@@ -62,4 +62,4 @@ const ChangePassword = () => {
   );
 };
 
-export default ChangePassword;
+export default ForgotPassword;
