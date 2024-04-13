@@ -13,7 +13,7 @@ const UpdateProduct = ({ productId }) => {
     description: "",
     originalPrice: "",
     discountedPrice: "",
-    size: "not_required",
+    size: "",
     warranty: "",
     images: [],
     newImageUploads: [],
@@ -34,7 +34,7 @@ const UpdateProduct = ({ productId }) => {
         ...prevFormValue,
         [name]: [...prevFormValue.newImageUploads, ...files],
       }));
-    } else if (name === "size") {
+    } else if (name === "size" || "category") {
       setFormValue((prevFormValue) => ({
         ...prevFormValue,
         [name]: value,
@@ -128,15 +128,17 @@ const UpdateProduct = ({ productId }) => {
             <label htmlFor="category" className="text-sm font-medium">
               Category
             </label>
-            <input
-              type="text"
+            <select
               name="category"
               className="input"
-              placeholder="Category"
               value={formValue.category}
               onChange={handleChange}
-              required
-            />
+            >
+              <option value="pillow">pillow</option>
+              <option value="mattress">mattress</option>
+              <option value="bolster">bolster</option>
+              <option value="cushion">cushion</option>
+            </select>
           </div>
           <div className="flex flex-col">
             <label htmlFor="description" className="text-sm font-medium">
