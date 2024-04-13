@@ -30,12 +30,13 @@ export async function POST(req) {
     }
 
     if (!validator.isStrongPassword(password)) {
-      throw new Error("confirm password not strong");
+      throw new Error(" password not strong");
     }
     if (password !== confirmPassword) {
-      throw new Error("Password doesn't match");
+      throw new Error("confirm Password doesn't match");
     }
-    if (!validator.isMobilePhone(phoneNumber, "IN")) {
+    //checks if ita an indian no
+    if (!validator.isMobilePhone(phoneNumber, "en-IN")) {
       throw new Error("Phone number invalid");
     }
 
@@ -86,6 +87,7 @@ export async function POST(req) {
 
     return response;
   } catch (error) {
+    console.log(error);
     if (error instanceof Error) {
       return NextResponse.json({ message: error.message }, { status: 400 });
     } else {

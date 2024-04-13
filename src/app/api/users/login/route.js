@@ -48,8 +48,14 @@ export async function POST(req) {
 
     response.cookies.set(
       "user",
-      JSON.stringify({ username: user.username, email: user.email }),
-      { httpOnly: false, secure: true }
+      JSON.stringify({
+        username: user.username,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+      }),
+      { httpOnly: false }
+      // JSON.stringify({ username: user.username, email: user.email }),
+      // { httpOnly: false, secure: true }
     );
     return response;
   } catch (error) {

@@ -35,7 +35,7 @@ export async function POST(req) {
     await user.save();
     await sendEmail(
       user.email,
-      "Reset Email",
+      "Reset Password",
       `Click the following link to reset your password: ${process.env.DOMAIN}/verify?token=${user.forgotPasswordToken}`,
       `<p>Click the following link to verify your email: <a href="${process.env.DOMAIN}/api/users/verify?token=${user.forgotPasswordToken}&action=reset-password">Verify Email</a></p>`
     );
