@@ -62,6 +62,32 @@ productSchema.methods.calculateDiscountPercentage = function () {
   return ((this.originalPrice - this.displayPrice) / this.originalPrice) * 100;
 };
 
+// Static method for searching products
+productSchema.statics.search = async function (query) {
+  const products = await this.find(
+    {
+      $text: { $search: query },
+    },
+    { score: { $meta: "textScore" } }
+  ).sort({ score: { $meta: "textScore" } });
+
+  return products;
+};
+//this is how each element inside array will look like
+// {
+//   _id: ObjectId,           // Unique identifier for the product
+//   name: String,            // Name of the product
+//   category: String,        // Category of the product
+//   description: String,     // Description of the product
+//   size: String,            // Size of the product
+//   warranty: Number,        // Warranty period of the product in months
+//   images: [String],        // Array of image URLs for the product
+//   originalPrice: Number,   // Original price of the product
+//   displayPrice: Number,    // Display price of the product
+//   createdAt: Date,         // Date when the product was created
+//   updatedAt: Date          // Date when the product was last updated
+// }
+
 const Product =
   mongoose.models.Product || mongoose.model("Product", productSchema);
 
