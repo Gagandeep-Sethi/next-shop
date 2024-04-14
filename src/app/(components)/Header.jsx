@@ -1,3 +1,4 @@
+"use client";
 import { RxHamburgerMenu } from "react-icons/rx";
 
 import { IoHome } from "react-icons/io5";
@@ -6,7 +7,31 @@ import { CiShoppingCart, CiUser } from "react-icons/ci";
 import Link from "next/link";
 
 import NavLinks from "./NavLinks";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser } from "@/provider/redux/userSlice";
+
 const Header = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((store) => store?.user?.user);
+  const cart = useSelector((store) => store?.cart.cart);
+  useEffect(() => {
+    const parseCookies = () => {
+      return document.cookie.split(";").reduce((cookies, cookie) => {
+        const [name, value] = cookie.trim().split("=");
+        return { ...cookies, [name]: value };
+      }, {});
+    };
+
+    // Get user details from the cookie
+    const { user } = parseCookies();
+    const decodedUser = decodeURIComponent(user || "");
+    const presentUser = JSON.parse(decodedUser || "{}");
+    if (presentUser) {
+      console.log(presentUser);
+      dispatch(addUser(presentUser));
+    }
+  }, [dispatch]);
   return (
     <div className="drawer-end ">
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
@@ -28,15 +53,27 @@ const Header = () => {
                 <IoSearchOutline className="w-7 h-6  text-black transition-colors duration-300 hover:text-orange-500 " />
               </Link>
             </div>
-            <div className=" ">
-              <Link href="/cart">
-                <CiShoppingCart className="w-7 h-7  text-black transition-colors duration-300 hover:text-orange-500" />
-              </Link>
+
+            <div className="indicator">
+              <span className="indicator-item badge bg-green-400  ">
+                {cart ? cart.length : 0}
+              </span>
+              <button>
+                <Link href="/cart">
+                  <CiShoppingCart className="w-7 h-7  text-black transition-colors duration-300 hover:text-orange-500" />
+                </Link>
+              </button>
             </div>
-            <div className="hidden md:flex ">
-              <Link href="/user">
-                <CiUser className="w-7 h-7  text-black transition-colors duration-300 hover:text-orange-500" />
-              </Link>
+
+            <div
+              className="hidden md:flex tooltip tooltip-bottom"
+              data-tip={user ? user?.username : "login"}
+            >
+              <button>
+                <Link href="/user">
+                  <CiUser className="w-7 h-7  text-black transition-colors duration-300 hover:text-orange-500" />
+                </Link>
+              </button>
             </div>
             <div className="flex-none lg:hidden">
               <label
@@ -76,6 +113,9 @@ const Header = () => {
           </li>
           <li aria-label="close sidebar">
             <Link
+              onClick={() => {
+                document.getElementById("my-drawer-3")?.click();
+              }}
               href="/"
               className="mr-4 transition-colors duration-300 hover:text-orange-500"
             >

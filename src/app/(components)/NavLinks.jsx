@@ -8,25 +8,31 @@ const NavLinks = () => {
         href="/"
         className=" mx-4 transition-colors duration-300 hover:text-orange-500"
       >
-        Phone
+        Mattress
       </Link>
       <Link
         href="/"
         className="mr-4 transition-colors duration-300 hover:text-orange-500"
       >
-        Tv
+        Pillow
       </Link>
       <Link
         href="/"
         className="mr-4 transition-colors duration-300 hover:text-orange-500"
       >
-        Speaker
+        Cushion
       </Link>
       <Link
         href="/"
         className="mr-4 transition-colors duration-300 hover:text-orange-500"
       >
-        T-shirt
+        Bolster
+      </Link>
+      <Link
+        href="/"
+        className="mr-4 transition-colors duration-300 hover:text-orange-500"
+      >
+        Customize product
       </Link>
     </div>
   );
