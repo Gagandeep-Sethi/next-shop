@@ -2,13 +2,13 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import CartCard from "./CartCard";
-//import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const Cart = () => {
   const cart = useSelector((store) => store?.cart?.cart);
 
   const user = useSelector((store) => store.user.user);
-  //const router = useRouter();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   if (cart.length === 0) return <p>cart is empty</p>;
@@ -43,19 +43,19 @@ const Cart = () => {
             razorpayPaymentId: response.razorpay_payment_id,
             razorpayOrderId: response.razorpay_order_id,
             razorpaySignature: response.razorpay_signature,
-            email: userData.user?.email,
+            _id: razorOrder.receipt,
           }),
         });
 
         const res = await data.json();
         if (res?.error === false) {
           // redirect to success page
-          //router.push("/");
           console.log("payment sucess");
+          router.push("/payment/success");
         }
       },
       prefill: {
-        email: user ? user?.email : "gagandeep123@gmail.com",
+        email: user ? user?.email : null,
       },
     };
 
