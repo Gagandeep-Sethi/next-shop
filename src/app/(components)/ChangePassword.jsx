@@ -34,7 +34,7 @@ const ChangePassword = () => {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-white">
       <div className="max-w-md w-full px-6 py-8 bg-gray-200 shadow-md rounded-md">
-        <h2 className="text-2xl font-bold mb-8 text-center">Sign Up</h2>
+        <h2 className="text-2xl font-bold mb-8 text-center">Change Password</h2>
         <form className="space-y-4  " onSubmit={handleSubmit}>
           <div className="flex flex-col relative">
             <label htmlFor="oldPassword" className="text-sm font-medium">

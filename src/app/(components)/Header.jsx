@@ -97,7 +97,12 @@ const Header = () => {
 
         <ul className="menu p-4 w-80 min-h-full bg-base-200 space-y-">
           {/* Sidebar content here */}
-          <Link href="/user/login">
+          <Link
+            onClick={() => {
+              document.getElementById("my-drawer-3")?.click();
+            }}
+            href="/user/login"
+          >
             <h1 className="flex items-center">
               <CiUser className="m-2 w-6 h-6 text-black" />
               SignUp/SignIn
@@ -105,7 +110,10 @@ const Header = () => {
           </Link>
           <li aria-label="close sidebar">
             <Link
-              href="/"
+              onClick={() => {
+                document.getElementById("my-drawer-3")?.click();
+              }}
+              href="/product/category/cushion"
               className="mr-4 transition-colors duration-300 hover:text-orange-500"
             >
               Cushion
@@ -116,7 +124,7 @@ const Header = () => {
               onClick={() => {
                 document.getElementById("my-drawer-3")?.click();
               }}
-              href="/"
+              href="/product/category/pillow"
               className="mr-4 transition-colors duration-300 hover:text-orange-500"
             >
               Pillow
@@ -124,7 +132,10 @@ const Header = () => {
           </li>
           <li aria-label="close sidebar">
             <Link
-              href="/"
+              onClick={() => {
+                document.getElementById("my-drawer-3")?.click();
+              }}
+              href="/product/category/mattress"
               className="mr-4 transition-colors duration-300 hover:text-orange-500"
             >
               Mattress
@@ -132,7 +143,10 @@ const Header = () => {
           </li>
           <li aria-label="close sidebar">
             <Link
-              href="/"
+              onClick={() => {
+                document.getElementById("my-drawer-3")?.click();
+              }}
+              href="/product/category/bolster"
               className="mr-4 transition-colors duration-300 hover:text-orange-500"
             >
               Bolster
@@ -140,6 +154,9 @@ const Header = () => {
           </li>
           <li aria-label="close sidebar">
             <Link
+              onClick={() => {
+                document.getElementById("my-drawer-3")?.click();
+              }}
               href="/"
               className="mr-4 transition-colors duration-300 hover:text-orange-500"
             >
