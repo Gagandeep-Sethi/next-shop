@@ -3,23 +3,23 @@ import { createSlice } from "@reduxjs/toolkit";
 const productSlice = createSlice({
   name: "products",
   initialState: {
-    pillows: null,
-    cushions: null,
-    bolsters: null,
-    mattresses: null,
+    pillow: null,
+    cushion: null,
+    bolster: null,
+    mattress: null,
   },
   reducers: {
     addPillows: (state, action) => {
-      state.pillows = action.payload;
+      state.pillow = action.payload;
     },
     addCushions: (state, action) => {
-      state.cushions = action.payload;
+      state.cushion = action.payload;
     },
     addBolsters: (state, action) => {
-      state.bolsters = action.payload;
+      state.bolster = action.payload;
     },
     addMattresses: (state, action) => {
-      state.mattresses = action.payload;
+      state.mattress = action.payload;
     },
   },
 });
