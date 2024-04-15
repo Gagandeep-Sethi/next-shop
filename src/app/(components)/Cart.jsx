@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import CartCard from "./CartCard";
 import { useRouter } from "next/navigation";
+import EmptyCart from "./EmptyCart";
 
 const Cart = () => {
   const cart = useSelector((store) => store?.cart?.cart);
@@ -11,7 +12,7 @@ const Cart = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  if (cart.length === 0) return <p>cart is empty</p>;
+  if (cart.length === 0) return <EmptyCart />;
 
   const makePayment = async () => {
     setIsLoading(true);
