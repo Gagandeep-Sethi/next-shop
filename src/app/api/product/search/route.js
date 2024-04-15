@@ -8,7 +8,7 @@ export async function GET(req) {
   const { searchParams } = new URL(req.url);
   const query = searchParams.get("query");
   if (!query) {
-    throw new Error("Search for some product");
+    return NextResponse.json({ status: 400 });
   }
   try {
     const products = await Product.search(query);
@@ -18,7 +18,7 @@ export async function GET(req) {
     return NextResponse.json({ products }, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
-      return NextResponse.json({ message: error.message }, { status: 400 });
+      return NextResponse.json({ status: 400 });
     } else {
       return NextResponse.json({ mesage: error.mesage }, { status: 500 });
     }
