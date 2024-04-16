@@ -2,8 +2,10 @@ import { Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import Header from "./(components)/Header";
+
 import ReduxProvider from "@/provider/redux/ReduxProvider";
 import { NextAuthProvider } from "@/provider/google/NextAuthProvider";
+import Footer from "./(components)/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +22,7 @@ export default function RootLayout({ children }) {
           <body className={inter.className}>
             <Header />
             {children}
+            <Footer />
           </body>
         </html>
         <Script src="https://checkout.razorpay.com/v1/checkout.js" />

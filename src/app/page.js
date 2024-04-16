@@ -1,12 +1,11 @@
 //import Image from "next/image";
-
-const Home = () => {
+import Home from "./(components)/Home";
+const Page = () => {
   return (
     <div className="w-screen">
-      Home
-      {/* <Image src="public/google.svg" width="40" height="40" alt="ss" /> */}
+      <Home />
     </div>
   );
 };
 
-export default Home;
+export default Page;
