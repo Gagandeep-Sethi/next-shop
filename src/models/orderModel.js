@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import User from "./userModel";
 
 const orderSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
@@ -67,16 +66,6 @@ orderSchema.pre("save", async function (next) {
   this.totalAmount = totalAmount;
   next();
 });
-
-//for provideing all the order placed by same  user
-orderSchema.statics.findByUserEmail = async function (email) {
-  const user = await User.findOne({ email });
-  if (!user) {
-    throw new Error("User not found");
-  }
-  return this.find({ user: user._id }).populate("products.product");
-};
-
 const Order = mongoose.models.Order || mongoose.model("Order", orderSchema);
 
 export default Order;
