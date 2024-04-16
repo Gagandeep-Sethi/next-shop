@@ -41,7 +41,7 @@ const ChangePassword = () => {
               Old Password
             </label>
             <input
-              type={showPassword ? "text" : "password"}
+              type="password"
               name="oldPassword"
               className="input"
               placeholder="Old Password"
