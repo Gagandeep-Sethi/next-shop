@@ -1,9 +1,11 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export const useUpdateProduct = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
+  const router = useRouter();
 
   const updateProduct = async (formValue, productId) => {
     console.log("reached hook");
@@ -56,6 +58,7 @@ export const useUpdateProduct = () => {
       if (response.ok) {
         setIsLoading(false);
         console.log("product updated");
+        router.push(`/product/${productId}`);
       }
     } catch (error) {
       setError("Error updating product. Please try again.");
