@@ -13,18 +13,6 @@ const Category = () => {
   const category = products[type];
   console.log(category, "category");
 
-  const getData = async () => {
-    try {
-      const response = await fetch(`/api/product/category/${type}`);
-      const json = await response.json();
-      console.log(json, "json");
-      if (response.ok) {
-        setProduct(json?.product);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
   useEffect(() => {
     if (category) {
       setProduct(category);
@@ -32,7 +20,19 @@ const Category = () => {
     if (!category) {
       getData();
     }
-  }, []);
+    const getData = async () => {
+      try {
+        const response = await fetch(`/api/product/category/${type}`);
+        const json = await response.json();
+        console.log(json, "json");
+        if (response.ok) {
+          setProduct(json?.product);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  }, [category, type]);
   if (product.length === 0) return <Skeleton />;
   console.log(product, "product");
   return (
