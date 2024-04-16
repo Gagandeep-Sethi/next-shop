@@ -19,6 +19,7 @@ const Orders = () => {
 
   useEffect(() => {
     getOrders();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (order.length === 0) return <p>No orders to show </p>;
