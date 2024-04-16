@@ -1,18 +1,20 @@
 "use client";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CartCard from "./CartCard";
 import { useRouter } from "next/navigation";
 import EmptyCart from "./EmptyCart";
+import { emptyCart } from "@/provider/redux/cartSlice";
 
 const Cart = () => {
   const cart = useSelector((store) => store?.cart?.cart);
-
+  const dispatch = useDispatch();
   const user = useSelector((store) => store.user.user);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   if (cart.length === 0) return <EmptyCart />;
+  console.log(cart, "cart");
 
   const makePayment = async () => {
     setIsLoading(true);
@@ -52,6 +54,7 @@ const Cart = () => {
         if (res?.error === false) {
           // redirect to success page
           console.log("payment sucess");
+          dispatch(emptyCart());
           router.push("/payment/success");
         }
       },
