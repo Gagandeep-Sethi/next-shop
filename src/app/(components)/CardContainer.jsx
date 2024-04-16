@@ -18,4 +18,3 @@ const CardContainer = ({ data }) => {
 };
 
 export default CardContainer;
-//grid lg:grid-flow-col lg:col-span-3 justify-evenly
