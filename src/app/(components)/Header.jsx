@@ -101,11 +101,11 @@ const Header = () => {
             onClick={() => {
               document.getElementById("my-drawer-3")?.click();
             }}
-            href="/user/login"
+            href={user ? "/user" : "/user/login"}
           >
             <h1 className="flex items-center">
               <CiUser className="m-2 w-6 h-6 text-black" />
-              SignUp/SignIn
+              {user ? "Account" : "SignUp/SignIn"}
             </h1>
           </Link>
           <li aria-label="close sidebar">
