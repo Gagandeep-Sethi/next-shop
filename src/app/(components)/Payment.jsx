@@ -5,7 +5,6 @@ import Loading from "@/app/loading";
 import { useSelector } from "react-redux";
 
 const PaymentButton = () => {
-  //const { userData } = useSession();
   const user = useSelector((store) => store.user.user);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);

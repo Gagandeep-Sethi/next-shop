@@ -30,7 +30,9 @@ export async function POST(req) {
   }
 
   const order = await Order.findById(_id);
+  console.log("b paid");
   order.paid = true;
+  console.log("after paid");
   order.save();
 
   return NextResponse.json(
