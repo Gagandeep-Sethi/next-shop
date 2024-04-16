@@ -3,7 +3,7 @@ import User from "@/models/userModel";
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 import { NextResponse } from "next/server";
-import jwt from "jsonwebtoken"; // Add this line to import jwt
+import jwt from "jsonwebtoken";
 
 connect();
 
@@ -31,6 +31,7 @@ const authOptions = {
 
         const existingUser = await User.findOne({ googleId: id });
         if (existingUser) {
+          console.log("user found");
           const token = createToken(existingUser._id);
           const response = NextResponse.json(
             { message: "logged in" },
@@ -38,7 +39,6 @@ const authOptions = {
           );
           response.cookies.set("token", token, {
             httpOnly: true,
-            secure: true,
           });
           response.cookies.set(
             "user",
@@ -46,7 +46,7 @@ const authOptions = {
               username: existingUser.username,
               email: existingUser.email,
             }),
-            { httpOnly: false, secure: true }
+            { httpOnly: false }
           );
           return response;
         }
@@ -58,7 +58,9 @@ const authOptions = {
           googleToken: access_token,
           verified: true,
         });
+        console.log(newUser, "user");
         const token = createToken(newUser._id);
+        console.log(token, "token");
         const response = NextResponse.json(
           { message: "user saved" },
           { status: 200 }
@@ -82,3 +84,5 @@ const authOptions = {
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
+
+//expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),

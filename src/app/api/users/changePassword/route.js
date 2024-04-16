@@ -25,12 +25,22 @@ export async function POST(req) {
     }
     //decoding key value from jwt oken recieved
     const decoded = jwt.verify(idCookies, process.env.JWT_SECRET);
-    const id = decoded.token;
+
+    const id = decoded._id;
+
     const user = await User.findById(id);
 
     if (!user) {
       return NextResponse.json(
         { message: "User not found please try again" },
+        { status: 400 }
+      );
+    }
+
+    const match = await bcrypt.compare(oldPassword, user.password);
+    if (!match) {
+      return NextResponse.json(
+        { message: "Old password doesn't match" },
         { status: 400 }
       );
     }

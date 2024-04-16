@@ -5,13 +5,17 @@ export const useChangePassword = () => {
   const [isLoading, setIsLoading] = useState(null);
 
   const changePassword = async (formValue) => {
-    const { oldPassword, newPassword, conformPassword } = formValue;
+    const { oldPassword, newPassword, confirmPassword } = formValue;
+    console.log(oldPassword, "oldPassword");
+    console.log(newPassword, "oldPassword");
+    console.log(confirm, "oldPassword");
+
     setIsLoading(true);
     setError(null);
     const response = await fetch(`/api/users/changePassword`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ oldPassword, newPassword, conformPassword }),
+      body: JSON.stringify({ oldPassword, newPassword, confirmPassword }),
     });
     const json = await response.json();
 
