@@ -5,8 +5,10 @@ import { useSignup } from "../(hooks)/useSignup";
 import { signIn, useSession } from "next-auth/react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
+
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
+
   const [formValue, setFormValue] = useState({
     username: "",
     password: "",

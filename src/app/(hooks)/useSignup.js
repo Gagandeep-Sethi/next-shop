@@ -1,8 +1,5 @@
 "use client";
 import { useState } from "react";
-//import { useDispatch } from "react-redux";
-//import { addUser } from "../store/userSlice";
-//import { Fetch_Uri } from "../constant";
 
 export const useSignup = () => {
   const [error, setError] = useState(null);
@@ -35,8 +32,6 @@ export const useSignup = () => {
     if (response.ok) {
       console.log(response);
       setError(json.message);
-      // localStorage.setItem("user", JSON.stringify(json));
-      // dispatch(addUser(json));
       setIsLoading(false);
     }
   };

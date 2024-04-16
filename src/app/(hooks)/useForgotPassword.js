@@ -1,13 +1,9 @@
 import { useState } from "react";
-//import { useDispatch } from "react-redux";
-//import { addUser } from "../store/userSlice";
-//import { Fetch_Uri } from "../constant";
 
 export const useForgotPassword = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
 
-  //const dispatch = useDispatch();
   const forgotPassword = async (formValue) => {
     const { email } = formValue;
     setIsLoading(true);
@@ -27,8 +23,7 @@ export const useForgotPassword = () => {
     if (response.ok) {
       console.log(response);
       setError(json.message);
-      //localStorage.setItem("user", JSON.stringify(json)); //to store item in local storage of browser by name user
-      //dispatch(addUser(json));
+
       setIsLoading(false);
     }
   };
