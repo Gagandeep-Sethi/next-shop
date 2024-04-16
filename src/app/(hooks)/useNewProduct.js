@@ -1,10 +1,12 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export const useNewProduct = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
+  const router = useRouter();
 
   const addProduct = async (formValue, _id) => {
     const {
@@ -47,10 +49,12 @@ export const useNewProduct = () => {
       }
       if (response.ok) {
         setIsLoading(false);
-        console.log("product added");
+
+        router.push(`/product/${json?.product?._id}`);
       }
     } catch (error) {
-      setError("Error updating product. Please try again.");
+      setError(error.message);
+      console.log(error);
       setIsLoading(false);
     }
   };

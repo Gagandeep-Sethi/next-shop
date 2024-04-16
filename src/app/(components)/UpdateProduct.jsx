@@ -249,7 +249,6 @@ const UpdateProduct = ({ productId }) => {
               accept="image/*"
               multiple
               onChange={handleChange}
-              required
             />
           </div>
           {/* Display uploaded images with option to remove */}
