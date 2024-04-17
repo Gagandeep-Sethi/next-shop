@@ -25,7 +25,7 @@ export async function POST(req) {
 
     const user = await User.findOne({ email: email.toLowerCase() });
     if (!user) {
-      throw new Error("Email not found");
+      throw new Error("Incorrect email or password !!");
     }
     if (!user.verified) {
       throw new Error("Verify your Email !!");
@@ -33,7 +33,7 @@ export async function POST(req) {
 
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
-      throw new Error("Incorrect password");
+      throw new Error("Incorrect email or password !!");
     }
 
     const token = createToken(user._id);
