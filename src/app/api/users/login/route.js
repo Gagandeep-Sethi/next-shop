@@ -37,7 +37,6 @@ export async function POST(req) {
     }
 
     const token = createToken(user._id);
-    console.log(user);
 
     const response = NextResponse.json(
       { message: "user saved" },

@@ -5,12 +5,29 @@ import { IoSearchOutline } from "react-icons/io5";
 import { CiShoppingCart, CiUser } from "react-icons/ci";
 import Link from "next/link";
 import NavLinks from "./NavLinks";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { addUser } from "@/provider/redux/userSlice";
 
 const Header = () => {
   const user = useSelector((store) => store?.user?.user);
   const cart = useSelector((store) => store?.cart.cart);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    const parseCookies = () => {
+      return document.cookie.split(";").reduce((cookies, cookie) => {
+        const [name, value] = cookie.trim().split("=");
+        return { ...cookies, [name]: value };
+      }, {});
+    };
+    const { user } = parseCookies();
+    const decodedUser = decodeURIComponent(user || "");
+    const presentUser = JSON.parse(decodedUser || "{}");
+    if (presentUser) {
+      dispatch(addUser(presentUser));
+    }
+  }, [dispatch]);
   return (
     <div className="drawer-end ">
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
