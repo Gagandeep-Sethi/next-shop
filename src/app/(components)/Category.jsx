@@ -17,10 +17,7 @@ const Category = () => {
     if (category) {
       setProduct(category);
     }
-    if (!category) {
-      getData();
-    }
-    const getData = async () => {
+    async function getData() {
       try {
         const response = await fetch(`/api/product/category/${type}`);
         const json = await response.json();
@@ -31,7 +28,10 @@ const Category = () => {
       } catch (error) {
         console.log(error);
       }
-    };
+    }
+    if (!category) {
+      getData();
+    }
   }, [category, type]);
   if (product.length === 0) return <Skeleton />;
   console.log(product, "product");
