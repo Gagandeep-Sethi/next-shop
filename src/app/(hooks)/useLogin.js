@@ -1,10 +1,22 @@
+import { addUser } from "@/provider/redux/userSlice";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 export const useLogin = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const router = useRouter();
+
+  const dispatch = useDispatch();
+
+  const parseCookies = () => {
+    return document.cookie.split(";").reduce((cookies, cookie) => {
+      const [name, value] = cookie.trim().split("=");
+      return { ...cookies, [name]: value };
+    }, {});
+  };
+  // Get user details from the cookie
 
   const login = async (formValue) => {
     const { email, password } = formValue;
@@ -23,6 +35,14 @@ export const useLogin = () => {
     }
     if (response.ok) {
       setIsLoading(false);
+
+      const { user } = parseCookies();
+      const decodedUser = decodeURIComponent(user || "");
+      const presentUser = JSON.parse(decodedUser || "{}");
+      if (presentUser) {
+        dispatch(addUser(presentUser));
+      }
+
       router.push("/user");
     }
   };

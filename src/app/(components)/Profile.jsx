@@ -43,7 +43,7 @@ const Profile = () => {
           " md:block w-screen  md:w-1/4   p-4 md:border-r-2 md:border-gray-200"
         }
       >
-        {user && (
+        {user ? (
           <div className="">
             <p className="text-lg font-bold text-center pt-2">
               Hey {user?.username} !
@@ -90,7 +90,7 @@ const Profile = () => {
               </dialog>
             </div>
           </div>
-        )}
+        ) : null}
 
         <div
           onClick={() => handleOptionClick("myOrders")}
