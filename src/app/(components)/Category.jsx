@@ -4,11 +4,14 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import CardContainer from "./CardContainer";
 import Skeleton from "./Skeleton";
+import { TbRulerMeasure } from "react-icons/tb";
+import { FcMoneyTransfer } from "react-icons/fc";
+import { GiStarsStack } from "react-icons/gi";
 
 const Category = () => {
   const [product, setProduct] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
-  const [filter, setfilter] = useState({
+  const [filter, setFilter] = useState({
     size: "all",
     price: "all",
     rating: 0,
@@ -21,21 +24,26 @@ const Category = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "price") {
-      setFormValue((prevFormValue) => ({
-        ...prevFormValue,
-        [name]: value,
-      }));
-    } else if (name === "size") {
-      setFormValue((prevFormValue) => ({
-        ...prevFormValue,
-        [name]: value,
-      }));
-    } else if (name === "rating") {
-      setFormValue((prevFormValue) => ({
-        ...prevFormValue,
+      return setFilter((prevFilterValue) => ({
+        ...prevFilterValue,
         [name]: value,
       }));
     }
+    // } else if (name === "size") {
+    //   setFilter((prevFilterValue) => ({
+    //     ...prevFilterValue,
+    //     [name]: value,
+    //   }));
+    // } else if (name === "rating") {
+    //   setFilter((prevFilterValue) => ({
+    //     ...prevFilterValue,
+    //     [name]: value,
+    //   }));
+    // }
+    return setFilter((prevFilterValue) => ({
+      ...prevFilterValue,
+      [name]: value,
+    }));
   };
 
   useEffect(() => {
@@ -98,21 +106,27 @@ const Category = () => {
     setProduct(filteredProducts);
   }, [filter, allProducts]);
 
-  if (product.length === 0) return <Skeleton />;
+  if (allProducts.length === 0) return <Skeleton />;
   console.log(product, "product");
   return (
-    <div>
-      <div className="flex w-full">
-        <form className="flex w-full">
+    <div className="md:flex w-screen">
+      <div className="  md:w-2/12">
+        <p className="my-auto text-xl font-medium text-center mt-10">
+          Filters:
+        </p>
+        <form className=" w-full    space-y-8 my-8">
           <div>
-            <label htmlFor="size" className="text-sm font-medium">
-              Size
-            </label>
+            <div className="flex w-full justify-center items-center space-x-1">
+              <TbRulerMeasure />
+              <p htmlFor="size" className="text-lg font-medium text-center">
+                Size
+              </p>
+            </div>
             <select
               name="size"
               value={filter.size}
               onChange={handleChange}
-              className="select w-full max-w-xs"
+              className="select w-full "
             >
               <option value="M">M</option>
               <option value="S">S</option>
@@ -122,14 +136,17 @@ const Category = () => {
             </select>
           </div>
           <div>
-            <label htmlFor="price" className="text-sm font-medium">
-              Price
-            </label>
+            <div className="flex w-full justify-center items-center space-x-1">
+              <FcMoneyTransfer />
+              <p htmlFor="price" className="text-lg  text-center font-medium">
+                Price
+              </p>
+            </div>
             <select
               name="price"
               value={filter.price}
               onChange={handleChange}
-              className="select w-full max-w-xs"
+              className="select w-full "
             >
               <option value="highToLow">High to Low</option>
               <option value="lowToHigh">Low to High</option>
@@ -137,6 +154,12 @@ const Category = () => {
             </select>
           </div>
           <div>
+            <div className="flex w-full  justify-center items-center space-x-1">
+              <GiStarsStack />
+              <p htmlFor="rating" className="text-lg font-medium text-center">
+                Rating
+              </p>
+            </div>
             <input
               type="range"
               name="rating"
@@ -158,10 +181,16 @@ const Category = () => {
           </div>
         </form>
       </div>
-      <h1 className="text-center text-3xl mt-6 underline">
-        {type.toUpperCase()}S
-      </h1>
-      <CardContainer data={product} />;
+      {allProducts && product.length === 0 ? (
+        <p>no products match your filters</p>
+      ) : (
+        <div className="md:w-10/12">
+          <h1 className="text-center text-3xl my-6 underline">
+            {type.toUpperCase()}S
+          </h1>
+          <CardContainer data={product} />;
+        </div>
+      )}
     </div>
   );
 };
