@@ -8,12 +8,11 @@ const Search = () => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [searched, setSearched] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
   const searchData = useSelector((store) => store?.search);
   const dispatch = useDispatch();
 
-  console.log(results, "results");
-  console.log(query, "query");
-
+  //to get search results
   useEffect(() => {
     const timer = setTimeout(() => {
       if (searchData[query]) {
@@ -26,47 +25,82 @@ const Search = () => {
         getSearchResult();
       }
     }, 200);
+    async function getSearchResult() {
+      try {
+        const response = await fetch(`/api/product/search?query=${query}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch products");
+        }
+        const products = await response.json();
+
+        dispatch(searchCache({ [query]: products?.products }));
+
+        setSearched(true);
+      } catch (error) {}
+    }
 
     return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, searchData]);
+  }, [query, searchData, dispatch]);
 
-  const getSearchResult = async () => {
-    try {
-      const response = await fetch(`/api/product/search?query=${query}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch products");
+  // to handle search suggestions
+  useEffect(() => {
+    if (query.trim() !== "") {
+      fetchSuggestions(query);
+    } else {
+      setSuggestions([]);
+    }
+    async function fetchSuggestions(searchTerm) {
+      try {
+        const response = await fetch(
+          `/api/product/suggestions?query=${searchTerm}`
+        );
+        const json = await response.json();
+        setSuggestions(json.suggestions);
+      } catch (error) {
+        console.error("Error fetching suggestions:", error);
       }
-      const products = await response.json();
-
-      dispatch(searchCache({ [query]: products?.products }));
-
-      setSearched(true);
-    } catch (error) {}
-  };
-  console.log(results, "rsults");
+    }
+  }, [query]);
 
   return (
     <div className="flex flex-col items-center  min-h-screen bg-gray-100 pt-12">
       <p className="text-3xl  font-bold mb-6">Search</p>
-      <div className="flex items-center border border-gray-300 rounded-lg p-2">
-        <input
-          type="text"
-          placeholder="Search for something..."
-          className="flex-1 outline-none bg-gray-100"
-          value={query}
-          onChange={(e) => {
-            setSearched(false);
-            setQuery(e.target.value);
-          }}
-        />
-        {/* <button
+      <div>
+        <div className="flex items-center border border-gray-300 rounded-lg p-2">
+          <input
+            type="text"
+            placeholder="Search for something..."
+            className="flex-1 outline-none bg-gray-100"
+            value={query}
+            onChange={(e) => {
+              setSearched(false);
+              setQuery(e.target.value);
+            }}
+          />
+          {/* <button
           className="ml-2 bg-blue-500 text-white px-4 py-2 rounded"
           onClick={handleSearch}
         >
           Search
         </button> */}
+        </div>
+        <div>
+          {suggestions.length > 0 && (
+            <ul className=" bg-white border border-gray-200 rounded-xl p-1 shadow-md mt-2 w-full">
+              {suggestions.map((suggestion, index) => (
+                <li
+                  key={index}
+                  className="px-4 py-2 cursor-pointer rounded-xl hover:bg-yellow-100"
+                  onClick={() => setQuery(suggestion)}
+                >
+                  {suggestion}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
+
       {searched && results.length === 0 && query.length > 0 && (
         <p className="text-red-500 mt-4">No results found for {query} </p>
       )}
