@@ -23,23 +23,6 @@ const Category = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "price") {
-      return setFilter((prevFilterValue) => ({
-        ...prevFilterValue,
-        [name]: value,
-      }));
-    }
-    // } else if (name === "size") {
-    //   setFilter((prevFilterValue) => ({
-    //     ...prevFilterValue,
-    //     [name]: value,
-    //   }));
-    // } else if (name === "rating") {
-    //   setFilter((prevFilterValue) => ({
-    //     ...prevFilterValue,
-    //     [name]: value,
-    //   }));
-    // }
     return setFilter((prevFilterValue) => ({
       ...prevFilterValue,
       [name]: value,
@@ -69,7 +52,7 @@ const Category = () => {
 
   // Handle filters
   useEffect(() => {
-    let filteredProducts = allProducts;
+    let filteredProducts = [...allProducts];
 
     // Filter by size
     if (filter.size !== "all") {
@@ -92,14 +75,12 @@ const Category = () => {
           (a.displayPrice || a.originalPrice) -
           (b.displayPrice || b.originalPrice)
       );
-      console.log(filteredProducts, "price");
     } else if (filter.price === "highToLow") {
       filteredProducts = filteredProducts.sort(
         (a, b) =>
           (b.displayPrice || b.originalPrice) -
           (a.displayPrice || a.originalPrice)
       );
-      console.log(filteredProducts, "price");
     }
 
     // Update the product state with the filtered and sorted products
