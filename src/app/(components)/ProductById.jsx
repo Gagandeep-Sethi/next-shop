@@ -21,78 +21,71 @@ const ProductById = () => {
     setPopupMessage("Item added to cart");
     setShowPopup(true);
   };
-  const getData = async () => {
-    try {
-      const data = await fetch(`/api/product/${id}`);
 
-      if (!data.ok) {
-        throw new Error("Failed to fetch product");
-      }
-
-      const json = await data.json();
-      console.log(json?.product);
-      setProduct(json?.product);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   useEffect(() => {
     getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    async function getData() {
+      try {
+        const data = await fetch(`/api/product/${id}`);
+
+        if (!data.ok) {
+          throw new Error("Failed to fetch product");
+        }
+
+        const json = await data.json();
+        console.log(json?.product);
+        setProduct(json?.product);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [id]);
   if (!product) return <Skeleton />;
   return (
     <div>
-      <div className="hero md:justify-start w-full md:pl-6  items-start    bg-white">
-        <div className="hero-content flex-col lg:flex-row ">
-          {/* <Corousal
-            className="max-w-sm rounded-lg shadow-2xl"
-            autoSlide={true}
-            autoSlideInterval={4000}
-          >
-            {product?.images.map((s) => (
-              <Image
-                key={s}
-                src={`https://res.cloudinary.com/dyja4tbmu/${s}.jpg`}
-                className="w-full h-full object-cover object-center"
-                sizes="100vw "
-                fill
-                alt=""
-              />
-            ))}
-          </Corousal> */}
-          <TestCorousal
-            className="max-w-lg rounded-lg shadow-2xl "
-            images={product?.images}
-          />
-          <div className="md:pl-20">
-            <h1 className="text-5xl font-bold">{product?.name}</h1>
-            <p className="pt-3 md:pt-6">{product?.description}</p>
-            {product?.displayPrice ? (
-              <div className="flex py-3 md:py-6 ">
-                <del className=" text-gray-400 ">₹{product?.originalPrice}</del>
-                <p className="text-green-600 ml-2">₹{product?.displayPrice}</p>
-              </div>
-            ) : (
-              <p className="py-3 md:py-6">₹{product?.originalPrice}</p>
-            )}
+      <div className="w-screen items-center md:flex whitespace-normal break-words">
+        <div className="md:w-5/12 md:ml-14 ">
+          <TestCorousal className="" images={product?.images} />
+        </div>
+        <div className="md:w-6/12 px-3  md:ml-14 ">
+          <h1 className="text-5xl font-bold py-3 text-center ">
+            {product?.name}
+          </h1>
+          <p className="pt-3 md:pt-6 py-3 text-center">
+            {product?.description}
+          </p>
+          {product?.displayPrice ? (
+            <div className="flex py-3 md:py-6 justify-center ">
+              <del className=" text-gray-400 ">₹{product?.originalPrice}</del>
+              <p className="text-green-600 ml-2">₹{product?.displayPrice}</p>
+            </div>
+          ) : (
+            <p className="py-3 md:py-6">₹{product?.originalPrice}</p>
+          )}
+          <div className="flex  justify-center">
             <button
               onClick={handleCart}
-              className="btn bg-black hover:bg-primary text-white "
+              className="btn    bg-black hover:bg-primary text-white "
             >
               Add to Cart
             </button>
-            <div className="mt-10">
-              <Link href={`/product/updateproduct/${id}`}>
-                <button className="btn bg-red-700 hover:bg-primary text-white ">
-                  Update Product
-                </button>
-              </Link>
-            </div>
           </div>
+
           {showPopup && (
-            <PopUpMessage message={popupMessage} setShowPopup={setShowPopup} />
+            <PopUpMessage
+              className="w-96"
+              message={popupMessage}
+              setShowPopup={setShowPopup}
+            />
           )}
+
+          <div className="mt-10 flex justify-center">
+            <Link href={`/product/updateproduct/${id}`}>
+              <button className="btn bg-red-700 hover:bg-primary text-white ">
+                Update Product
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

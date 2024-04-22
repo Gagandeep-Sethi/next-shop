@@ -90,7 +90,7 @@ const Category = () => {
   if (allProducts.length === 0) return <Skeleton />;
   console.log(product, "product");
   return (
-    <div className="md:flex w-screen">
+    <div className="md:flex w-screen min-h-svh">
       <div className="  md:w-2/12">
         <p className="my-auto text-xl font-medium text-center mt-10">
           Filters:
@@ -165,11 +165,11 @@ const Category = () => {
       {allProducts && product.length === 0 ? (
         <p>no products match your filters</p>
       ) : (
-        <div className="md:w-10/12">
-          <h1 className="text-center text-3xl my-6 underline">
-            {type.toUpperCase()}S
+        <div className="md:w-10/12 mb-10">
+          <h1 className="text-center text-3xl my-6 underline uppercase">
+            {type}s
           </h1>
-          <CardContainer data={product} />;
+          <CardContainer data={product} />
         </div>
       )}
     </div>

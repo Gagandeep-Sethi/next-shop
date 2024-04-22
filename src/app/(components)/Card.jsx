@@ -29,8 +29,8 @@ const Card = ({ data }) => {
         </figure>
       </Link>
 
-      <div className="card-body ">
-        <h2 className="card-title text-gray-800">{data?.name}</h2>
+      <div className="card-body truncate">
+        <h2 className="card-title text-gray-800 ">{data?.name}</h2>
         <p className="text-gray-600">
           ₹{data?.displayPrice || data?.originalPrice}
         </p>
