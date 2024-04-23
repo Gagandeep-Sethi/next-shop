@@ -2,14 +2,14 @@
 import React, { useEffect } from "react";
 import { FiCheckCircle } from "react-icons/fi";
 
-const PopUpMessage = ({ message, setShowPopup }) => {
+const PopUpMessage = ({ message, setShowPopup, timeout = 2000 }) => {
   useEffect(() => {
-    const timeout = setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       setShowPopup(false);
-    }, 2000);
+    }, timeout);
 
-    return () => clearTimeout(timeout);
-  }, [setShowPopup]);
+    return () => clearTimeout(timeoutId);
+  }, [setShowPopup, timeout]);
 
   return (
     <div role="alert" className="alert alert-success">
