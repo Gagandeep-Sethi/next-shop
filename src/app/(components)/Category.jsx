@@ -62,11 +62,11 @@ const Category = () => {
     }
 
     // Filter by rating
-    // if (filter.rating !== 0) {
-    //   filteredProducts = filteredProducts.filter(
-    //     (product) => product.rating >= filter.rating
-    //   );
-    // }
+    if (filter.rating !== 0) {
+      filteredProducts = filteredProducts.filter(
+        (product) => (product?.avgRating ?? 0) >= filter.rating
+      );
+    }
 
     // Sort by price
     if (filter.price === "lowToHigh") {
