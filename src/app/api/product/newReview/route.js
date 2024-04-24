@@ -54,6 +54,7 @@ export async function POST(req) {
         productId,
         //images: imageIds,
       });
+      await product.updateAvgRating();
       console.log("review done");
       return NextResponse.json(
         { message: "review added without images" },
@@ -99,6 +100,8 @@ export async function POST(req) {
       productId,
       images: imageIds,
     });
+    await product.updateAvgRating();
+    console.log(product.avgRating, "avg rating ");
 
     // Return success response
     return NextResponse.json(

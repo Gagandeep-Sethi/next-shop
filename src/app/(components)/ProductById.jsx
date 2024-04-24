@@ -3,9 +3,11 @@ import React, { useEffect, useState } from "react";
 import TestCorousal from "./TestCorousal";
 import { addToCart } from "@/provider/redux/cartSlice";
 import PopUpMessage from "./PopUpMessage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Skeleton from "./Skeleton";
 import Link from "next/link";
+import Review from "./Review";
+import RevewList from "./RevewList";
 
 const ProductById = () => {
   const params = useParams();
@@ -13,6 +15,7 @@ const ProductById = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
   const dispatch = useDispatch();
+  const user = useSelector((store) => store?.user?.user);
 
   const { id } = params;
   console.log(id);
@@ -48,21 +51,21 @@ const ProductById = () => {
           <TestCorousal className="" images={product?.images} />
         </div>
         <div className="md:w-6/12 px-3  md:ml-14 ">
-          <h1 className="text-5xl font-bold py-3 text-center ">
+          <h1 className="text-5xl font-bold py-3 text-center md:text-left ">
             {product?.name}
           </h1>
-          <p className="pt-3 md:pt-6 py-3 text-center">
+          <p className="pt-3 md:pt-6 py-3 text-center md:text-left">
             {product?.description}
           </p>
           {product?.displayPrice ? (
-            <div className="flex py-3 md:py-6 justify-center ">
+            <div className="flex py-3 md:py-6 justify-center md:justify-start ">
               <del className=" text-gray-400 ">₹{product?.originalPrice}</del>
               <p className="text-green-600 ml-2">₹{product?.displayPrice}</p>
             </div>
           ) : (
             <p className="py-3 md:py-6">₹{product?.originalPrice}</p>
           )}
-          <div className="flex  justify-center">
+          <div className="flex  justify-center md:justify-start">
             <button
               onClick={handleCart}
               className="btn    bg-black hover:bg-primary text-white "
@@ -79,7 +82,7 @@ const ProductById = () => {
             />
           )}
 
-          <div className="mt-10 flex justify-center">
+          <div className="mt-10 flex justify-center md:justify-start">
             <Link href={`/product/updateproduct/${id}`}>
               <button className="btn bg-red-700 hover:bg-primary text-white ">
                 Update Product
@@ -87,6 +90,12 @@ const ProductById = () => {
             </Link>
           </div>
         </div>
+      </div>
+      <div>
+        <RevewList id={id} />
+      </div>
+      <div className="flex justify-center py-6">
+        <Review email={user?.email} id={id} />
       </div>
     </div>
   );

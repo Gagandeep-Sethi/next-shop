@@ -6,6 +6,9 @@ import { MdOutlineVerified } from "react-icons/md";
 
 const RevewList = ({ id }) => {
   const [reviews, setReviews] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   useEffect(() => {
     getData();
     async function getData() {
@@ -17,23 +20,30 @@ const RevewList = ({ id }) => {
         }
 
         const json = await data.json();
-        console.log(json?.reviews);
         setReviews(json?.reviews);
       } catch (error) {
         console.log(error);
       }
     }
   }, [id]);
-  if (reviews.length === 0) return <p>Not reviews yet</p>;
-  console.log(reviews, "reviews");
+
+  if (reviews.length === 0) return <p>No reviews yet</p>;
+
   const averageRating = (
     reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length
   ).toFixed(2);
   const filledStars = Math.floor(averageRating);
-
-  // Calculate the remaining fraction as a percentage of a star
   const remaining = averageRating - filledStars;
   const partialStar = remaining >= 0.25 ? 0.5 : 0;
+
+  const openModal = (image) => {
+    setSelectedImage(image);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div>
@@ -50,27 +60,30 @@ const RevewList = ({ id }) => {
         <span className="ml-1">({averageRating} out of 5)</span>
       </p>
       <div className="bg-gray-200 rounded-xl mx-4 p-4">
-        {reviews.map((review) => {
-          return (
-            <div key={review._id} className="space-y-1 py-2">
-              <p className="flex items-center gap-1">
-                <FaUserAlt className="w-6 h-4" />
-                {review?.username}
-                <span className="flex items-center font-extralight text-sm bg-green-300 rounded-xl px-1">
-                  <MdOutlineVerified /> verified buyer{" "}
-                </span>
-              </p>
-              <div className="flex">
-                {Array.from({ length: review.rating }, (_, index) => (
-                  <FaStar key={index} className="text-orange-400" />
-                ))}
-              </div>
-              <p>{review?.comments}</p>
-              <div>
-                {review.images.length > 0 && (
-                  <div className="flex flex-wrap">
-                    {review.images.map((image, index) => (
-                      <div key={index} className="relative mr-4 mb-4">
+        {reviews.map((review) => (
+          <div key={review._id} className="space-y-1 py-2">
+            <p className="flex items-center gap-1">
+              <FaUserAlt className="w-6 h-4" />
+              {review?.username}
+              <span className="flex items-center font-extralight text-sm bg-green-300 rounded-xl px-1">
+                <MdOutlineVerified /> verified buyer{" "}
+              </span>
+            </p>
+            <div className="flex">
+              {Array.from({ length: review.rating }, (_, index) => (
+                <FaStar key={index} className="text-orange-400" />
+              ))}
+            </div>
+            <p>{review?.comments}</p>
+            <div>
+              {review.images.length > 0 && (
+                <div className="flex flex-wrap">
+                  {review.images.map((image, index) => (
+                    <div key={index}>
+                      <div
+                        className="relative mr-4 mb-4 cursor-pointer"
+                        onClick={() => openModal(image)}
+                      >
                         <Image
                           src={`http://res.cloudinary.com/dyja4tbmu/image/upload/${image}.png`}
                           alt=""
@@ -79,13 +92,29 @@ const RevewList = ({ id }) => {
                           height="100"
                         />
                       </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+                      {isModalOpen && selectedImage === image && (
+                        <dialog className="modal" open>
+                          <div className="modal-box ">
+                            <Image
+                              src={`http://res.cloudinary.com/dyja4tbmu/image/upload/${image}.png`}
+                              alt=""
+                              className="h-[300px] md:h-[400px] w-[500px] md:w-[600px] "
+                              width="800"
+                              height="800"
+                            />
+                          </div>
+                          <form method="dialog" className="modal-backdrop">
+                            <button onClick={closeModal}>close</button>
+                          </form>
+                        </dialog>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
     </div>
   );
