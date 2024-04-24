@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 import daisyui from "daisyui";
+
 module.exports = {
   darkMode: ["class"],
   content: [
@@ -12,6 +13,11 @@ module.exports = {
   daisyui: {
     themes: ["light"],
   },
-
+  theme: {
+    truncate: {
+      ellipsis: "...",
+      // Add more truncate settings if needed
+    },
+  },
   plugins: [daisyui],
 };

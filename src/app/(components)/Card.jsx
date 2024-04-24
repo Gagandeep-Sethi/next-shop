@@ -29,11 +29,17 @@ const Card = ({ data }) => {
         </figure>
       </Link>
 
-      <div className="card-body truncate">
-        <h2 className="card-title text-gray-800 ">{data?.name}</h2>
-        <p className="text-gray-600">
-          ₹{data?.displayPrice || data?.originalPrice}
-        </p>
+      <div className="card-body ">
+        <h2 className="card-title text-gray-800  truncate ">{data?.name}</h2>
+        {data?.displayPrice ? (
+          <div className="flex pt-3 ">
+            <del className=" text-gray-400 ">₹{data?.originalPrice}</del>
+            <p className="text-green-600 ml-2">₹{data?.displayPrice}</p>
+          </div>
+        ) : (
+          <p className="pt-3">₹{data?.originalPrice}</p>
+        )}
+
         <div className="card-actions justify-end">
           <button
             onClick={handleCart}
