@@ -11,14 +11,21 @@ const orderSchema = new mongoose.Schema({
       },
       quantity: { type: Number, required: true },
       price: { type: Number, required: true },
-      deliveryDate: { type: Date }, // New field to store delivery date of each product
-      replaceEligible: { type: Boolean, default: true }, // New field to track replacement eligibility
+      deliveryDate: { type: Date },
+      replaceEligible: { type: Boolean, default: true },
     },
   ],
-  paid: {
-    type: Boolean,
-    default: false,
+  address: {
+    houseNo: { type: String, required: true },
+    streetNo: { type: String, required: true },
+    locality: { type: String, required: true },
+    landmark: { type: String, required: true },
+    city: { type: String, required: true },
+    state: { type: String, required: true },
+    pincode: { type: String, required: true },
+    contactNo: { type: String, required: true },
   },
+  paid: { type: Boolean, default: false },
   totalAmount: { type: Number },
   status: {
     type: String,
@@ -44,12 +51,8 @@ const orderSchema = new mongoose.Schema({
   },
 });
 
-// Define pre-save hook to calculate totalAmount it will be triggered when you hit save() or create()
-
 // Define pre-save hook to calculate totalAmount and set delivery date
 orderSchema.pre("save", async function (next) {
-  //save is middleware function mongo db and pre means before and combined with save
-
   let totalAmount = 0;
   this.products.forEach((product) => {
     totalAmount += product.quantity * product.price;
@@ -66,6 +69,7 @@ orderSchema.pre("save", async function (next) {
   this.totalAmount = totalAmount;
   next();
 });
+
 const Order = mongoose.models.Order || mongoose.model("Order", orderSchema);
 
 export default Order;
