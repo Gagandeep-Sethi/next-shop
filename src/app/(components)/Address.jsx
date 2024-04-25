@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
-import { useAddress } from "../(hooks)/useAddress";
+import { useDispatch } from "react-redux";
+import { addAddress } from "@/provider/redux/orderSlice";
+import { useRouter } from "next/navigation";
 
 const Address = () => {
   const [formValue, setFormValue] = useState({
@@ -10,13 +12,26 @@ const Address = () => {
     landmark: "",
     city: "",
     state: "",
+    pincode: "",
+    contactNo: "",
   });
-  const { addAddress, isLoading, error } = useAddress();
+  const isFormFilled =
+    formValue.houseNo &&
+    formValue.streetNo &&
+    formValue.locality &&
+    formValue.landmark &&
+    formValue.city &&
+    formValue.state &&
+    formValue.pincode &&
+    formValue.contactNo;
+
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formValue.images);
-    await addAddress(formValue);
+    dispatch(addAddress(formValue));
+    router.push("/order/pay");
   };
 
   const handleChange = (e) => {
@@ -48,7 +63,7 @@ const Address = () => {
           </div>
           <div className="flex flex-col">
             <label htmlFor="streetNo" className="text-sm font-medium">
-              Street N
+              Street Number
             </label>
             <input
               type="text"
@@ -101,7 +116,6 @@ const Address = () => {
               required
             />
           </div>
-
           <div className="flex flex-col">
             <label htmlFor="state" className="text-sm font-medium">
               State
@@ -116,18 +130,46 @@ const Address = () => {
               required
             />
           </div>
+          <div className="flex flex-col">
+            <label htmlFor="pincode" className="text-sm font-medium">
+              Pincode
+            </label>
+            <input
+              type="number"
+              name="pincode"
+              className="input"
+              placeholder="Pincode"
+              value={formValue.pincode}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="contactNo" className="text-sm font-medium">
+              Contact number
+            </label>
+            <input
+              type="number"
+              name="contactNo"
+              className="input"
+              placeholder="Contact Number"
+              value={formValue.contactNo}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
           <div className="flex justify-center">
             <button
-              disabled={isLoading}
+              onClick={handleSubmit}
               type="submit"
               className="btn bg-blue-500 text-white hover:bg-blue-600"
+              disabled={!isFormFilled}
             >
               Add Address
             </button>
           </div>
         </form>
-        {error && <div className="text-red-600 text-lg">{error} !!</div>}
       </div>
     </div>
   );
