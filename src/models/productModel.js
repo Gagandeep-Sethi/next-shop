@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Review from "./reviewModal";
 
 const productSchema = new mongoose.Schema(
   {
@@ -40,6 +41,10 @@ const productSchema = new mongoose.Schema(
         message: "Display price must be a non-negative number",
       },
     },
+    avgRating: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true, // Automatically add createdAt and updatedAt fields
@@ -73,6 +78,18 @@ productSchema.statics.search = async function (query) {
 
   return products;
 };
+//to update avgRating
+productSchema.methods.updateAvgRating = async function () {
+  //const Review = mongoose.model("Review");
+  const reviews = await Review.find({ productId: this._id });
+  const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
+  this.avgRating = reviews.length > 0 ? totalRating / reviews.length : 0;
+  this.avgRating = parseFloat(this.avgRating.toFixed(2));
+  console.log("update function called");
+  console.log(this.avgRating, "avgRating");
+  await this.save(); // Save the updated avgRating
+};
+
 const Product =
   mongoose.models.Product || mongoose.model("Product", productSchema);
 
