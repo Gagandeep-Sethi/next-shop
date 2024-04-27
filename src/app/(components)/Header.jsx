@@ -97,7 +97,7 @@ const Header = () => {
             onClick={() => {
               document.getElementById("my-drawer-3")?.click();
             }}
-            href={user ? "/user" : "/user/login"}
+            href="/user"
           >
             <h1 className="flex items-center">
               <CiUser className="m-2 w-6 h-6 text-black" />
