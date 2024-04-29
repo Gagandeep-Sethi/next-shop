@@ -1,8 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import Orders from "./Orders";
+import Orders from "./UserOrders";
 import Rating from "./Rating";
-
 import TrackingOrders from "./TrackingOrders";
 import { MdRateReview } from "react-icons/md";
 import { FaBoxOpen } from "react-icons/fa";
@@ -12,9 +11,6 @@ import ChangePassword from "./ChangePassword";
 import { FaChevronLeft } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import NewProduct from "./NewProduct";
-
-import { HiTemplate } from "react-icons/hi";
 
 const Profile = () => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -50,9 +46,7 @@ const Profile = () => {
             </p>
             <p className="  text-center pt-2">{user?.email}</p>
             <p className="text-lg  text-center pt-2">{user?.phoneNumber}</p>
-            <div className="flex justify-center">
-              {/* button to logout */}
-              {/* Open the modal using document.getElementById('ID').showModal() method */}
+            <div className="flex justify-center mt-4">
               <button
                 className="btn btn-primary text-white  btn-sm md:btn-md "
                 onClick={() =>
@@ -69,7 +63,7 @@ const Profile = () => {
                     <div>
                       <button
                         onClick={handleLogout}
-                        className="btn bg-green-600 text-white  btn-sm md:btn-md "
+                        className="btn bg-green-500 hover:bg-green-600 text-white  btn-sm md:btn-md "
                       >
                         Yes
                       </button>
@@ -77,7 +71,7 @@ const Profile = () => {
                     <div className="modal-action justify-center mt-0">
                       <form method="dialog">
                         {/* if there is a button in form, it will close the modal */}
-                        <button className="bg-red-600 btn text-white  btn-sm md:btn-md ">
+                        <button className="bg-red-500 hover:bg-red-600 btn text-white  btn-sm md:btn-md ">
                           Close
                         </button>
                       </form>
@@ -137,17 +131,6 @@ const Profile = () => {
 
           <p>Track Orders</p>
         </div>
-
-        <div
-          onClick={() => handleOptionClick("newProduct")}
-          className={` flex items-center w-full text-left p-4 rounded-md mt-2 border-b-2 border-gray-200 cursor-pointer ${
-            selectedOption === "newProduct" ? "bg-blue-500 text-white" : ""
-          }`}
-        >
-          <HiTemplate className="w-8 h-6" />
-
-          <p>New Product</p>
-        </div>
       </div>
       <div
         className={
@@ -182,13 +165,6 @@ const Profile = () => {
             <Rating />
           </div>
         )}
-        {selectedOption === "newProduct" && (
-          <div>
-            <NewProduct />
-          </div>
-        )}
-
-        {/* Add more content based on selected option */}
       </div>
     </div>
   );
