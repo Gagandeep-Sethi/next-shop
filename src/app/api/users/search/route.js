@@ -14,7 +14,9 @@ export async function GET(req) {
     throw new Error("Search for some email");
   }
   try {
-    const users = await User.search(query);
+    const users = await User.findOne({ email: query }).select(
+      "username email phoneNumber "
+    );
     if (!users) {
       throw new Error("No Email found related to your Search");
     }
