@@ -1,8 +1,10 @@
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export const useChangePassword = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
+  const router = useRouter();
 
   const changePassword = async (formValue) => {
     const { oldPassword, newPassword, confirmPassword } = formValue;
@@ -26,6 +28,7 @@ export const useChangePassword = () => {
     }
     if (response.ok) {
       console.log(response);
+      router.refresh();
 
       setIsLoading(false);
     }

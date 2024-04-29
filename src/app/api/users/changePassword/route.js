@@ -11,7 +11,7 @@ export async function POST(req) {
   try {
     const body = await req.json();
     const idCookies = req.cookies.get("token")?.value; //set it according key value you are getting from client
-
+    console.log(idCookies, "idcookies");
     const { oldPassword, newPassword, confirmPassword } = body;
 
     if (!oldPassword || !newPassword || !confirmPassword) {
@@ -25,9 +25,9 @@ export async function POST(req) {
     }
     //decoding key value from jwt oken recieved
     const decoded = jwt.verify(idCookies, process.env.JWT_SECRET);
-
+    console.log(decoded, "decoded");
     const id = decoded._id;
-
+    console.log(id, "id");
     const user = await User.findById(id);
 
     if (!user) {
@@ -47,12 +47,15 @@ export async function POST(req) {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(newPassword, salt);
     user.password = hashPassword;
-    user.save();
-
-    return NextResponse.json(
+    await user.save();
+    const response = NextResponse.json(
       { message: "Password updated please login" },
       { status: 200 }
     );
+    response.cookies.delete("token", { httpOnly: true });
+    response.cookies.delete("user");
+
+    return response;
 
     //   if you want iser to get logged out after changing password
     //   response.cookies.set("token", "", { httpOnly: true, secure: true });

@@ -6,9 +6,12 @@ import jwt from "jsonwebtoken";
 
 connect(); //its imp to connect to db in every api route
 
-const createToken = (_id) => {
+const createToken = (_id, isAdmin, expiresIn) => {
   try {
-    return jwt.sign({ _id }, process.env.JWT_SECRET, { expiresIn: "3d" });
+    return jwt.sign(
+      { _id, isAdmin, exp: Math.floor(Date.now() / 1000) + expiresIn },
+      process.env.JWT_SECRET
+    );
   } catch (error) {
     console.error("Error creating token:", error);
     return null;
@@ -36,7 +39,7 @@ export async function POST(req) {
       throw new Error("Incorrect email or password !!");
     }
 
-    const token = createToken(user._id);
+    const token = createToken(user._id, user.isAdmin, 60 * 60 * 24 * 3); // Token expires in 3 days
 
     const response = NextResponse.json(
       { message: "user saved" },

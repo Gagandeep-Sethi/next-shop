@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { useForgotPassword } from "../(hooks)/useForgotPassword";
+import Link from "next/link";
 
 const ForgotPassword = () => {
   const [formValue, setFormValue] = useState({
@@ -57,6 +58,12 @@ const ForgotPassword = () => {
             </button>
           </div>
         </form>
+        <p className="text-center text-lg text-gray-600">
+          Already have account !{" "}
+          <span className="text-black cursor-pointer hover:text-blue-800 hover:underline">
+            <Link href="/user/login">SignIn</Link>
+          </span>
+        </p>
       </div>
     </div>
   );
