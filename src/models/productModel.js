@@ -45,6 +45,10 @@ const productSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    isOutOfStock: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true, // Automatically add createdAt and updatedAt fields
