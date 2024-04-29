@@ -6,7 +6,16 @@ export const useSignup = () => {
   const [isLoading, setIsLoading] = useState(null);
 
   const addAddress = async (formValue) => {
-    const { streetNo, houseNo, landmark, locality, state, city } = formValue;
+    const {
+      streetNo,
+      houseNo,
+      landmark,
+      locality,
+      state,
+      city,
+      pincode,
+      contactNo,
+    } = formValue;
     setIsLoading(true);
     setError(null);
     const response = await fetch(`/api/users/address`, {
@@ -19,6 +28,8 @@ export const useSignup = () => {
         locality,
         state,
         city,
+        pincode,
+        contactNo,
       }),
     });
     const json = await response.json();
