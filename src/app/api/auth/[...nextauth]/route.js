@@ -1,9 +1,9 @@
 import { connect } from "@/dbConfig/dbConfig";
-import User from "@/models/userModel";
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
+import User from "@/models/userModel";
 
 connect();
 
@@ -28,6 +28,8 @@ const authOptions = {
       try {
         const { id, name, email } = user;
         const { access_token } = account;
+        console.log(user, "user");
+        console.log(account, "account");
 
         const existingUser = await User.findOne({ googleId: id });
         if (existingUser) {
@@ -46,10 +48,11 @@ const authOptions = {
               username: existingUser.username,
               email: existingUser.email,
             }),
-            { httpOnly: false }
+            { httpOnly: true }
           );
           return response;
         }
+        console.log("befores db new entry");
 
         const newUser = await User.create({
           username: name,
@@ -58,7 +61,8 @@ const authOptions = {
           googleToken: access_token,
           verified: true,
         });
-        console.log(newUser, "user");
+        console.log("after db new entry");
+        console.log(newUser, "usernew");
         const token = createToken(newUser._id);
         console.log(token, "token");
         const response = NextResponse.json(
@@ -71,10 +75,11 @@ const authOptions = {
         response.cookies.set(
           "user",
           JSON.stringify({ username: newUser.username, email: newUser.email }),
-          { httpOnly: false }
+          { httpOnly: true }
         );
         return response;
       } catch (error) {
+        console.log(error, "error");
         return NextResponse.json({ message: error.message }, { status: 500 });
       }
     },

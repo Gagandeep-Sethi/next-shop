@@ -28,7 +28,7 @@ export async function POST(req) {
 
     const user = await User.findOne({ email: email.toLowerCase() });
     if (!user) {
-      throw new Error("Incorrect email or password !!");
+      throw new Error("No user found with this email !!");
     }
     if (!user.verified) {
       throw new Error("Verify your Email !!");
