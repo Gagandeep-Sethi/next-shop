@@ -1,10 +1,12 @@
 import ResetPassword from "@/app/(components)/ResetPasswoord";
-import React from "react";
+import React, { Suspense } from "react";
 
 const page = () => {
   return (
     <div>
-      <ResetPassword />
+      <Suspense>
+        <ResetPassword />
+      </Suspense>
     </div>
   );
 };
