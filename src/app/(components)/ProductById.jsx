@@ -65,12 +65,12 @@ const ProductById = () => {
           ) : (
             <p className="py-3 md:py-6">₹{product?.originalPrice}</p>
           )}
-          {data?.isOutOfStock ? (
+          {product?.isOutOfStock === "true" ? (
             <p className="text-red-500">Currently Out of Stock !!</p>
           ) : null}
           <div className="flex  justify-center md:justify-start">
             <button
-              disabled={product?.isOutOfStock}
+              disabled={product?.isOutOfStock === "true"}
               onClick={handleCart}
               className="btn    bg-black hover:bg-primary text-white "
             >

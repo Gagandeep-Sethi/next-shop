@@ -20,6 +20,7 @@ export const useUpdateProduct = () => {
       newImageUploads,
       deletedImages,
       warranty,
+      stock,
     } = formValue;
     setIsLoading(true);
     setError(null);
@@ -33,6 +34,7 @@ export const useUpdateProduct = () => {
       formData.append("originalPrice", originalPrice);
       formData.append("discountedPrice", discountedPrice);
       formData.append("size", size);
+      formData.append("stock", stock);
 
       // Append each file to the form data
       for (let i = 0; i < images.length; i++) {

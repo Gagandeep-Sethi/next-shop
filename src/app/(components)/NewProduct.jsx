@@ -13,6 +13,7 @@ const NewProduct = () => {
     size: "not_required",
     warranty: "",
     images: [],
+    stock: "false",
   });
   const { addProduct, isLoading, error } = useNewProduct();
 
@@ -29,7 +30,7 @@ const NewProduct = () => {
         ...prevFormValue,
         [name]: [...prevFormValue.images, ...files],
       }));
-    } else if (name === "size" || "category") {
+    } else if (name === "size" || "category" || "stock") {
       setFormValue((prevFormValue) => ({
         ...prevFormValue,
         [name]: value,
@@ -146,6 +147,20 @@ const NewProduct = () => {
               <option value="Full">Full</option>
               <option value="Half">Half</option>
               {/* Add more size options as needed */}
+            </select>
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="stock" className="text-sm font-medium">
+              Out of Stock ?
+            </label>
+            <select
+              name="stock"
+              className="input"
+              value={formValue.stock}
+              onChange={handleChange}
+            >
+              <option value="true">Yes</option>
+              <option value="false">No</option>
             </select>
           </div>
           <div className="flex flex-col">

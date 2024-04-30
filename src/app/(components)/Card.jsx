@@ -39,13 +39,13 @@ const Card = ({ data }) => {
         ) : (
           <p className="pt-3">₹{data?.originalPrice}</p>
         )}
-        {data?.isOutOfStock ? (
+        {data?.isOutOfStock === "true" ? (
           <p className="text-red-500">Currently Out of Stock !!</p>
         ) : null}
 
         <div className="card-actions justify-end">
           <button
-            disabled={data?.isOutOfStock}
+            disabled={data?.isOutOfStock === "true"}
             onClick={handleCart}
             className="btn bg-black hover:bg-primary text-white"
           >

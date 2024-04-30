@@ -25,6 +25,7 @@ export async function POST(req) {
       discountedPrice,
       size,
       warranty,
+      stock,
     } = Object.fromEntries(data.entries());
 
     if (!files || files.length === 0) {
@@ -72,6 +73,7 @@ export async function POST(req) {
       displayPrice: discountedPrice,
       size,
       warranty,
+      isOutOfStock: stock,
     });
 
     // Return success response

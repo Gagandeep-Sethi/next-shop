@@ -18,6 +18,7 @@ const UpdateProduct = ({ productId }) => {
     images: [],
     newImageUploads: [],
     deletedImages: [],
+    stock: "",
   });
   const { updateProduct, isLoading, error } = useUpdateProduct();
 
@@ -34,7 +35,7 @@ const UpdateProduct = ({ productId }) => {
         ...prevFormValue,
         [name]: [...prevFormValue.newImageUploads, ...files],
       }));
-    } else if (name === "size" || "category") {
+    } else if (name === "size" || "category" || "stock") {
       setFormValue((prevFormValue) => ({
         ...prevFormValue,
         [name]: value,
@@ -92,6 +93,7 @@ const UpdateProduct = ({ productId }) => {
           warranty: product?.product?.warranty,
           size: product?.product?.size,
           images: product?.product?.images,
+          stock: product?.product?.isOutOfStock,
           newImageUploads: [], // No new images initially
           deletedImages: [], // No deleted images initially
         }));
@@ -180,6 +182,20 @@ const UpdateProduct = ({ productId }) => {
               onChange={handleChange}
               required
             />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="stock" className="text-sm font-medium">
+              Out of Stock ?
+            </label>
+            <select
+              name="stock"
+              className="input"
+              value={formValue.stock}
+              onChange={handleChange}
+            >
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
           </div>
           <div className="flex flex-col">
             <label htmlFor="waranty" className="text-sm font-medium">
