@@ -13,6 +13,7 @@ const Header = () => {
   const user = useSelector((store) => store?.user?.user);
   const cart = useSelector((store) => store?.cart.cart);
   const dispatch = useDispatch();
+  console.log(user, "user");
 
   useEffect(() => {
     const parseCookies = () => {

@@ -54,6 +54,7 @@ export async function POST(req) {
         username: user.username,
         email: user.email,
         phoneNumber: user.phoneNumber,
+        isAdmin: user.isAdmin,
       }),
       { httpOnly: false }
       // JSON.stringify({ username: user.username, email: user.email }),

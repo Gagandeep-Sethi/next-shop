@@ -86,13 +86,15 @@ const ProductById = () => {
             />
           )}
 
-          <div className="mt-10 flex justify-center md:justify-start">
-            <Link href={`/product/updateproduct/${id}`}>
-              <button className="btn bg-red-700 hover:bg-primary text-white ">
-                Update Product
-              </button>
-            </Link>
-          </div>
+          {user?.isAdmin ? (
+            <div className="mt-10 flex justify-center md:justify-start">
+              <Link href={`/product/updateproduct/${id}`}>
+                <button className="btn bg-red-700 hover:bg-primary text-white ">
+                  Update Product
+                </button>
+              </Link>
+            </div>
+          ) : null}
         </div>
       </div>
       <div>
