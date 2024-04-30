@@ -20,6 +20,7 @@ const Category = () => {
   const { type } = params;
   const products = useSelector((store) => store?.product);
   const category = products[type];
+  console.log(category, "category");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,8 +31,9 @@ const Category = () => {
   };
 
   useEffect(() => {
-    if (category) {
+    if (category.length > 0) {
       setProduct(category);
+      setAllProducts(category);
     }
     async function getData() {
       try {
@@ -49,6 +51,7 @@ const Category = () => {
       getData();
     }
   }, [category, type]);
+  console;
 
   // Handle filters
   useEffect(() => {
