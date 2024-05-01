@@ -1,16 +1,15 @@
 "use client";
 import React, { useState } from "react";
-import Orders from "./UserOrders";
 import Rating from "./Rating";
 import TrackingOrders from "./TrackingOrders";
 import { MdRateReview } from "react-icons/md";
-import { FaBoxOpen } from "react-icons/fa";
+import { FaBoxOpen, FaChevronLeft } from "react-icons/fa";
 import { TbPasswordFingerprint } from "react-icons/tb";
 import { GiDeerTrack } from "react-icons/gi";
 import ChangePassword from "./ChangePassword";
-import { FaChevronLeft } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import UserOrders from "./UserOrders";
 
 const Profile = () => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -36,17 +35,17 @@ const Profile = () => {
       <div
         className={
           (selectedOption && "hidden md:block") +
-          " md:block w-screen  md:w-1/4   p-4 md:border-r-2 md:border-gray-200"
+          " md:block w-screen  md:w-1/4    p-4 md:border-r-2 md:border-gray-200"
         }
       >
-        {user ? (
+        {user?.username ? (
           <div className="">
             <p className="text-lg font-bold text-center pt-2">
               Hey {user?.username} !
             </p>
             <p className="  text-center pt-2">{user?.email}</p>
             <p className="text-lg  text-center pt-2">{user?.phoneNumber}</p>
-            <div className="flex justify-center mt-4">
+            <div className="flex justify-center">
               <button
                 className="btn btn-primary text-white  btn-sm md:btn-md "
                 onClick={() =>
@@ -88,7 +87,7 @@ const Profile = () => {
 
         <div
           onClick={() => handleOptionClick("myOrders")}
-          className={` flex items-center  w-full text-left p-4 rounded-md  border-b-2 border-gray-200 cursor-pointer ${
+          className={` flex items-center  w-full text-left p-4 rounded-md  border-b-2 border-gray-200 cursor-pointer mt-4 ${
             selectedOption === "myOrders" ? "bg-blue-500 text-white" : ""
           }`}
         >
@@ -152,7 +151,7 @@ const Profile = () => {
         )}
         {selectedOption === "myOrders" && (
           <div>
-            <Orders />
+            <UserOrders email={user?.email} />
           </div>
         )}
         {selectedOption === "changePassword" && (
