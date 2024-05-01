@@ -24,15 +24,17 @@ const Profile = () => {
   const handleLogout = async () => {
     console.log("logout function reached");
     try {
-      const response = await fetch("/api/users/logout");
-      if (response.ok) {
-        dispatch(deleteUser());
-        router.push("/user/login");
-      }
+      await fetch("/api/users/logout");
+      dispatch(deleteUser());
+      router.push("/user/login");
     } catch (error) {
       console.log(error);
     }
   };
+  // const handleLogout = () => {
+  //   dispatch(deleteUser());
+  //   router.push("/user/login");
+  // };
 
   return (
     <div className="flex min-h-screen ">

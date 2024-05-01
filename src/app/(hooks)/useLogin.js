@@ -42,6 +42,7 @@ export const useLogin = () => {
       if (presentUser) {
         dispatch(addUser(presentUser));
       }
+      console.log(presentUser, "presentuser");
 
       router.push("/user");
     }

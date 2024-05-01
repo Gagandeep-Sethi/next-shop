@@ -7,7 +7,7 @@ import { FaBoxOpen, FaChevronLeft } from "react-icons/fa";
 import { TbPasswordFingerprint } from "react-icons/tb";
 import { GiDeerTrack } from "react-icons/gi";
 import ChangePassword from "./ChangePassword";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import NewProduct from "./NewProduct";
 import { FaBox } from "react-icons/fa6";
@@ -15,21 +15,23 @@ import { TbUserSearch } from "react-icons/tb";
 import { HiTemplate } from "react-icons/hi";
 import SearchUser from "./SearchUser";
 import UserOrders from "./UserOrders";
+import { deleteUser } from "@/provider/redux/userSlice";
 
 const AdminProfile = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const user = useSelector((store) => store?.user?.user);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
   };
   const handleLogout = async () => {
+    console.log("logout function reached");
     try {
-      const response = await fetch("/api/users/logout");
-      if (response.ok) {
-        router.push("/user/login");
-      }
+      await fetch("/api/users/logout");
+      dispatch(deleteUser());
+      router.push("/user/login");
     } catch (error) {
       console.log(error);
     }
