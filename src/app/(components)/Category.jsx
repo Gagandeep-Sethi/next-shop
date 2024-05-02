@@ -1,7 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CardContainer from "./CardContainer";
 import Skeleton from "./Skeleton";
 import { TbRulerMeasure } from "react-icons/tb";
@@ -31,13 +31,20 @@ const Category = () => {
   };
 
   useEffect(() => {
-    if (category.length > 0) {
+    console.log(category, "category");
+
+    if (category !== null && category.length > 3) {
       setProduct(category);
       setAllProducts(category);
     }
+    getData();
+
     async function getData() {
       try {
-        const response = await fetch(`/api/product/category/${type}`);
+        const response = await fetch(
+          `/api/product/category?type=${type}&limit=all`
+        );
+        //const response = await fetch(`/api/product/category/${type}`);
         const json = await response.json();
         if (response.ok) {
           setProduct(json?.product);
@@ -46,9 +53,6 @@ const Category = () => {
       } catch (error) {
         console.log(error);
       }
-    }
-    if (!category) {
-      getData();
     }
   }, [category, type]);
   console;

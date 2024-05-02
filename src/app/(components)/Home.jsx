@@ -16,7 +16,9 @@ const Home = () => {
     <div className="min-h-svh    ">
       <h1 className="my-6 text-3xl text-center underline">Pillows</h1>
       <div>
-        <CardContainer data={products?.pillow} />
+        {/* <CardContainer data={products?.pillow} /> */}
+        <CardContainer data={products?.pillow.slice(0, 3)} />
+
         <div className="flex justify-center my-6">
           <Link href="/product/category/pillow">
             <button className="btn btn-xs sm:btn-sm md:btn-md bg-black hover:bg-primary text-white ">
