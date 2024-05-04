@@ -21,13 +21,15 @@ const useAllProducts = () => {
         // const data = await fetch(`/api/product`);
         // const json = await data.json();
         if (products?.pillow === null) {
+          console.log(products?.pillow, "pillow");
           const pillow = await fetch(
             `/api/product/category?type=pillow&limit=3`
           );
           const pillows = await pillow.json();
           dispatch(addPillows(pillows?.product));
         }
-        if (!products?.bolster === null) {
+        if (products?.bolster === null) {
+          console.log(products?.bolster, "bolster");
           const bolster = await fetch(
             `/api/product/category?type=bolster&limit=3`
           );
@@ -35,6 +37,8 @@ const useAllProducts = () => {
           dispatch(addBolsters(bolsters?.product));
         }
         if (products?.cushion === null) {
+          console.log(products?.cushion, "cushion");
+
           const cushion = await fetch(
             `/api/product/category?type=cushion&limit=3`
           );
@@ -42,6 +46,8 @@ const useAllProducts = () => {
           dispatch(addCushions(cushions?.product));
         }
         if (products?.mattress === null) {
+          console.log(products?.mattress, "mattress");
+
           console.log("mattress called");
           const mattress = await fetch(
             `/api/product/category?type=mattress&limit=3`
