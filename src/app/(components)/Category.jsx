@@ -7,6 +7,13 @@ import Skeleton from "./Skeleton";
 import { TbRulerMeasure } from "react-icons/tb";
 import { FcMoneyTransfer } from "react-icons/fc";
 import { GiStarsStack } from "react-icons/gi";
+import {
+  addBolsters,
+  addCushions,
+  addMattresses,
+  addPillows,
+} from "@/provider/redux/productSlice";
+import Image from "next/image";
 
 const Category = () => {
   const [product, setProduct] = useState([]);
@@ -20,6 +27,7 @@ const Category = () => {
   const { type } = params;
   const products = useSelector((store) => store?.product);
   const category = products[type];
+  const dispatch = useDispatch();
   console.log(category, "category");
 
   const handleChange = (e) => {
@@ -29,33 +37,6 @@ const Category = () => {
       [name]: value,
     }));
   };
-
-  useEffect(() => {
-    console.log(category, "category");
-
-    if (category !== null && category.length > 3) {
-      setProduct(category);
-      setAllProducts(category);
-    }
-    getData();
-
-    async function getData() {
-      try {
-        const response = await fetch(
-          `/api/product/category?type=${type}&limit=all`
-        );
-        //const response = await fetch(`/api/product/category/${type}`);
-        const json = await response.json();
-        if (response.ok) {
-          setProduct(json?.product);
-          setAllProducts(json?.product);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  }, [category, type]);
-  console;
 
   // Handle filters
   useEffect(() => {
@@ -94,10 +75,55 @@ const Category = () => {
     setProduct(filteredProducts);
   }, [filter, allProducts]);
 
-  if (allProducts.length === 0) return <Skeleton />;
+  useEffect(() => {
+    if (category !== null && category.length > 3) {
+      setProduct(category);
+      setAllProducts(category);
+    }
+  }, [category]);
+
+  useEffect(() => {
+    async function getData() {
+      try {
+        const response = await fetch(
+          `/api/product/category?type=${type}&limit=all`
+        );
+        const json = await response.json();
+        if (response.ok) {
+          setProduct(json?.product);
+          setAllProducts(json?.product);
+
+          switch (type) {
+            case "pillow":
+              dispatch(addPillows(json?.product));
+              break;
+            case "cushion":
+              dispatch(addCushions(json?.product));
+              break;
+            case "bolster":
+              dispatch(addBolsters(json?.product));
+              break;
+            case "mattress":
+              dispatch(addMattresses(json?.product));
+              break;
+            default:
+              break;
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    if (category === null || category.length <= 3) {
+      getData();
+    }
+  }, [type, dispatch, category]);
+
+  //if (allProducts.length === 0) return <Skeleton count={3} />;
   console.log(product, "product");
   return (
-    <div className="md:flex w-screen min-h-svh">
+    <div className="md:flex w-screen min-h-svh md:space-x-6">
       <div className="  md:w-2/12">
         <p className="my-auto text-xl font-medium text-center mt-10">
           Filters:
@@ -169,16 +195,29 @@ const Category = () => {
           </div>
         </form>
       </div>
-      {allProducts && product.length === 0 ? (
-        <p>no products match your filters</p>
-      ) : (
-        <div className="md:w-10/12 mb-10">
-          <h1 className="text-center text-3xl my-6 underline uppercase">
-            {type}s
-          </h1>
-          <CardContainer data={product} />
-        </div>
-      )}
+      <div className=" md:w-10/12">
+        {allProducts.length !== 0 && product.length === 0 ? (
+          <div className="flex flex-col justify-center  ">
+            <p className="text-center mt-10 text-4xl text-blue-600 ">
+              Oops.. no product match your filters !!
+            </p>
+            <div className="flex justify-center">
+              <Image src="/search.png" alt="" width={320} height={500} />
+            </div>
+          </div>
+        ) : (
+          <div className="md:w-10/12 mb-10">
+            <h1 className="text-center text-3xl my-6 underline uppercase">
+              {type}s
+            </h1>
+            {product.length !== 0 ? (
+              <CardContainer data={product} />
+            ) : (
+              <Skeleton count={6} />
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
