@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { emptyCart } from "@/provider/redux/cartSlice";
 import OrderCard from "./OrderCard";
+import { IoCheckmarkCircle } from "react-icons/io5";
 
 const Order = () => {
   const order = useSelector((store) => store?.order);
@@ -75,40 +76,74 @@ const Order = () => {
   };
 
   return (
-    <div className="  md:flex w-screen">
-      <div className=" w-full md:w-7/12">
-        {order?.orders.map((res) => (
-          <OrderCard key={res?._id} data={res} />
-        ))}
+    <div>
+      <div className="flex justify-center w-full">
+        <ul className="timeline">
+          <li>
+            <div className="timeline-start timeline-box text-green-500 border-green-500">
+              Cart
+            </div>
+            <div className="timeline-middle">
+              <IoCheckmarkCircle className="w-5 h-5 text-green-500" />
+            </div>
+            <hr className="bg-green-500" />
+          </li>
+          <li>
+            <hr className="bg-green-500" />
+            <div className="timeline-start timeline-box text-green-500 border-green-500">
+              Address
+            </div>
+            <div className="timeline-middle">
+              <IoCheckmarkCircle className="w-5 h-5 text-green-500" />
+            </div>
+            <hr className="bg-green-500" />
+          </li>
+          <li>
+            <hr className="bg-green-500" />
+            <div className="timeline-start timeline-box text-green-500 border-green-500">
+              Payment
+            </div>
+            <div className="timeline-middle">
+              <IoCheckmarkCircle className="w-5 h-5 " />
+            </div>
+          </li>
+        </ul>
       </div>
-      <div className="w-full md:w-4/12 mx-auto   border-2 border-gray-300 rounded-xl h-fit mt-6">
-        <div className="p-6 space-y-4">
-          <div className="flex justify-between">
-            <p>Items total</p>
-            <p>
-              ₹
-              {order.orders.reduce((acc, res) => {
-                console.log(res);
-                return (
-                  acc +
-                  (res.displayPrice
-                    ? res.displayPrice * res.quantity
-                    : res.originalPrice * res.quantity)
-                );
-              }, 0)}
+      <div className="  md:flex w-screen">
+        <div className=" w-full md:w-7/12">
+          {order?.orders.map((res) => (
+            <OrderCard key={res?._id} data={res} />
+          ))}
+        </div>
+        <div className="w-full md:w-4/12 mx-auto   border-2 border-gray-300 rounded-xl h-fit mt-6">
+          <div className="p-6 space-y-4">
+            <div className="flex justify-between">
+              <p>Items total</p>
+              <p>
+                ₹
+                {order.orders.reduce((acc, res) => {
+                  console.log(res);
+                  return (
+                    acc +
+                    (res.displayPrice
+                      ? res.displayPrice * res.quantity
+                      : res.originalPrice * res.quantity)
+                  );
+                }, 0)}
+              </p>
+            </div>
+            <div className="flex justify-between ">
+              <p>Delivery fee </p>
+              <p className="text-green-600">Free</p>
+            </div>
+            <p
+              onClick={makePayment}
+              disabled={isLoading}
+              className="text-center bg-primary text-white rounded-xl p-2 cursor-pointer"
+            >
+              Pay now
             </p>
           </div>
-          <div className="flex justify-between ">
-            <p>Delivery fee </p>
-            <p className="text-green-600">Free</p>
-          </div>
-          <p
-            onClick={makePayment}
-            disabled={isLoading}
-            className="text-center bg-primary text-white rounded-xl p-2 cursor-pointer"
-          >
-            Pay now
-          </p>
         </div>
       </div>
     </div>
