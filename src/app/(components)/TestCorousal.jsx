@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import React, { useState, useEffect, useCallback } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { RxDotFilled } from "react-icons/rx";
 
@@ -12,11 +13,11 @@ const TestCarousel = ({ images }) => {
     setCurrentIndex(newIndex);
   };
 
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     const isLastSlide = currentIndex === images.length - 1;
     const newIndex = isLastSlide ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
-  };
+  }, [currentIndex, images.length]);
 
   const goToSlide = (slideIndex) => {
     setCurrentIndex(slideIndex);
@@ -31,27 +32,36 @@ const TestCarousel = ({ images }) => {
     }
 
     return () => clearInterval(interval);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentIndex, isHovered]);
+  }, [currentIndex, isHovered, nextSlide]);
 
   return (
     <div
-      className="max-w-[1400px] md:h-[740px] h-[500px] w-80 md:w-[600px] py-10 m-auto relative group"
+      className="w-full h-full py-10 mx-auto relative group"
+      //className="max-w-[1400px] md:h-[740px] h-[500px] w-80 md:w-[600px] py-10 m-auto relative group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div
+      <div className="duration-500  w-full h-full">
+        <Image
+          className="duration-500 w-full h-full  rounded-xl "
+          alt=""
+          width={1200}
+          height={740}
+          src={`https://res.cloudinary.com/dyja4tbmu/${images[currentIndex]}.jpg`}
+        />
+      </div>
+      {/* <div
         style={{
           backgroundImage: `url(https://res.cloudinary.com/dyja4tbmu/${images[currentIndex]}.jpg)`,
         }}
         className="w-full h-full rounded-2xl bg-center bg-cover duration-500"
-      ></div>
+      ></div> */}
       {/* Left Arrow */}
       <div className="md:hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
         <BsChevronCompactLeft onClick={prevSlide} size={30} />
       </div>
       {/* Right Arrow */}
-      <div className="md:hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
+      <div className="md:hidden group-hover:block absolute top-[50%]  -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
         <BsChevronCompactRight onClick={nextSlide} size={30} />
       </div>
       <div className="flex top-4 justify-center py-2">
@@ -59,7 +69,9 @@ const TestCarousel = ({ images }) => {
           <div
             key={slideIndex}
             onClick={() => goToSlide(slideIndex)}
-            className="text-2xl cursor-pointer"
+            className={`text-2xl cursor-pointer ${
+              slideIndex === currentIndex ? "text-blue-500" : "text-gray-300"
+            }`}
           >
             <RxDotFilled />
           </div>

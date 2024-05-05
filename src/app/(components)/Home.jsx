@@ -5,15 +5,23 @@ import { useSelector } from "react-redux";
 import CardContainer from "./CardContainer";
 import Link from "next/link";
 import Skeleton from "./Skeleton";
+import TestCarousel from "./TestCorousal";
 
 const Home = () => {
   const products = useSelector((store) => store?.product);
   useAllProducts();
-
-  //if (!products?.pillow || !products?.pillow) return <Skeleton />;
+  console.log(products, "products");
 
   return (
     <div className="min-h-svh    ">
+      <div className="w-11/12 md:h-[740px] h-[500px] mx-auto ">
+        {products?.bolster !== null &&
+        products?.bolster[0]?.images.length > 0 ? (
+          <TestCarousel images={products?.bolster[0]?.images} />
+        ) : (
+          <div className="skeleton w-11/12 md:h-[600px] h-[300px] mx-auto  mt-6 "></div>
+        )}
+      </div>
       <h1 className="my-6 text-3xl text-center underline">Pillows</h1>
       <div>
         {products?.pillow ? (
