@@ -43,12 +43,12 @@ const ProductById = () => {
       }
     }
   }, [id]);
-  if (!product) return <Skeleton />;
+  if (!product) return <Skeleton count={6} />;
   return (
     <div>
-      <div className="w-screen items-center md:flex whitespace-normal break-words">
-        <div className="md:w-5/12 md:ml-14 ">
-          <TestCorousal className="" images={product?.images} />
+      <div className="w-screen items-center md:flex whitespace-normal break-words ">
+        <div className="md:w-5/12 md:ml-14 w-80 mx-auto   md:h-[740px] h-[400px]  flex justify-center">
+          <TestCorousal className=" block" images={product?.images} />
         </div>
         <div className="md:w-6/12 px-3  md:ml-14 ">
           <h1 className="text-5xl font-bold py-3 text-center md:text-left ">
