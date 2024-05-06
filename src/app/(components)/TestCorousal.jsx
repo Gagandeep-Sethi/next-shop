@@ -41,9 +41,9 @@ const TestCarousel = ({ images }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="duration-500  w-full h-full">
+      <div className="  w-full h-full">
         <Image
-          className="duration-500 w-full h-full  rounded-xl "
+          className=" w-full h-full  rounded-xl "
           alt=""
           width={1200}
           height={740}
