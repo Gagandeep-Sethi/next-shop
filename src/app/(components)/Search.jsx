@@ -66,23 +66,17 @@ const Search = () => {
     <div className="flex flex-col items-center  min-h-screen bg-gray-100 pt-12">
       <p className="text-3xl  font-bold mb-6">Search</p>
       <div>
-        <div className="flex items-center border border-gray-300 rounded-lg p-2">
+        <div className="flex items-center border bg-white border-gray-300 rounded-lg p-2">
           <input
             type="text"
             placeholder="Search for something..."
-            className="flex-1 outline-none bg-gray-100"
+            className="flex-1 outline-none "
             value={query}
             onChange={(e) => {
               setSearched(false);
               setQuery(e.target.value);
             }}
           />
-          {/* <button
-          className="ml-2 bg-blue-500 text-white px-4 py-2 rounded"
-          onClick={handleSearch}
-        >
-          Search
-        </button> */}
         </div>
         <div>
           {suggestions.length > 0 && (
@@ -90,7 +84,7 @@ const Search = () => {
               {suggestions.map((suggestion, index) => (
                 <li
                   key={index}
-                  className="px-4 py-2 cursor-pointer rounded-xl hover:bg-yellow-100"
+                  className="px-4 py-2 cursor-pointer rounded-xl transition duration-100 ease-out hover:bg-blue-500 hover:text-white"
                   onClick={() => setQuery(suggestion)}
                 >
                   {suggestion}
