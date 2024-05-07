@@ -54,6 +54,9 @@ const ForgotPassword = () => {
               type="submit"
               className="btn bg-blue-500 text-white hover:bg-blue-600 "
             >
+              {isLoading ? (
+                <span className="loading loading-spinner loading-xs"></span>
+              ) : null}
               Send Link
             </button>
           </div>

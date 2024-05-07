@@ -80,9 +80,7 @@ const UpdateProduct = ({ productId }) => {
         }
 
         const product = await response.json();
-        //console.log(product);
-        //console.log(product.product.name, "name");
-        // Update the form value state with the fetched product data
+
         setFormValue((prevFormValue) => ({
           ...prevFormValue,
           name: product?.product?.name,
@@ -104,6 +102,7 @@ const UpdateProduct = ({ productId }) => {
     };
 
     getData();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -296,6 +295,9 @@ const UpdateProduct = ({ productId }) => {
               type="submit"
               className="btn bg-blue-500 text-white hover:bg-blue-600"
             >
+              {isLoading ? (
+                <span className="loading loading-spinner loading-xs"></span>
+              ) : null}
               Update Product
             </button>
           </div>
