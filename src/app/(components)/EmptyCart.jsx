@@ -2,10 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const EmptyCart = () => {
+const EmptyCart = ({ value }) => {
   return (
     <div className=" min-h-svh flex flex-col justify-center items-center">
-      <p className="text-center text-4xl md:text-6xl ">Opps Cart is empty !!</p>
+      <p className="text-center text-4xl md:text-6xl ">
+        Opps {value} is empty !!
+      </p>
       <div className="my-10 flex justify-center  ">
         <Image src="/cart.png" alt="" width={320} height={500} />
       </div>

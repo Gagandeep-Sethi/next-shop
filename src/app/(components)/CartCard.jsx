@@ -20,9 +20,16 @@ const CartCard = ({ data }) => {
               height={200}
             />
           </div>
-          <div className="md:w-8/12 w-full " style={{ wordWrap: "break-word" }}>
-            <p className="text-5xl   font-bold  ">{data?.name}</p>
-            <p className="pt-3 ">{data?.description}</p>
+          <div
+            className="md:w-8/12 w-full   "
+            style={{ wordWrap: "break-word" }}
+          >
+            <p className="text-5xl text-center md:text-start  font-bold  ">
+              {data?.name}
+            </p>
+            <p className="pt-3 text-center md:text-start">
+              {data?.description}
+            </p>
             {data?.displayPrice ? (
               <div className="flex pt-3 md:justify-start justify-center">
                 <del className=" text-gray-400 ">₹{data?.originalPrice}</del>
