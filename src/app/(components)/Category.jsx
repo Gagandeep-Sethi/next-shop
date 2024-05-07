@@ -206,14 +206,16 @@ const Category = () => {
             </div>
           </div>
         ) : (
-          <div className="md:w-10/12 mb-10">
+          <div className=" w-full mb-10">
             <h1 className="text-center text-3xl my-6 underline uppercase">
               {type}s
             </h1>
             {product.length !== 0 ? (
               <CardContainer data={product} />
             ) : (
-              <Skeleton count={6} />
+              <div className="w-full  flex flex-wrap justify-evenly">
+                <Skeleton count={6} />
+              </div>
             )}
           </div>
         )}

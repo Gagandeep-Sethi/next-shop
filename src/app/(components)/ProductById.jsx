@@ -43,7 +43,12 @@ const ProductById = () => {
       }
     }
   }, [id]);
-  if (!product) return <Skeleton count={6} />;
+  if (!product)
+    return (
+      <div>
+        <Skeleton count={6} />
+      </div>
+    );
   return (
     <div>
       <div className="w-screen items-center md:flex whitespace-normal break-words ">
