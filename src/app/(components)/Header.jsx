@@ -8,12 +8,27 @@ import NavLinks from "./NavLinks";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { addUser } from "@/provider/redux/userSlice";
+import { addToCart } from "@/provider/redux/cartSlice";
 
 const Header = () => {
   const user = useSelector((store) => store?.user?.user);
   const cart = useSelector((store) => store?.cart.cart);
   const dispatch = useDispatch();
-  console.log(user, "user");
+
+  // Save cart data to local storage
+
+  // Initialize cart from local storage on component mount
+  useEffect(() => {
+    const savedCart = localStorage.getItem("cart");
+
+    if (savedCart) {
+      const cartItems = JSON.parse(savedCart);
+      // Add items to cart in Redux store
+      cartItems.forEach((item) => {
+        dispatch(addToCart(item));
+      });
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     const parseCookies = () => {
@@ -52,8 +67,10 @@ const Header = () => {
             </div>
 
             <div className="indicator">
-              <span className="indicator-item badge bg-green-400  ">
-                {cart ? cart.length : 0}
+              <span className="indicator-item badge text-white bg-blue-500  ">
+                {cart.reduce((acc, res) => {
+                  return acc + res.quantity;
+                }, 0)}
               </span>
               <button>
                 <Link href="/cart">
