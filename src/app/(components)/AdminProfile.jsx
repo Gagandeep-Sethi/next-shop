@@ -220,16 +220,8 @@ const AdminProfile = () => {
             <NewProduct />
           </div>
         )}
-        {selectedOption === "allOrders" && (
-          <div>
-            <NewProduct />
-          </div>
-        )}
-        {selectedOption === "pendingOrders" && (
-          <div>
-            <NewProduct />
-          </div>
-        )}
+        {selectedOption === "allOrders" && <div>all orders</div>}
+        {selectedOption === "pendingOrders" && <div>pending orders</div>}
         {selectedOption === "searchUsers" && (
           <div>
             <SearchUser />
