@@ -1,6 +1,6 @@
 "use client";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { addAddress } from "@/provider/redux/orderSlice";
 import { useRouter } from "next/navigation";
 
@@ -15,6 +15,7 @@ const Address = () => {
     pincode: "",
     contactNo: "",
   });
+  const address = useSelector((store) => store?.order?.address);
   const isFormFilled =
     formValue.houseNo &&
     formValue.streetNo &&
@@ -33,6 +34,11 @@ const Address = () => {
     dispatch(addAddress(formValue));
     router.push("/order/pay");
   };
+  useEffect(() => {
+    if (address) {
+      setFormValue(address);
+    }
+  }, [address]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

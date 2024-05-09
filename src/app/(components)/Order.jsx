@@ -5,16 +5,28 @@ import { useRouter } from "next/navigation";
 import { emptyCart } from "@/provider/redux/cartSlice";
 import OrderCard from "./OrderCard";
 import { IoCheckmarkCircle } from "react-icons/io5";
+import { emptyOrder } from "@/provider/redux/orderSlice";
+import EmptyCart from "./EmptyCart";
 
 const Order = () => {
   const order = useSelector((store) => store?.order);
+  const {
+    city,
+    contactNo,
+    houseNo,
+    landmark,
+    locality,
+    pincode,
+    state,
+    streetNo,
+  } = order?.address;
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user.user);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-
-  console.log(order, "order");
-
+  const handleAddress = () => {
+    router.push("/order/address");
+  };
   const makePayment = async () => {
     setIsLoading(true);
 
@@ -58,6 +70,7 @@ const Order = () => {
           // redirect to success page
           console.log("payment sucess");
           dispatch(emptyCart());
+          dispatch(emptyOrder());
           router.push("/payment/success");
         }
       },
@@ -74,7 +87,7 @@ const Order = () => {
       setIsLoading(false);
     });
   };
-
+  if (order?.orders.length === 0) return <EmptyCart value={"Order list"} />;
   return (
     <div>
       <div className="flex justify-center w-full">
@@ -115,8 +128,24 @@ const Order = () => {
             <OrderCard key={res?._id} data={res} />
           ))}
         </div>
-        <div className="w-full md:w-4/12 mx-auto   border-2 border-gray-300 rounded-xl h-fit mt-6">
-          <div className="p-6 space-y-4">
+        <div className="w-full md:w-4/12 mx-auto    h-fit mt-6">
+          <div className="border-2 border-gray-300 rounded-xl  p-6 ">
+            <p>House Number: {houseNo}</p>
+            <p>Street Number: {streetNo}</p>
+            <p>Locality: {locality}</p>
+            <p>Landmark: {landmark}</p>
+            <p>Pincode :{pincode}</p>
+            <p>City: {city}</p>
+            <p>State: {state}</p>
+            <p>Contact Number: {contactNo}</p>
+            <p
+              onClick={handleAddress}
+              className="text-center btn bg-primary text-white hover:bg-blue-600 rounded-xl mt-4 w-full"
+            >
+              Update Address
+            </p>
+          </div>
+          <div className="p-6 space-y-4 border-2 border-gray-300  rounded-xl mt-6">
             <div className="flex justify-between">
               <p>Items total</p>
               <p>
@@ -139,7 +168,7 @@ const Order = () => {
             <p
               onClick={makePayment}
               disabled={isLoading}
-              className="text-center bg-primary text-white rounded-xl p-2 cursor-pointer"
+              className="text-center bg-primary text-white  btn w-full hover:bg-blue-600 rounded-xl p-2 cursor-pointer"
             >
               Pay now
             </p>
