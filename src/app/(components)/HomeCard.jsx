@@ -6,16 +6,16 @@ import Link from "next/link";
 
 const HomeCard = ({ data }) => {
   return (
-    <div className="w-full h-full flex flex-col justify-center shadow-md rounded-md py-2  bg-gray-100">
+    <div className="w-full h-full flex flex-col justify-center shadow-md rounded-md pt-3 pb-1  bg-gray-100">
       <div>
         <Link href={`/product/${data._id}`}>
-          <div className="mx-4 ">
+          <div className="md:mx-6 mx-5 h-32 md:h-56 ">
             <Image
               src={`https://res.cloudinary.com/dyja4tbmu/${data?.images[0]}.jpg`}
               width={320}
               height={320}
               alt="Shoes"
-              className="rounded-lg max-w-full transform transition-transform duration-300 hover:scale-105"
+              className="rounded-lg w-full h-full transform transition-transform duration-300 hover:scale-105"
             />
           </div>
         </Link>
