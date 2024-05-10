@@ -27,7 +27,8 @@ const RevewList = ({ id }) => {
     }
   }, [id]);
 
-  if (reviews.length === 0) return <p>No reviews yet</p>;
+  if (reviews.length === 0)
+    return <p className="text-2xl mt-6  text-center">No reviews yet !!</p>;
 
   const averageRating = (
     reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length
@@ -46,7 +47,7 @@ const RevewList = ({ id }) => {
   };
 
   return (
-    <div>
+    <div className=" ">
       <p className="text-3xl font-semibold text-center my-8 underline">
         Rating and Reviews
       </p>
@@ -59,9 +60,10 @@ const RevewList = ({ id }) => {
         )}
         <span className="ml-1">({averageRating} out of 5)</span>
       </p>
-      <div className="bg-gray-200 rounded-xl mx-4 p-4">
+
+      <div className="mx-auto max-w-screen-lg bg-gray-100 rounded-xl py-4    ">
         {reviews.map((review) => (
-          <div key={review._id} className="space-y-1 py-2">
+          <div key={review._id} className=" ">
             <p className="flex items-center gap-1">
               <FaUserAlt className="w-6 h-4" />
               {review?.username}
@@ -79,7 +81,7 @@ const RevewList = ({ id }) => {
               {review.images.length > 0 && (
                 <div className="flex flex-wrap">
                   {review.images.map((image, index) => (
-                    <div key={index}>
+                    <div key={index} className="max-w-full">
                       <div
                         className="relative mr-4 mb-4 cursor-pointer"
                         onClick={() => openModal(image)}

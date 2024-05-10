@@ -50,13 +50,13 @@ const ProductById = () => {
       </div>
     );
   return (
-    <div>
-      <div className="w-screen items-center md:flex whitespace-normal break-words ">
+    <div className="w-screen font-">
+      <div className="w-full items-center md:flex whitespace-normal break-words ">
         <div className="md:w-5/12 md:ml-14 w-80 mx-auto   md:h-[740px] h-[400px]  flex justify-center">
           <TestCorousal className=" block" images={product?.images} />
         </div>
         <div className="md:w-6/12 px-3  md:ml-14 ">
-          <h1 className="text-5xl font-bold py-3 text-center md:text-left ">
+          <h1 className="text-4xl font-medium py-1 md:py-3 text-center md:text-left ">
             {product?.name}
           </h1>
           <p className="pt-3 md:pt-6 py-3 text-center md:text-left">
@@ -102,7 +102,7 @@ const ProductById = () => {
           ) : null}
         </div>
       </div>
-      <div>
+      <div className="  ">
         <RevewList id={id} />
       </div>
       <div className="flex justify-center py-6">

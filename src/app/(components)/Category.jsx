@@ -115,15 +115,13 @@ const Category = () => {
       }
     }
 
-    if (category === null || category.length <= 3) {
+    if (category === null || category.length <= 4) {
       getData();
     }
   }, [type, dispatch, category]);
 
-  //if (allProducts.length === 0) return <Skeleton count={3} />;
-  console.log(product, "product");
   return (
-    <div className="md:flex w-screen min-h-svh md:space-x-6">
+    <div className="md:flex w-screen min-h-svh md:space-x-6 font-">
       <div className="  md:w-2/12">
         <p className="my-auto text-xl font-medium text-center mt-10">
           Filters:

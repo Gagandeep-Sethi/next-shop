@@ -9,7 +9,7 @@ const CartCard = ({ data }) => {
   const dispatch = useDispatch();
   return (
     <div>
-      <div className="w-full md:justify-start   md:border-2 md:rounded-2xl md:my-6 md:m-6 border-gray-300 items-center   bg-white  ">
+      <div className="w-full md:justify-start font-   md:border-2 md:rounded-2xl md:my-6 md:m-6 border-gray-300 items-center   bg-white  ">
         <div className="flex flex-col     md:flex-row p-6 w-full md:gap-8 space-y-4 md:space-y-0 justify-center items-center">
           <div className="md:w-3/12 h-[230px] justify-center flex">
             <Image
@@ -24,7 +24,7 @@ const CartCard = ({ data }) => {
             className="md:w-8/12 w-full   "
             style={{ wordWrap: "break-word" }}
           >
-            <p className="text-5xl text-center md:text-start  font-bold  ">
+            <p className="text-4xl text-center md:text-start  font-medium  ">
               {data?.name}
             </p>
             <p className="pt-3 text-center md:text-start">
