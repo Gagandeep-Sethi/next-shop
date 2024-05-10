@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { addUser } from "@/provider/redux/userSlice";
 import { addToCart } from "@/provider/redux/cartSlice";
+import Sidebar from "./Sidebar";
 
 const Header = () => {
   const user = useSelector((store) => store?.user?.user);
@@ -45,15 +46,15 @@ const Header = () => {
     }
   }, [dispatch]);
   return (
-    <div className="drawer-end ">
+    <div className="drawer-end  ">
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         {/* Navbar */}
-        <div className="w-full flex justify-between navbar bg-base-300">
+        <div className="w-full flex justify-between navbar bg-white shadow-lg">
           <div className="flex space-x-5">
             <div>
               <Link href="/">
-                <IoHome className="w-7 h-7  text-black transition-colors duration-300 hover:text-orange-500" />
+                <IoHome className="w-7 h-7  text-black transition-colors duration-300 hover:text-customColor" />
               </Link>
             </div>
             <NavLinks />
@@ -62,30 +63,30 @@ const Header = () => {
           <div className="flex space-x-2 lg:space-x-4">
             <div className=" ">
               <Link href="/search">
-                <IoSearchOutline className="w-7 h-6  text-black transition-colors duration-300 hover:text-orange-500 " />
+                <IoSearchOutline className="w-7 h-6  text-black transition-colors duration-300 hover:text-customColor " />
               </Link>
             </div>
 
             <div className="indicator">
-              <span className="indicator-item badge text-white bg-blue-500  ">
+              <span className="indicator-item badge text-white bg-customColor  ">
                 {cart.reduce((acc, res) => {
                   return acc + res.quantity;
                 }, 0)}
               </span>
               <button>
                 <Link href="/cart">
-                  <CiShoppingCart className="w-7 h-7  text-black transition-colors duration-300 hover:text-orange-500" />
+                  <CiShoppingCart className="w-7 h-7  text-black transition-colors duration-300 hover:text-customColor" />
                 </Link>
               </button>
             </div>
 
             <div
               className="hidden md:flex tooltip tooltip-bottom"
-              data-tip={user ? user?.username : "login"}
+              data-tip={user?.username ? user?.username : "Login"}
             >
               <button>
                 <Link href="/user">
-                  <CiUser className="w-7 h-7  text-black transition-colors duration-300 hover:text-orange-500" />
+                  <CiUser className="w-7 h-7  text-black transition-colors duration-300 hover:text-customColor" />
                 </Link>
               </button>
             </div>
@@ -109,75 +110,7 @@ const Header = () => {
           className="drawer-overlay"
         ></label>
 
-        <ul className="menu p-4 w-80 min-h-full bg-base-200 space-y-">
-          {/* Sidebar content here */}
-          <Link
-            onClick={() => {
-              document.getElementById("my-drawer-3")?.click();
-            }}
-            href="/user"
-          >
-            <h1 className="flex items-center">
-              <CiUser className="m-2 w-6 h-6 text-black" />
-              {user ? "Account" : "SignUp/SignIn"}
-            </h1>
-          </Link>
-          <li aria-label="close sidebar">
-            <Link
-              onClick={() => {
-                document.getElementById("my-drawer-3")?.click();
-              }}
-              href="/product/category/cushion"
-              className="mr-4 transition-colors duration-300 hover:text-orange-500"
-            >
-              Cushion
-            </Link>
-          </li>
-          <li aria-label="close sidebar">
-            <Link
-              onClick={() => {
-                document.getElementById("my-drawer-3")?.click();
-              }}
-              href="/product/category/pillow"
-              className="mr-4 transition-colors duration-300 hover:text-orange-500"
-            >
-              Pillow
-            </Link>
-          </li>
-          <li aria-label="close sidebar">
-            <Link
-              onClick={() => {
-                document.getElementById("my-drawer-3")?.click();
-              }}
-              href="/product/category/mattress"
-              className="mr-4 transition-colors duration-300 hover:text-orange-500"
-            >
-              Mattress
-            </Link>
-          </li>
-          <li aria-label="close sidebar">
-            <Link
-              onClick={() => {
-                document.getElementById("my-drawer-3")?.click();
-              }}
-              href="/product/category/bolster"
-              className="mr-4 transition-colors duration-300 hover:text-orange-500"
-            >
-              Bolster
-            </Link>
-          </li>
-          <li aria-label="close sidebar">
-            <Link
-              onClick={() => {
-                document.getElementById("my-drawer-3")?.click();
-              }}
-              href="/"
-              className="mr-4 transition-colors duration-300 hover:text-orange-500"
-            >
-              Customize product
-            </Link>
-          </li>
-        </ul>
+        <Sidebar />
       </div>
     </div>
   );
