@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const HomeCard = ({ data }) => {
   return (
-    <div className="w-full h-full flex flex-col justify-center shadow-md rounded-md pt-3 pb-1  bg-gray-100">
+    <div className="w-full h-full flex flex-col justify-center shadow-md rounded-md pt-3 pb-1  bg-gray-50">
       <div>
         <Link href={`/product/${data._id}`}>
           <div className="md:mx-6 mx-5 h-32 md:h-56 ">
