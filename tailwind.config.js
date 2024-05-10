@@ -14,6 +14,16 @@ module.exports = {
     themes: ["light"],
   },
   theme: {
+    extend: {
+      colors: {
+        customColor: "#f97316",
+      },
+      fontFamily: {
+        space: ["var(--font-space-mono)"],
+
+        // Include other font families if needed
+      },
+    },
     truncate: {
       ellipsis: "...",
       // Add more truncate settings if needed
