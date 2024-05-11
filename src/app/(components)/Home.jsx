@@ -16,8 +16,8 @@ const Home = () => {
   return (
     <div className="min-h-svh  bg-gray-50  ">
       <div className="w-11/12 md:h-[740px] h-[500px] mx-auto ">
-        {products?.bolster !== null &&
-        products?.bolster[0]?.images.length > 0 ? (
+        {products?.mattress !== null &&
+        products?.mattress[0]?.images.length > 3 ? (
           <TestCarousel images={products?.mattress[3]?.images} />
         ) : (
           <div className="skeleton w-11/12 md:h-[600px] h-[300px] mx-auto  mt-6 "></div>

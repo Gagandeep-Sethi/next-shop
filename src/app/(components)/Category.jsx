@@ -51,8 +51,15 @@ const Category = () => {
 
     // Filter by rating
     if (filter.rating !== 0) {
-      filteredProducts = filteredProducts.filter(
-        (product) => (product?.avgRating ?? 0) >= filter.rating
+      // Filter out products without a rating
+      let ratedProducts = filteredProducts.filter(
+        (product) =>
+          product.avgRating !== null && product.avgRating !== undefined
+      );
+
+      // Filter by rating
+      filteredProducts = ratedProducts.filter(
+        (product) => product.avgRating >= filter.rating
       );
     }
 
@@ -76,13 +83,13 @@ const Category = () => {
   }, [filter, allProducts]);
 
   useEffect(() => {
-    if (category !== null && category.length > 3) {
+    if (category !== null && category.length > 4) {
       setProduct(category);
       setAllProducts(category);
+    } else {
+      getData();
     }
-  }, [category]);
 
-  useEffect(() => {
     async function getData() {
       try {
         const response = await fetch(
@@ -114,11 +121,13 @@ const Category = () => {
         console.log(error);
       }
     }
+  }, [category, dispatch, type]);
 
-    if (category === null || category.length <= 4) {
-      getData();
-    }
-  }, [type, dispatch, category]);
+  // useEffect(() => {
+
+  //   if (category === null || category.length <= 4) {
+  //   }
+  // }, [type, dispatch, category]);
 
   return (
     <div className="md:flex w-screen min-h-svh md:space-x-6 font-">
