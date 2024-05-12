@@ -57,7 +57,7 @@ const NavLinks = () => {
         { label: "Pillow", href: "/product/category/pillow" },
         { label: "Cushion", href: "/product/category/cushion" },
         { label: "Bolster", href: "/product/category/bolster" },
-        { label: "Customize product", href: "/" },
+        // { label: "Customize product", href: "/" },
       ].map((item, index) => (
         <Link key={index} href={item.href}>
           <p

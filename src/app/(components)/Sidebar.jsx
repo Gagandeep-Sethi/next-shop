@@ -96,7 +96,7 @@ const Sidebar = () => {
     { label: "Pillow", href: "/product/category/pillow" },
     { label: "Mattress", href: "/product/category/mattress" },
     { label: "Bolster", href: "/product/category/bolster" },
-    { label: "Customize product", href: "/" },
+    // { label: "Customize product", href: "/" },
   ];
   console.log(user, "user");
 
