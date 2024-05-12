@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import CardContainer from "./CardContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { searchCache } from "@/provider/redux/searchSlice";
+import HomeCardContainer from "./HomeCardContainer";
 
 const Search = () => {
   const [query, setQuery] = useState("");
@@ -66,7 +66,7 @@ const Search = () => {
     <div className="flex flex-col items-center  min-h-screen bg-gray-100 pt-12">
       <p className="text-3xl  font-bold mb-6">Search</p>
       <div>
-        <div className="flex items-center border bg-white border-gray-300 rounded-lg p-2">
+        <div className="flex items-center border bg-white border-gray-300 rounded-lg p-2 m-2">
           <input
             type="text"
             placeholder="Search for something..."
@@ -78,9 +78,9 @@ const Search = () => {
             }}
           />
         </div>
-        <div>
+        <div className="w-full flex justify-center">
           {suggestions.length > 0 && (
-            <ul className=" bg-white border border-gray-200 rounded-xl p-1 shadow-md mt-2 w-full">
+            <ul className=" bg-white border border-gray-200 rounded-xl p-1 shadow-md    w-[96%]">
               {suggestions.map((suggestion, index) => (
                 <li
                   key={index}
@@ -103,7 +103,8 @@ const Search = () => {
           <h2 className="text-xl text-center font-semibold mb-4">Results:</h2>
 
           <div key={results?._id}>
-            <CardContainer data={results} />
+            {/* <CardContainer data={results} /> */}
+            <HomeCardContainer data={results} />
           </div>
         </div>
       )}
