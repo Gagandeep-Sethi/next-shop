@@ -8,15 +8,14 @@ export async function GET(req) {
 
   try {
     let product;
-    if (limit === "all") {
+    if (!limit) {
       product = await Product.find({ category: type });
     } else {
-      product = await Product.find({ category: type }).limit(limit);
+      product = await Product.find({ category: type }).limit(parseInt(limit));
     }
 
-    if (!product) {
-      console.log("product not found");
-      return NextResponse.json(product, { status: 400 });
+    if (product.length === 0) {
+      return NextResponse.json({ status: 400 });
     }
     return NextResponse.json({ product }, { status: 200 });
   } catch (error) {

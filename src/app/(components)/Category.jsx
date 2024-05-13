@@ -2,7 +2,6 @@
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import CardContainer from "./CardContainer";
 import Skeleton from "./Skeleton";
 import { TbRulerMeasure } from "react-icons/tb";
 import { FcMoneyTransfer } from "react-icons/fc";
@@ -14,6 +13,7 @@ import {
   addPillows,
 } from "@/provider/redux/productSlice";
 import Image from "next/image";
+import HomeCardContainer from "./HomeCardContainer";
 
 const Category = () => {
   const [product, setProduct] = useState([]);
@@ -92,9 +92,7 @@ const Category = () => {
 
     async function getData() {
       try {
-        const response = await fetch(
-          `/api/product/category?type=${type}&limit=all`
-        );
+        const response = await fetch(`/api/product/category?type=${type}`);
         const json = await response.json();
         if (response.ok) {
           setProduct(json?.product);
@@ -218,7 +216,8 @@ const Category = () => {
               {type}s
             </h1>
             {product.length !== 0 ? (
-              <CardContainer data={product} />
+              // <CardContainer data={product} />
+              <HomeCardContainer data={product} />
             ) : (
               <div className="w-full  flex flex-wrap justify-evenly">
                 <Skeleton count={6} />
