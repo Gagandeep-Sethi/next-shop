@@ -16,8 +16,12 @@ const OrderCard = ({ data }) => {
             />
           </div>
           <div className="md:w-8/12 w-full " style={{ wordWrap: "break-word" }}>
-            <p className="text-5xl   font-bold  text-center">{data?.name}</p>
-            <p className="pt-3 text-center">{data?.description}</p>
+            <p className="text-5xl   font-bold  text-center md:text-start">
+              {data?.name}
+            </p>
+            <p className="pt-3 text-center md:text-start">
+              {data?.description}
+            </p>
             {data?.displayPrice ? (
               <div className="flex pt-3 md:justify-start justify-center">
                 <del className=" text-gray-400 ">₹{data?.originalPrice}</del>

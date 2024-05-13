@@ -87,7 +87,8 @@ const Order = () => {
       setIsLoading(false);
     });
   };
-  if (order?.orders.length === 0) return <EmptyCart value={"Order list"} />;
+  if (order?.orders.length === 0)
+    return <EmptyCart value={"Order list is empty !!"} button={"Add Items"} />;
   return (
     <div>
       <div className="flex justify-center w-full">
