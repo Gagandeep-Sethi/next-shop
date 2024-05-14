@@ -111,8 +111,8 @@ const SignUp = () => {
               )}
             </button>
           </div>
-          <p className="text-xs font-extralight">
-            Must include no,symbol,uppercase,lower,min 8 letter long !
+          <p className="text-xs font-extralight text-red-600">
+            *Must include no,symbol,uppercase,lower,min 8 letter long !
           </p>
           <div className="flex flex-col relative">
             <label htmlFor="confirmPassword" className="text-sm font-medium">
@@ -152,13 +152,17 @@ const SignUp = () => {
         </div>
         <div className="flex justify-center">
           <button
+            disabled={true}
             onClick={() => signIn("google")}
-            className="btn mt-6 bg-white text-gray-700 border border-gray-300 hover:border-gray-400 flex items-center justify-center"
+            className="btn mt-6 bg-white text-gray-700 border border-gray-300 hover:border-gray-400 flex items-center justify-center cursor-not-allowed "
           >
             <FcGoogle className="w-8 h-7" />
             Sign in with Google
           </button>
         </div>
+        <p className="text-red-600 text-sm text-center font-extralight">
+          *Please use email method to signup{" "}
+        </p>
         <p className="text-center text-lg text-gray-600">
           Already have account !{" "}
           <span className="text-black cursor-pointer hover:text-blue-800 hover:underline">
