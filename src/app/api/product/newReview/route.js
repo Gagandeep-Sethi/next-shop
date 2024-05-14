@@ -26,14 +26,14 @@ export async function POST(req) {
     //checks if user with such email exists or not
     if (!user) {
       return NextResponse.json(
-        { message: "user not found please try again" },
+        { message: "An error occurred" },
         { status: 400 }
       );
     }
     //check if product with such id exists or not
     if (!product) {
       return NextResponse.json(
-        { message: "product not found please try again" },
+        { message: "Product not found please try again" },
         { status: 400 }
       );
     }
@@ -55,7 +55,6 @@ export async function POST(req) {
         //images: imageIds,
       });
       await product.updateAvgRating();
-      console.log("review done");
       return NextResponse.json(
         { message: "review added without images" },
         { status: 200 }
@@ -67,8 +66,6 @@ export async function POST(req) {
     const fileBuffers = [];
 
     for (const file of files) {
-      console.log("Processing file:", file.name);
-
       const reader = file.stream().getReader();
       let chunks = [];
       let done = false;
@@ -101,7 +98,6 @@ export async function POST(req) {
       images: imageIds,
     });
     await product.updateAvgRating();
-    console.log(product.avgRating, "avg rating ");
 
     // Return success response
     return NextResponse.json(

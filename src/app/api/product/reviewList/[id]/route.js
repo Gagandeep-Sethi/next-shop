@@ -6,13 +6,12 @@ export async function GET(req, { params }) {
     const reviews = await Review.find({ productId: params.id }).select(
       "comments images rating username"
     );
-    console.log(reviews);
+
     if (!reviews) {
-      console.log("no reviews yet");
       return NextResponse.json({ reviews }, { status: 200 });
     }
     return NextResponse.json({ reviews }, { status: 200 });
   } catch (error) {
-    console.log(error);
+    return NextResponse.json({ message: "error occured" }, { status: 400 });
   }
 }
