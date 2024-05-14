@@ -12,7 +12,8 @@ const Cart = () => {
   const order = useSelector((store) => store?.order);
   console.log(order, "order");
   const dispatch = useDispatch();
-  if (cart.length === 0) return <EmptyCart value={"Cart"} />;
+  if (cart.length === 0)
+    return <EmptyCart value={"Cart is empty !!"} button={"Add Items"} />;
   const handleBuy = () => {
     dispatch(addOrder(cart));
   };
