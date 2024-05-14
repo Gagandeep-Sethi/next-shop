@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import Rating from "./Rating";
-import TrackingOrders from "./TrackingOrders";
 import { MdRateReview } from "react-icons/md";
 import { FaBoxOpen, FaChevronLeft } from "react-icons/fa";
 import { TbPasswordFingerprint } from "react-icons/tb";
@@ -78,7 +77,7 @@ const AdminProfile = () => {
                       <form method="dialog">
                         {/* if there is a button in form, it will close the modal */}
                         <button className="bg-red-500 hover:bg-red-600 btn text-white  btn-sm md:btn-md ">
-                          Close
+                          No
                         </button>
                       </form>
                     </div>
@@ -195,11 +194,7 @@ const AdminProfile = () => {
           <FaChevronLeft className="h-8" />
         </p>
 
-        {selectedOption === "trackOrders" && (
-          <div>
-            <TrackingOrders />
-          </div>
-        )}
+        {selectedOption === "trackOrders" && <div>No orders to track</div>}
         {selectedOption === "myOrders" && (
           <div>
             <UserOrders email={user?.email} />
@@ -212,7 +207,7 @@ const AdminProfile = () => {
         )}
         {selectedOption === "myRatingAndReviews" && (
           <div>
-            <Rating />
+            <Rating email={user?.email} />
           </div>
         )}
         {selectedOption === "newProduct" && (
@@ -220,8 +215,8 @@ const AdminProfile = () => {
             <NewProduct />
           </div>
         )}
-        {selectedOption === "allOrders" && <div>all orders</div>}
-        {selectedOption === "pendingOrders" && <div>pending orders</div>}
+        {selectedOption === "allOrders" && <div>All orders</div>}
+        {selectedOption === "pendingOrders" && <div>Pending orders</div>}
         {selectedOption === "searchUsers" && (
           <div>
             <SearchUser />

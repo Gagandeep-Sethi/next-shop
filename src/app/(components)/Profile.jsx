@@ -21,7 +21,6 @@ const Profile = () => {
     setSelectedOption(option);
   };
   const handleLogout = async () => {
-    console.log("logout function reached");
     try {
       await fetch("/api/users/logout");
       dispatch(deleteUser());
@@ -158,7 +157,7 @@ const Profile = () => {
         )}
         {selectedOption === "myRatingAndReviews" && (
           <div>
-            <Rating />
+            <Rating email={user?.email} />
           </div>
         )}
       </div>
