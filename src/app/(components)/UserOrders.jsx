@@ -3,22 +3,21 @@ import React, { useEffect, useState } from "react";
 
 const UserOrders = ({ email }) => {
   const [order, setOrder] = useState([]);
-  const getOrders = async () => {
-    try {
-      const response = await fetch(`/api/order/search?email=${email}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch orders");
-      }
-      const orders = await response.json();
-      console.log(orders.orders, "orders");
-      setOrder(orders.orders);
-    } catch (error) {}
-  };
 
   useEffect(() => {
+    async function getOrders() {
+      try {
+        const response = await fetch(`/api/order/search?email=${email}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch orders");
+        }
+        const orders = await response.json();
+        console.log(orders.orders, "orders");
+        setOrder(orders.orders);
+      } catch (error) {}
+    }
     getOrders();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [email]);
 
   if (order.length === 0) return <p>No orders to show </p>;
   return (

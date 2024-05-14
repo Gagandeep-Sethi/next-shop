@@ -3,6 +3,7 @@ import Razorpay from "razorpay";
 import crypto from "crypto";
 import Order from "@/models/orderModel";
 import { connect } from "@/dbConfig/dbConfig";
+import ProductsBought from "@/models/productsBoughtModel";
 connect();
 
 const instance = new Razorpay({
@@ -30,10 +31,27 @@ export async function POST(req) {
   }
 
   const order = await Order.findById(_id);
-  console.log("b paid");
   order.paid = true;
-  console.log("after paid");
   order.save();
+  const productIds = order.products.map((product) => product.product);
+  //adding products in product bought list
+
+  let productsBought = await ProductsBought.findOne({ userId: order.user });
+
+  if (productsBought) {
+    // If document exists, add new product IDs to the existing document
+    productsBought.productBought = [
+      ...productsBought.productBought,
+      ...productIds.map((productId) => ({ _id: productId })),
+    ];
+  } else {
+    // If document doesn't exist, create a new document
+    productsBought = new ProductsBought({
+      userId: order.user,
+      productBought: productIds.map((productId) => ({ _id: productId })),
+    });
+  }
+  await productsBought.save();
 
   return NextResponse.json(
     { message: "payment success", error: false },
