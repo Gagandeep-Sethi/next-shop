@@ -11,7 +11,6 @@ import { FaArrowRight } from "react-icons/fa";
 const Home = () => {
   const products = useSelector((store) => store?.product);
   useAllProducts();
-  console.log(products, "products");
 
   return (
     <div className="min-h-svh  bg-gray-50  ">
