@@ -38,8 +38,6 @@ export async function POST(req) {
     const fileBuffers = [];
 
     for (const file of files) {
-      console.log("Processing file:", file.name);
-
       const reader = file.stream().getReader();
       let chunks = [];
       let done = false;
@@ -82,7 +80,6 @@ export async function POST(req) {
       { status: 200 }
     );
   } catch (error) {
-    console.error("Error processing request:", error);
     return NextResponse.json(
       { message: "Error processing request" },
       { status: 500 }
