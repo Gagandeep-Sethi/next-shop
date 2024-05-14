@@ -6,13 +6,13 @@ export function middleware(request) {
   const isPublic = path === "/user/login" || path === "/user/signup";
   const account = path === "/user" || path === "/user/admin";
   const cart = path === "/cart";
-
+  const updateProduct = /^\/product\/updateproduct\/[^/]+$/;
   const token = request.cookies.get("token")?.value || "";
 
   // Decode the JWT token to get the payload
   let payload;
   try {
-    payload = jwt.decode(token, "your_secret_key_here");
+    payload = jwt.decode(token, process.env.JWT_SECRET);
   } catch (error) {
     console.error("Failed to verify token:", error);
   }
@@ -41,11 +41,20 @@ export function middleware(request) {
   if (account && token && isAdmin && path !== "/user/admin") {
     return NextResponse.redirect(new URL("/user/admin", request.nextUrl));
   }
-
+  if (updateProduct.test(path) && !isAdmin) {
+    return NextResponse.redirect(new URL("/", request.nextUrl));
+  }
   return NextResponse.next(); // Continue processing if no redirection is needed
 }
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/user/login", "/user/signup", "/user", "/cart", "/user/admin"],
+  matcher: [
+    "/user/login",
+    "/user/signup",
+    "/user",
+    "/cart",
+    "/user/admin",
+    "/product/updateproduct/:id*",
+  ],
 };
