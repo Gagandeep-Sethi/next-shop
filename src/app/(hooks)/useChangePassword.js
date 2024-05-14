@@ -8,9 +8,6 @@ export const useChangePassword = () => {
 
   const changePassword = async (formValue) => {
     const { oldPassword, newPassword, confirmPassword } = formValue;
-    console.log(oldPassword, "oldPassword");
-    console.log(newPassword, "oldPassword");
-    console.log(confirm, "oldPassword");
 
     setIsLoading(true);
     setError(null);
@@ -24,10 +21,8 @@ export const useChangePassword = () => {
     if (!response.ok) {
       setIsLoading(false);
       setError(json.message);
-      console.log(json.message);
     }
     if (response.ok) {
-      console.log(response);
       router.refresh();
 
       setIsLoading(false);

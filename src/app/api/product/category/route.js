@@ -18,7 +18,5 @@ export async function GET(req) {
       return NextResponse.json({ status: 400 });
     }
     return NextResponse.json({ product }, { status: 200 });
-  } catch (error) {
-    console.log(error, "error");
-  }
+  } catch (error) {}
 }

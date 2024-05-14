@@ -28,7 +28,6 @@ const Category = () => {
   const products = useSelector((store) => store?.product);
   const category = products[type];
   const dispatch = useDispatch();
-  console.log(category, "category");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -115,9 +114,7 @@ const Category = () => {
               break;
           }
         }
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     }
   }, [category, dispatch, type]);
 

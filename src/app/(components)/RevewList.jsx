@@ -21,9 +21,7 @@ const RevewList = ({ id }) => {
 
         const json = await data.json();
         setReviews(json?.reviews);
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     }
   }, [id]);
 

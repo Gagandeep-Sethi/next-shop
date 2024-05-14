@@ -42,7 +42,7 @@ const Order = () => {
       }),
     });
     const { razorOrder } = await data?.json();
-    console.log(razorOrder, "orderssss");
+
     const options = {
       key: key,
       name: user ? user?.email : "xyz123@gmail.com",
@@ -68,7 +68,7 @@ const Order = () => {
         const res = await data.json();
         if (res?.error === false) {
           // redirect to success page
-          console.log("payment sucess");
+
           dispatch(emptyCart());
           dispatch(emptyOrder());
           router.push("/payment/success");
@@ -152,7 +152,6 @@ const Order = () => {
               <p>
                 ₹
                 {order.orders.reduce((acc, res) => {
-                  console.log(res);
                   return (
                     acc +
                     (res.displayPrice

@@ -11,7 +11,6 @@ const createToken = (_id) => {
   try {
     return jwt.sign({ _id }, process.env.JWT_SECRET, { expiresIn: "2d" });
   } catch (error) {
-    console.error("Error creating token:", error);
     return null;
   }
 };
@@ -28,12 +27,9 @@ const authOptions = {
       try {
         const { id, name, email } = user;
         const { access_token } = account;
-        console.log(user, "user");
-        console.log(account, "account");
 
         const existingUser = await User.findOne({ googleId: id });
         if (existingUser) {
-          console.log("user found");
           const token = createToken(existingUser._id);
           const response = NextResponse.json(
             { message: "logged in" },
@@ -52,7 +48,6 @@ const authOptions = {
           );
           return response;
         }
-        console.log("befores db new entry");
 
         const newUser = await User.create({
           username: name,
@@ -61,10 +56,9 @@ const authOptions = {
           googleToken: access_token,
           verified: true,
         });
-        console.log("after db new entry");
-        console.log(newUser, "usernew");
+
         const token = createToken(newUser._id);
-        console.log(token, "token");
+
         const response = NextResponse.json(
           { message: "user saved" },
           { status: 200 }
@@ -79,7 +73,6 @@ const authOptions = {
         );
         return response;
       } catch (error) {
-        console.log(error, "error");
         return NextResponse.json({ message: error.message }, { status: 500 });
       }
     },

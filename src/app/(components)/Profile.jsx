@@ -25,9 +25,7 @@ const Profile = () => {
       await fetch("/api/users/logout");
       dispatch(deleteUser());
       router.push("/user/login");
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   return (

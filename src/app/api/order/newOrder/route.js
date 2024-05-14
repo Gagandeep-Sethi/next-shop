@@ -28,7 +28,6 @@ export async function POST(req) {
       products.map(async (pro) => {
         const product = await Product.findById(pro._id);
         if (!product) {
-          console.log("product not found");
           throw new Error("product added in list not found");
         }
 
@@ -62,11 +61,8 @@ export async function POST(req) {
     //handleling errors
   } catch (error) {
     if (error instanceof Error) {
-      console.log(error, "error");
       return NextResponse.json({ message: error.message }, { status: 400 });
     } else {
-      console.log(error, "error");
-
       return NextResponse.json(
         { message: "Something went wrong" },
         { status: 500 }

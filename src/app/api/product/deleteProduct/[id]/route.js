@@ -34,7 +34,6 @@ export async function GET(req, { params }) {
 
     return NextResponse.json({ message: "Product deleted " }, { status: 200 });
   } catch (error) {
-    console.log(error);
     return NextResponse.json({ mesage: error.mesage }, { status: 500 });
   }
 }
@@ -43,7 +42,6 @@ async function deleteImages(images) {
     try {
       const result = await cloudinary.uploader.destroy(publicId);
     } catch (error) {
-      console.error("Error deleting image:", error);
       throw error;
     }
   }

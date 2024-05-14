@@ -56,9 +56,7 @@ const Search = () => {
         );
         const json = await response.json();
         setSuggestions(json.suggestions);
-      } catch (error) {
-        console.error("Error fetching suggestions:", error);
-      }
+      } catch (error) {}
     }
   }, [query]);
 

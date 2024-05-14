@@ -10,7 +10,7 @@ import { IoCheckmarkCircle } from "react-icons/io5";
 const Cart = () => {
   const cart = useSelector((store) => store?.cart?.cart);
   const order = useSelector((store) => store?.order);
-  console.log(order, "order");
+
   const dispatch = useDispatch();
   if (cart.length === 0)
     return <EmptyCart value={"Cart is empty !!"} button={"Add Items"} />;
@@ -65,7 +65,6 @@ const Cart = () => {
               <p>
                 ₹
                 {cart.reduce((acc, res) => {
-                  console.log(res);
                   return (
                     acc +
                     (res.displayPrice

@@ -11,7 +11,7 @@ export async function POST(req) {
   try {
     const body = await req.json();
     const idCookies = req.cookies.get("token")?.value; //set it according key value you are getting from client
-    console.log(idCookies, "idcookies");
+
     const { oldPassword, newPassword, confirmPassword } = body;
 
     if (!oldPassword || !newPassword || !confirmPassword) {
@@ -25,9 +25,9 @@ export async function POST(req) {
     }
     //decoding key value from jwt oken recieved
     const decoded = jwt.verify(idCookies, process.env.JWT_SECRET);
-    console.log(decoded, "decoded");
+
     const id = decoded._id;
-    console.log(id, "id");
+
     const user = await User.findById(id);
 
     if (!user) {
@@ -62,7 +62,6 @@ export async function POST(req) {
     // response.cookies.set("user", "", { httpOnly: false, secure: true });
     //you can add redirection to login page also
   } catch (error) {
-    console.log(error);
     if (
       error instanceof jwt.JsonWebTokenError ||
       error instanceof jwt.TokenExpiredError

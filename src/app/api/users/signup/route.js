@@ -68,7 +68,6 @@ export async function POST(req) {
     });
     //const token = createToken(user._id);
 
-    console.log(user);
     // After user creation email verification link send to email
     await sendEmail(
       user.email,
@@ -87,7 +86,6 @@ export async function POST(req) {
 
     return response;
   } catch (error) {
-    console.log(error);
     if (error instanceof Error) {
       return NextResponse.json({ message: error.message }, { status: 400 });
     } else {

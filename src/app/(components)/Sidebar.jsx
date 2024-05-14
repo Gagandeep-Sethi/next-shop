@@ -98,7 +98,6 @@ const Sidebar = () => {
     { label: "Bolster", href: "/product/category/bolster" },
     // { label: "Customize product", href: "/" },
   ];
-  console.log(user, "user");
 
   return (
     <ul className="menu p-4 w-80 min-h-full bg-white space-y-8">

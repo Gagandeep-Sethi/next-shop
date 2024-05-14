@@ -5,8 +5,6 @@ import Image from "next/image";
 import { useUpdateProduct } from "../(hooks)/useUpdateProduct";
 
 const UpdateProduct = ({ productId }) => {
-  console.log(productId, "update");
-
   const [formValue, setFormValue] = useState({
     name: "",
     category: "",
@@ -24,7 +22,7 @@ const UpdateProduct = ({ productId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("before sending to hook");
+
     await updateProduct(formValue, productId);
   };
 
@@ -95,10 +93,7 @@ const UpdateProduct = ({ productId }) => {
           newImageUploads: [], // No new images initially
           deletedImages: [], // No deleted images initially
         }));
-        console.log("form data:", formValue);
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     };
 
     getData();

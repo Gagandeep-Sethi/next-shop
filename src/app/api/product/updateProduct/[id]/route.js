@@ -114,7 +114,6 @@ async function deleteImages(dletedImageFiles) {
     try {
       const result = await cloudinary.uploader.destroy(publicId);
     } catch (error) {
-      console.error("Error deleting image:", error);
       throw error;
     }
   }

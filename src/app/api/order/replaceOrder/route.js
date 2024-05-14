@@ -55,7 +55,6 @@ export async function POST() {
       { status: 200 }
     );
   } catch (error) {
-    console.log(error);
     if (
       error instanceof jwt.JsonWebTokenError ||
       error instanceof jwt.TokenExpiredError

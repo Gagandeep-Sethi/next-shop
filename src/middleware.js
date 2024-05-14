@@ -13,9 +13,7 @@ export function middleware(request) {
   let payload;
   try {
     payload = jwt.decode(token, process.env.JWT_SECRET);
-  } catch (error) {
-    console.error("Failed to verify token:", error);
-  }
+  } catch (error) {}
 
   const isTokenExpired =
     payload && payload.exp && Date.now() >= payload.exp * 1000;

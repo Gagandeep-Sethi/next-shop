@@ -49,9 +49,7 @@ const ProductById = () => {
         } else {
           setProduct(json?.product);
         }
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     }
   }, [id]);
 

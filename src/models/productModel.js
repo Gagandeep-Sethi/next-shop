@@ -89,8 +89,7 @@ productSchema.methods.updateAvgRating = async function () {
   const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
   this.avgRating = reviews.length > 0 ? totalRating / reviews.length : 0;
   this.avgRating = parseFloat(this.avgRating.toFixed(2));
-  console.log("update function called");
-  console.log(this.avgRating, "avgRating");
+
   await this.save(); // Save the updated avgRating
 };
 

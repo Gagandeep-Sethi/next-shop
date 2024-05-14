@@ -15,7 +15,6 @@ function generateTokenExpiry() {
 export async function POST(req) {
   const body = await req.json();
   const { email } = body;
-  console.log(email);
 
   try {
     const user = await User.findOne({ email: email });
@@ -45,7 +44,6 @@ export async function POST(req) {
       { status: 200 }
     );
   } catch (error) {
-    console.log(error);
     if (error instanceof Error) {
       return NextResponse.json({ message: error.message }, { status: 400 });
     } else {

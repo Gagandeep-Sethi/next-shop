@@ -46,9 +46,7 @@ const useAllProducts = () => {
           const mattresses = await mattress.json();
           dispatch(addMattresses(mattresses?.product));
         }
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     }
   }, [dispatch, products]);
 };

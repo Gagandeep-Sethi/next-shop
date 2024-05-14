@@ -26,14 +26,11 @@ const AdminProfile = () => {
     setSelectedOption(option);
   };
   const handleLogout = async () => {
-    console.log("logout function reached");
     try {
       await fetch("/api/users/logout");
       dispatch(deleteUser());
       router.push("/user/login");
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   return (

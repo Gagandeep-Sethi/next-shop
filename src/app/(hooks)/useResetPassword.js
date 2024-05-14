@@ -21,10 +21,8 @@ export const useResetPassword = () => {
     if (!response.ok) {
       setIsLoading(false);
       setError(json.message);
-      console.log(json.message);
     }
     if (response.ok) {
-      console.log(response);
       router.push("/user/login");
       setIsLoading(false);
     }

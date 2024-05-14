@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  console.log("request reached on backend for logout");
   try {
     const response = NextResponse.json(
       {
@@ -16,7 +15,6 @@ export async function GET() {
     // response.cookies.set("user", "", { httpOnly: false, secure: true });
     return response;
   } catch (error) {
-    console.log(error, "error");
     return NextResponse.json({ message: "Unable to logout" }, { status: 400 });
   }
 }

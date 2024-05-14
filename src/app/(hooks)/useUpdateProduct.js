@@ -8,7 +8,6 @@ export const useUpdateProduct = () => {
   const router = useRouter();
 
   const updateProduct = async (formValue, productId) => {
-    console.log("reached hook");
     const {
       name,
       category,
@@ -46,7 +45,7 @@ export const useUpdateProduct = () => {
       for (let i = 0; i < newImageUploads.length; i++) {
         formData.append("newImageUploads", newImageUploads[i]);
       }
-      console.log("before req send");
+
       const response = await fetch(`/api/product/updateProduct/${productId}`, {
         method: "PUT",
         body: formData,
@@ -59,7 +58,7 @@ export const useUpdateProduct = () => {
       }
       if (response.ok) {
         setIsLoading(false);
-        console.log("product updated");
+
         router.push(`/product/${productId}`);
       }
     } catch (error) {

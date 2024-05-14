@@ -19,7 +19,7 @@ const NewProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formValue.images);
+
     await addProduct(formValue);
   };
 

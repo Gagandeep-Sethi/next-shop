@@ -12,7 +12,7 @@ const UserOrders = ({ email }) => {
           throw new Error("Failed to fetch orders");
         }
         const orders = await response.json();
-        console.log(orders.orders, "orders");
+
         setOrder(orders.orders);
       } catch (error) {}
     }

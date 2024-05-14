@@ -13,7 +13,6 @@ const createToken = (_id, isAdmin, expiresIn) => {
       process.env.JWT_SECRET
     );
   } catch (error) {
-    console.error("Error creating token:", error);
     return null;
   }
 };

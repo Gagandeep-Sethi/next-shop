@@ -9,10 +9,9 @@ const SearchUser = () => {
   const handleSearch = async () => {
     const response = await fetch(`/api/users/search?query=${searchQuery}`);
     const json = await response.json();
-    console.log(json?.users, "user json");
+
     setSearchResults(json?.users);
     setSearched(true);
-    console.log(searchResults, "search");
   };
 
   const handleClear = () => {

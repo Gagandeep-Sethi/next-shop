@@ -56,7 +56,7 @@ export const useNewProduct = () => {
       }
     } catch (error) {
       setError(error.message);
-      console.log(error);
+
       setIsLoading(false);
     }
   };
