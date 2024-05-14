@@ -1,23 +1,26 @@
 import nodemailer from "nodemailer";
-//transporter will be the service we will be using for sending emails
+
 const transporter = nodemailer.createTransport({
-  host: process.env.TRANPORTER_HOST,
-  port: process.env.TRANPORTER_PORT,
-  secure: false,
+  service: "gmail",
+  host: process.env.EMAIL_HOST,
+  port: process.env.EMAIL_PORT,
   auth: {
-    user: process.env.TRANPORTER_USER,
-    pass: process.env.TRANPORTER_PASSWORD,
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD,
   },
 });
 
 export async function sendEmail(email, subject, text, html) {
   try {
     let info = await transporter.sendMail({
-      from: '"Your Name" <your_email@example.com>',
+      from: {
+        name: "Sky-Shop",
+        address: process.env.EMAIL_USER,
+      },
       to: email,
-      subject,
-      text,
-      html,
+      subject: subject,
+      text: text,
+      html: html,
     });
 
     console.log("Message sent: %s", info.messageId);
@@ -25,12 +28,3 @@ export async function sendEmail(email, subject, text, html) {
     console.error("Error sending email:", error);
   }
 }
-
-// var transport = nodemailer.createTransport({
-//   host: "sandbox.smtp.mailtrap.io",
-//   port: 2525,
-//   auth: {
-//     user: "fbc0cd973fd303",
-//     pass: "cf086af5ede6a2"
-//   }
-// });
