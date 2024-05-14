@@ -12,7 +12,6 @@ cloudinary.config({
 });
 
 export async function PUT(req, { params }) {
-  console.log("re recieved");
   try {
     const products = await Product.findById(params.id); //new true will return the updated value rather then older value
     if (!products) {
