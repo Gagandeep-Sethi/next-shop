@@ -71,8 +71,14 @@ const Review = ({ id, email }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formValue.images);
     await addReview(formValue);
+    setFormValue({
+      email: email,
+      comment: "",
+      rating: "5",
+      productId: id,
+      images: [],
+    });
   };
 
   const handleChange = (e) => {
@@ -102,18 +108,18 @@ const Review = ({ id, email }) => {
   };
 
   return (
-    <div className="bg-gray-200 border-2 max-w-sm  rounded-xl">
+    <div className="max-w-sm  ">
       <form onSubmit={handleSubmit} className="p-8 space-y-3">
         <div className="flex justify-center">
           <RatingComponent formValue={formValue} setFormValue={setFormValue} />
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col ">
           <label htmlFor="comment" className="text-sm font-medium">
             Review
           </label>
           <textarea
             name="comment"
-            className="input p-2"
+            className="input p-2 bg-gray-100"
             placeholder="Write your review ..."
             value={formValue.description}
             onChange={handleChange}
@@ -121,13 +127,13 @@ const Review = ({ id, email }) => {
           />
         </div>
         <div className="flex flex-col">
-          <label htmlFor="images" className="text-sm font-medium">
+          <label htmlFor="images" className="text-sm font-medium ">
             Images
           </label>
           <input
             type="file"
             name="images"
-            className="input p-2"
+            className="input p-2 bg-gray-100"
             accept="image/*"
             multiple
             onChange={handleChange}
@@ -162,6 +168,9 @@ const Review = ({ id, email }) => {
             className="btn bg-black hover:bg-primary text-white "
             type="submit"
           >
+            {isLoading ? (
+              <span className="loading loading-spinner loading-xs"></span>
+            ) : null}
             Submit Review
           </button>
         </div>
@@ -172,7 +181,7 @@ const Review = ({ id, email }) => {
           className="w-96"
           message={popupMessage}
           setShowPopup={setShowPopup}
-          timeout={3500}
+          status={"success"}
         />
       )}
     </div>

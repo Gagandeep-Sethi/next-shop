@@ -63,7 +63,7 @@ const RevewList = ({ id }) => {
 
       <div className="mx-auto max-w-screen-lg bg-gray-100 rounded-xl py-4    ">
         {reviews.map((review) => (
-          <div key={review._id} className=" ">
+          <div key={review._id} className="py-2 ">
             <p className="flex items-center gap-1">
               <FaUserAlt className="w-6 h-4" />
               {review?.username}
