@@ -171,6 +171,9 @@ const Order = () => {
               disabled={isLoading}
               className="text-center bg-primary text-white  btn w-full hover:bg-blue-600 rounded-xl p-2 cursor-pointer"
             >
+              {isLoading ? (
+                <span className="loading loading-spinner loading-xs"></span>
+              ) : null}{" "}
               Pay now
             </p>
           </div>
