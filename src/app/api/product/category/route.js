@@ -1,6 +1,7 @@
 import Product from "@/models/productModel";
 import { NextResponse } from "next/server";
-
+import { connect } from "@/dbConfig/dbConfig";
+connect();
 export async function GET(req) {
   const searchParams = req.nextUrl.searchParams;
   const type = searchParams.get("type");
@@ -18,5 +19,10 @@ export async function GET(req) {
       return NextResponse.json({ status: 400 });
     }
     return NextResponse.json({ product }, { status: 200 });
-  } catch (error) {}
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Internal Server Error", status: 500 },
+      { status: 500 }
+    );
+  }
 }
