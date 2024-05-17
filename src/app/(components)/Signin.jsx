@@ -1,13 +1,16 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLogin } from "../(hooks)/useLogin";
 import { signIn, useSession } from "next-auth/react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const user = useSelector((store) => store?.user?.user);
 
   const [formValue, setFormValue] = useState({
     password: "",
@@ -15,6 +18,7 @@ const SignIn = () => {
   });
   const { login, isLoading, error } = useLogin();
   const session = useSession();
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,6 +36,11 @@ const SignIn = () => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+  useEffect(() => {
+    if (user) {
+      router.push("/user");
+    }
+  }, [router, user]);
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-white">

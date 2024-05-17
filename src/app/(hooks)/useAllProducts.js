@@ -1,8 +1,7 @@
 "use client";
+
 import { useDispatch, useSelector } from "react-redux";
-
 import { useEffect } from "react";
-
 import {
   addBolsters,
   addCushions,
@@ -15,39 +14,41 @@ const useAllProducts = () => {
   const products = useSelector((store) => store?.product);
 
   useEffect(() => {
-    getData();
     async function getData() {
       try {
-        if (products?.pillow === null) {
-          const pillow = await fetch(
-            `/api/product/category?type=pillow&limit=4`
+        const fetchProducts = async (type) => {
+          const response = await fetch(
+            `/api/product/category?type=${type}&limit=4`
           );
-          const pillows = await pillow.json();
-          dispatch(addPillows(pillows?.product));
+          if (!response.ok) {
+            throw new Error(`Failed to fetch ${type} products`);
+          }
+          const data = await response.json();
+          return data.product;
+        };
+
+        if (products?.pillow === null) {
+          const pillows = await fetchProducts("pillow");
+          dispatch(addPillows(pillows));
         }
         if (products?.bolster === null) {
-          const bolster = await fetch(
-            `/api/product/category?type=bolster&limit=4`
-          );
-          const bolsters = await bolster.json();
-          dispatch(addBolsters(bolsters?.product));
+          const bolsters = await fetchProducts("bolster");
+          dispatch(addBolsters(bolsters));
         }
         if (products?.cushion === null) {
-          const cushion = await fetch(
-            `/api/product/category?type=cushion&limit=4`
-          );
-          const cushions = await cushion.json();
-          dispatch(addCushions(cushions?.product));
+          const cushions = await fetchProducts("cushion");
+          dispatch(addCushions(cushions));
         }
         if (products?.mattress === null) {
-          const mattress = await fetch(
-            `/api/product/category?type=mattress&limit=4`
-          );
-          const mattresses = await mattress.json();
-          dispatch(addMattresses(mattresses?.product));
+          const mattresses = await fetchProducts("mattress");
+          dispatch(addMattresses(mattresses));
         }
-      } catch (error) {}
+      } catch (error) {
+        console.error(error.message);
+      }
     }
+
+    getData();
   }, [dispatch, products]);
 };
 
