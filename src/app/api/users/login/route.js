@@ -44,7 +44,7 @@ export async function POST(req) {
       { message: "user saved" },
       { status: 200 }
     );
-    response.cookies.set("token", token, { httpOnly: true });
+    response.cookies.set("token", token, { httpOnly: true, secure: true });
     //response.cookies.set("token", token, { httpOnly: true , secure: true });
 
     response.cookies.set(
@@ -55,7 +55,7 @@ export async function POST(req) {
         phoneNumber: user.phoneNumber,
         isAdmin: user.isAdmin,
       }),
-      { httpOnly: false }
+      { httpOnly: false, secure: true }
       // JSON.stringify({ username: user.username, email: user.email }),
       // { httpOnly: false, secure: true }
     );
