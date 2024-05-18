@@ -53,6 +53,7 @@ export async function POST(req) {
       //user exist but verify token expired so i delete the user from db and procceed to add that user again
       if (!emailExist.verified && emailExist.verifyTokenExpiry < Date.now()) {
         await User.findOneAndDelete({ email });
+        throw new Error("Email not verified on time please re-register");
       }
     }
     //user does not exist so we are creating a new user here with hash password and sending verification token expire date
