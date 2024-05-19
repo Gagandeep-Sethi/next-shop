@@ -29,20 +29,13 @@ const Profile = () => {
         throw new Error("Failed to logout");
       }
 
-      console.log("Logout successful, dispatching actions");
-
       dispatch(deleteUser());
       dispatch(emptyCart());
 
-      console.log("Actions dispatched, navigating to login");
-
       setTimeout(() => {
-        console.log("Pushing to /user/login");
         router.push("/user/login");
       }, 100); // 100 milliseconds delay
-    } catch (error) {
-      console.error("Logout failed", error);
-    }
+    } catch (error) {}
   };
 
   return (

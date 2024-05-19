@@ -40,9 +40,7 @@ const AdminProfile = () => {
       setTimeout(() => {
         router.push("/user/login");
       }, 100); // 100 milliseconds delay
-    } catch (error) {
-      console.error("Logout failed", error);
-    }
+    } catch (error) {}
   };
 
   return (

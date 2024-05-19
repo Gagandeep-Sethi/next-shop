@@ -43,9 +43,7 @@ const useAllProducts = () => {
           const mattresses = await fetchProducts("mattress");
           dispatch(addMattresses(mattresses));
         }
-      } catch (error) {
-        console.error(error.message);
-      }
+      } catch (error) {}
     }
 
     getData();
