@@ -41,7 +41,8 @@ const Header = () => {
     const { user } = parseCookies();
     const decodedUser = decodeURIComponent(user || "");
     const presentUser = JSON.parse(decodedUser || "{}");
-    if (presentUser) {
+
+    if (presentUser.username) {
       dispatch(addUser(presentUser));
     }
   }, [dispatch]);

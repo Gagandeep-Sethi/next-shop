@@ -16,13 +16,16 @@ const SignIn = () => {
     password: "",
     email: "",
   });
-  const { login, isLoading, error, loginSuccess } = useLogin();
+  const { login, isLoading, error } = useLogin();
   const session = useSession();
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     await login(formValue);
+    setTimeout(() => {
+      router.push("/user");
+    }, 100);
   };
 
   const handleChange = (e) => {
@@ -38,14 +41,20 @@ const SignIn = () => {
   };
 
   useEffect(() => {
-    if (loginSuccess) {
+    let timeoutId;
+    if (user) {
       if (user?.isAdmin) {
-        router.push("/user/admin");
+        timeoutId = setTimeout(() => {
+          router.push("/user/admin");
+        }, 100);
       } else {
-        router.push("/user");
+        timeoutId = setTimeout(() => {
+          router.push("/user");
+        }, 100);
       }
     }
-  }, [loginSuccess, user, router]);
+    return () => clearTimeout(timeoutId); // Clear timeout on cleanup
+  }, [router, user]);
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-white">
