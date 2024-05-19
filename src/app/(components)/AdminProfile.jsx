@@ -15,6 +15,7 @@ import { HiTemplate } from "react-icons/hi";
 import SearchUser from "./SearchUser";
 import UserOrders from "./UserOrders";
 import { deleteUser } from "@/provider/redux/userSlice";
+import { emptyCart } from "@/provider/redux/cartSlice";
 
 const AdminProfile = () => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -27,10 +28,21 @@ const AdminProfile = () => {
   };
   const handleLogout = async () => {
     try {
-      await fetch("/api/users/logout");
+      const response = await fetch("/api/users/logout");
+
+      if (!response.ok) {
+        throw new Error("Failed to logout");
+      }
+
       dispatch(deleteUser());
-      router.push("/user/login");
-    } catch (error) {}
+      dispatch(emptyCart());
+
+      setTimeout(() => {
+        router.push("/user/login");
+      }, 100); // 100 milliseconds delay
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
   };
 
   return (

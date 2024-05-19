@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import UserOrders from "./UserOrders";
 import { deleteUser } from "@/provider/redux/userSlice";
+import { emptyCart } from "@/provider/redux/cartSlice";
 
 const Profile = () => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -22,10 +23,26 @@ const Profile = () => {
   };
   const handleLogout = async () => {
     try {
-      await fetch("/api/users/logout");
+      const response = await fetch("/api/users/logout");
+
+      if (!response.ok) {
+        throw new Error("Failed to logout");
+      }
+
+      console.log("Logout successful, dispatching actions");
+
       dispatch(deleteUser());
-      router.push("/user/login");
-    } catch (error) {}
+      dispatch(emptyCart());
+
+      console.log("Actions dispatched, navigating to login");
+
+      setTimeout(() => {
+        console.log("Pushing to /user/login");
+        router.push("/user/login");
+      }, 100); // 100 milliseconds delay
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
   };
 
   return (
