@@ -8,8 +8,12 @@ export async function GET() {
       },
       { status: 200 }
     );
-    response.cookies.delete("token", { httpOnly: true, secure: true });
-    response.cookies.delete("user", { secure: true });
+    response.cookies.delete("token", {
+      httpOnly: true,
+      secure: true,
+      path: "/",
+    });
+    response.cookies.delete("user", { secure: true, path: "/" });
 
     // response.cookies.set("token", "", { httpOnly: true, secure: true });
     // response.cookies.set("user", "", { httpOnly: false, secure: true });
