@@ -16,7 +16,7 @@ const SignIn = () => {
     password: "",
     email: "",
   });
-  const { login, isLoading, error } = useLogin();
+  const { login, isLoading, error, loginSuccess } = useLogin();
   const session = useSession();
   const router = useRouter();
 
@@ -36,11 +36,16 @@ const SignIn = () => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
   useEffect(() => {
-    if (user) {
-      router.push("/user");
+    if (loginSuccess) {
+      if (user?.isAdmin) {
+        router.push("/user/admin");
+      } else {
+        router.push("/user");
+      }
     }
-  }, [router, user]);
+  }, [loginSuccess, user, router]);
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-white">
