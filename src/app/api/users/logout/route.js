@@ -11,9 +11,15 @@ export async function GET() {
     response.cookies.delete("token", {
       httpOnly: true,
       secure: true,
+      sameSite: "lax",
       path: "/",
     });
-    response.cookies.delete("user", { secure: true, path: "/" });
+    response.cookies.delete("user", {
+      httpOnly: false,
+      secure: true,
+      sameSite: "lax",
+      path: "/",
+    });
 
     // response.cookies.set("token", "", { httpOnly: true, secure: true });
     // response.cookies.set("user", "", { httpOnly: false, secure: true });
