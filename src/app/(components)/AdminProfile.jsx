@@ -38,11 +38,19 @@ const AdminProfile = () => {
   }
   const handleLogout = async () => {
     try {
-      const response = await fetch("/api/users/logout");
+      const response = await fetch("/api/users/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       if (!response.ok) {
+        console.log("response not ok");
         throw new Error("Failed to logout");
       } else {
+        console.log("response ok");
+
         dispatch(deleteUser());
         dispatch(emptyCart());
         deleteCookie("user");
