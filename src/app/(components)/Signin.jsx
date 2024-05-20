@@ -19,13 +19,17 @@ const SignIn = () => {
   const { login, isLoading, error } = useLogin();
   const session = useSession();
   const router = useRouter();
+  // function refreshPage() {
+  //   window.location.reload();
+  // }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     await login(formValue);
-    setTimeout(() => {
-      router.push("/user");
-    }, 100);
+    // setTimeout(() => {
+    //   router.push("/user");
+    // }, 100);
+    //refreshPage();
   };
 
   const handleChange = (e) => {

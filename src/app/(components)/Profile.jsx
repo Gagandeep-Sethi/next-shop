@@ -17,6 +17,16 @@ const Profile = () => {
   const user = useSelector((store) => store?.user?.user);
   const router = useRouter();
   const dispatch = useDispatch();
+  function refreshPage() {
+    window.location.reload();
+  }
+  function deleteCookie(name) {
+    document.cookie =
+      name +
+      "=; Max-Age=0; path=/; domain=" +
+      window.location.hostname +
+      "; secure; samesite=lax";
+  }
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
@@ -27,14 +37,13 @@ const Profile = () => {
 
       if (!response.ok) {
         throw new Error("Failed to logout");
+      } else {
+        dispatch(deleteUser());
+        dispatch(emptyCart());
+        deleteCookie("user");
+        deleteCookie("token");
+        refreshPage();
       }
-
-      dispatch(deleteUser());
-      dispatch(emptyCart());
-
-      setTimeout(() => {
-        router.push("/user/login");
-      }, 100); // 100 milliseconds delay
     } catch (error) {}
   };
 

@@ -26,20 +26,29 @@ const AdminProfile = () => {
   const handleOptionClick = (option) => {
     setSelectedOption(option);
   };
+  function refreshPage() {
+    window.location.reload();
+  }
+  function deleteCookie(name) {
+    document.cookie =
+      name +
+      "=; Max-Age=0; path=/; domain=" +
+      window.location.hostname +
+      "; secure; samesite=lax";
+  }
   const handleLogout = async () => {
     try {
       const response = await fetch("/api/users/logout");
 
       if (!response.ok) {
         throw new Error("Failed to logout");
+      } else {
+        dispatch(deleteUser());
+        dispatch(emptyCart());
+        deleteCookie("user");
+        deleteCookie("token");
+        refreshPage();
       }
-
-      dispatch(deleteUser());
-      dispatch(emptyCart());
-
-      setTimeout(() => {
-        router.push("/user/login");
-      }, 100); // 100 milliseconds delay
     } catch (error) {}
   };
 
