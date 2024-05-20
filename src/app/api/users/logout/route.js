@@ -14,11 +14,12 @@ export async function GET() {
       sameSite: "lax",
       path: "/",
     });
-    response.cookies.delete("user", {
+    response.cookies.set("user", "", {
       httpOnly: false,
       secure: true,
       sameSite: "lax",
       path: "/",
+      expires: new Date(0),
     });
 
     // response.cookies.set("token", "", { httpOnly: true, secure: true });
